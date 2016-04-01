@@ -1,7 +1,7 @@
 {
-  "name": "COMP392-finalproject",
+  "name": "comp392-lesson10",
   "version": "1.0.0",
-  "description": "Final Project for Centennial College",
+  "description": "COMP392-Lesson 10 for Centennial College",
   "main": "game.js",
   "dependencies": {
     "typescript": "^1.8.7"
@@ -18,7 +18,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/GaalOmar/COMP392-FinalProject.git"
+    "url": "git+https://github.com/CentennialCollege/COMP392-Lesson10.git"
   },
-  "license": "MIT"
+  "author": "Tom Tsiliopoulos",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/CentennialCollege/COMP392-Lesson10/issues"
+  },
+  "homepage": "https://github.com/CentennialCollege/COMP392-Lesson10#readme"
 }

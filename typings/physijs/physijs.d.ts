@@ -138,6 +138,8 @@ declare module Physijs {
     }
 
     export class Scene extends THREE.Scene {
+        _worker:Worker;
+        
         constructor(param?: SceneParameters);
 
         addConstraint(constraint:Constraint, show_marker?:boolean):void;
