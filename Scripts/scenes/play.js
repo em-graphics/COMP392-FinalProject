@@ -23,6 +23,8 @@ var scenes;
          */
         function Play() {
             _super.call(this);
+            //light
+            this.light = new THREE.DirectionalLight(0xffffff);
             this._initialize();
             this.start();
         }
@@ -51,7 +53,6 @@ var scenes;
             this.blocker.style.display = "block";
             // setup canvas for menu scene
             this._setupCanvas();
-            this.coinCount = 10;
             this.prevTime = 0;
             this.stage = new createjs.Stage(canvas);
             this.velocity = new Vector3(0, 0, 0);
@@ -85,57 +86,207 @@ var scenes;
             console.log("Added Score Label to stage");
         };
         /**
-         * Add a spotLight to the scene
+         * Add a DirectionalLight to the scene
          *
-         * @method addSpotLight
+         * @method addDirectionalLight
          * @return void
          */
-        Play.prototype.addSpotLight = function () {
-            // Spot Light
-            this.spotLight = new SpotLight(0xffffff);
-            this.spotLight.position.set(20, 40, -15);
-            this.spotLight.castShadow = true;
-            this.spotLight.intensity = 2;
-            this.spotLight.lookAt(new Vector3(0, 0, 0));
-            this.spotLight.shadowCameraNear = 2;
-            this.spotLight.shadowCameraFar = 200;
-            this.spotLight.shadowCameraLeft = -5;
-            this.spotLight.shadowCameraRight = 5;
-            this.spotLight.shadowCameraTop = 5;
-            this.spotLight.shadowCameraBottom = -5;
-            this.spotLight.shadowMapWidth = 2048;
-            this.spotLight.shadowMapHeight = 2048;
-            this.spotLight.shadowDarkness = 0.5;
-            this.spotLight.name = "Spot Light";
-            this.add(this.spotLight);
-            console.log("Added spotLight to scene");
+        Play.prototype.addDirectionalLight = function () {
+            // DirectionalLight 
+            this.light.castShadow = true; // soft white light
+            this.light.shadowCameraNear = 2;
+            this.add(this.light);
+            console.log("Added DirectionalLight to scene");
         };
         /**
-         * Add a ground plane to the scene
+         * Add a level to the scene
          *
-         * @method addGround
+         * @method addLevel
          * @return void
          */
-        Play.prototype.addGround = function () {
-            this.groundTexture = new THREE.TextureLoader().load('../../Assets/images/GravelCobble.jpg');
+        Play.prototype.addLevel = function () {
+            // Beginning Big Island
+            //Ground texture
+            this.groundTexture = new THREE.TextureLoader().load('../../Images/Grass.jpg');
             this.groundTexture.wrapS = THREE.RepeatWrapping;
             this.groundTexture.wrapT = THREE.RepeatWrapping;
-            this.groundTexture.repeat.set(8, 8);
-            this.groundTextureNormal = new THREE.TextureLoader().load('../../Assets/images/GravelCobbleNormal.png');
+            this.groundTexture.repeat.set(10, 10);
+            this.groundTextureNormal = new THREE.TextureLoader().load('../../Images/Grass.jpg');
             this.groundTextureNormal.wrapS = THREE.RepeatWrapping;
             this.groundTextureNormal.wrapT = THREE.RepeatWrapping;
-            this.groundTextureNormal.repeat.set(8, 8);
+            this.groundTextureNormal.repeat.set(10, 10);
             this.groundMaterial = new PhongMaterial();
             this.groundMaterial.map = this.groundTexture;
             this.groundMaterial.bumpMap = this.groundTextureNormal;
             this.groundMaterial.bumpScale = 0.2;
-            this.groundGeometry = new BoxGeometry(32, 1, 32);
-            this.groundPhysicsMaterial = Physijs.createMaterial(this.groundMaterial, 0, 0);
-            this.ground = new Physijs.ConvexMesh(this.groundGeometry, this.groundPhysicsMaterial, 0);
-            this.ground.receiveShadow = true;
-            this.ground.name = "Ground";
-            this.add(this.ground);
-            console.log("Added Burnt Ground to scene");
+            //Door Texture
+            this.doorTexture = new THREE.TextureLoader().load('../../Images/door.jpg');
+            this.doorTexture.wrapS = THREE.RepeatWrapping;
+            this.doorTexture.wrapT = THREE.RepeatWrapping;
+            this.doorTexture.repeat.set(10, 10);
+            this.doorTextureNormal = new THREE.TextureLoader().load('../../Images/door.jpg');
+            this.doorTextureNormal.wrapS = THREE.RepeatWrapping;
+            this.doorTextureNormal.wrapT = THREE.RepeatWrapping;
+            this.doorTextureNormal.repeat.set(10, 10);
+            this.doorMaterial = new PhongMaterial();
+            this.doorMaterial.map = this.doorTexture;
+            this.doorMaterial.bumpMap = this.doorTextureNormal;
+            this.doorMaterial.bumpScale = 0.2;
+            //Big Island
+            this.bigIslandGeometry = new BoxGeometry(32, 1, 20);
+            this.bigIslandMaterial = Physijs.createMaterial(this.groundMaterial, 0, 0);
+            this.bigIsland = new Physijs.ConvexMesh(this.bigIslandGeometry, this.bigIslandMaterial, 0);
+            this.bigIsland.position.set(0, 0, 5);
+            this.bigIsland.receiveShadow = true;
+            this.bigIsland.name = "BigIsland";
+            this.add(this.bigIsland);
+            console.log("Added BigIsland to scene");
+            // Board
+            this.boardGeometry = new BoxGeometry(32, 1, 5);
+            this.boardMaterial = Physijs.createMaterial(this.groundMaterial, 0, 0);
+            this.board = new Physijs.ConvexMesh(this.boardGeometry, this.boardMaterial, 0);
+            this.board.position.set(0, 0, -9);
+            this.board.receiveShadow = true;
+            this.board.name = "Board";
+            this.add(this.board);
+            console.log("Added Board to scene");
+            // Board
+            this.boardGeometry = new BoxGeometry(32, 1, 5);
+            this.boardMaterial = Physijs.createMaterial(this.groundMaterial, 0, 0);
+            this.board = new Physijs.ConvexMesh(this.boardGeometry, this.boardMaterial, 0);
+            this.board.position.set(0, 0, -16);
+            this.board.receiveShadow = true;
+            this.board.name = "Board";
+            this.add(this.board);
+            console.log("Added Board to scene");
+            // Big Island
+            this.bigIslandGeometry = new BoxGeometry(32, 1, 10);
+            this.bigIslandMaterial = Physijs.createMaterial(this.groundMaterial, 0, 0);
+            this.bigIsland = new Physijs.ConvexMesh(this.bigIslandGeometry, this.bigIslandMaterial, 0);
+            this.bigIsland.position.set(0, 0, -26);
+            this.bigIsland.receiveShadow = true;
+            this.bigIsland.name = "BigIsland";
+            this.add(this.bigIsland);
+            console.log("Added BigIsland to scene");
+            // Small Island 1
+            this.smallIslandGeometry = new BoxGeometry(10, 1, 10);
+            this.smallIslandMaterial = Physijs.createMaterial(this.groundMaterial, 0, 0);
+            this.smallIsland = new Physijs.ConvexMesh(this.smallIslandGeometry, this.smallIslandMaterial, 0);
+            this.smallIsland.position.set(-11, 0, -38);
+            this.smallIsland.receiveShadow = true;
+            this.smallIsland.name = "SmallIsland";
+            this.add(this.smallIsland);
+            console.log("Added SmallIsland to scene");
+            //Small Island 2
+            this.smallIslandGeometry = new BoxGeometry(10, 1, 10);
+            this.smallIslandMaterial = Physijs.createMaterial(this.groundMaterial, 0, 0);
+            this.smallIsland = new Physijs.ConvexMesh(this.smallIslandGeometry, this.smallIslandMaterial, 0);
+            this.smallIsland.position.set(-1, 0, -48);
+            this.smallIsland.receiveShadow = true;
+            this.smallIsland.name = "SmallIsland";
+            this.add(this.smallIsland);
+            console.log("Added SmallIsland to scene");
+            console.log("Finished setting up Level...");
+            //Small Island 3
+            this.smallIslandGeometry = new BoxGeometry(10, 1, 10);
+            this.smallIslandMaterial = Physijs.createMaterial(this.groundMaterial, 0, 0);
+            this.smallIsland = new Physijs.ConvexMesh(this.smallIslandGeometry, this.smallIslandMaterial, 0);
+            this.smallIsland.position.set(9, 0, -58);
+            this.smallIsland.receiveShadow = true;
+            this.smallIsland.name = "SmallIsland";
+            this.add(this.smallIsland);
+            console.log("Added SmallIsland to scene");
+            // Safe Board
+            this.boardGeometry = new BoxGeometry(32, 1, 10);
+            this.boardMaterial = Physijs.createMaterial(this.groundMaterial, 0, 0);
+            this.board = new Physijs.ConvexMesh(this.boardGeometry, this.boardMaterial, 0);
+            this.board.position.set(0, 0, -70);
+            this.board.receiveShadow = true;
+            this.board.name = "Board";
+            this.add(this.board);
+            console.log("Added Board to scene");
+            // Small Island 
+            this.smallIslandGeometry = new BoxGeometry(10, 1, 10);
+            this.smallIslandMaterial = Physijs.createMaterial(this.groundMaterial, 0, 0);
+            this.smallIsland = new Physijs.ConvexMesh(this.smallIslandGeometry, this.smallIslandMaterial, 0);
+            this.smallIsland.position.set(-1, 0, -82);
+            this.smallIsland.receiveShadow = true;
+            this.smallIsland.name = "SmallIsland";
+            this.add(this.smallIsland);
+            console.log("Added SmallIsland to scene");
+            // Safe Board
+            this.boardGeometry = new BoxGeometry(32, 1, 10);
+            this.boardMaterial = Physijs.createMaterial(this.groundMaterial, 0, 0);
+            this.board = new Physijs.ConvexMesh(this.boardGeometry, this.boardMaterial, 0);
+            this.board.position.set(-1, 0, -94);
+            this.board.receiveShadow = true;
+            this.board.name = "Board";
+            this.add(this.board);
+            console.log("Added Board to scene");
+            // Long Board
+            this.boardGeometry = new BoxGeometry(6, 1, 32);
+            this.boardMaterial = Physijs.createMaterial(this.groundMaterial, 0, 0);
+            this.board = new Physijs.ConvexMesh(this.boardGeometry, this.boardMaterial, 0);
+            this.board.position.set(-1, 0, -118);
+            this.board.receiveShadow = true;
+            this.board.name = "Board";
+            this.add(this.board);
+            console.log("Added Board to scene");
+            // Safe Board
+            this.boardGeometry = new BoxGeometry(32, 1, 10);
+            this.boardMaterial = Physijs.createMaterial(this.groundMaterial, 0, 0);
+            this.board = new Physijs.ConvexMesh(this.boardGeometry, this.boardMaterial, 0);
+            this.board.position.set(-1, 0, -145);
+            this.board.receiveShadow = true;
+            this.board.name = "Board";
+            this.add(this.board);
+            console.log("Added Board to scene");
+            //Island 1
+            this.smallIslandGeometry = new BoxGeometry(10, 1, 10);
+            this.smallIslandMaterial = Physijs.createMaterial(this.groundMaterial, 0, 0);
+            this.smallIsland = new Physijs.ConvexMesh(this.smallIslandGeometry, this.smallIslandMaterial, 0);
+            this.smallIsland.position.set(-11, 0, -158);
+            this.smallIsland.receiveShadow = true;
+            this.smallIsland.name = "SmallIsland";
+            this.add(this.smallIsland);
+            console.log("Added SmallIsland to scene");
+            //Island 2
+            this.smallIslandGeometry = new BoxGeometry(10, 1, 10);
+            this.smallIslandMaterial = Physijs.createMaterial(this.groundMaterial, 0, 0);
+            this.smallIsland = new Physijs.ConvexMesh(this.smallIslandGeometry, this.smallIslandMaterial, 0);
+            this.smallIsland.position.set(-1, 0, -170);
+            this.smallIsland.receiveShadow = true;
+            this.smallIsland.name = "SmallIsland";
+            this.add(this.smallIsland);
+            console.log("Added SmallIsland to scene");
+            //Island 3
+            this.smallIslandGeometry = new BoxGeometry(10, 1, 10);
+            this.smallIslandMaterial = Physijs.createMaterial(this.groundMaterial, 0, 0);
+            this.smallIsland = new Physijs.ConvexMesh(this.smallIslandGeometry, this.smallIslandMaterial, 0);
+            this.smallIsland.position.set(-11, 0, -182);
+            this.smallIsland.receiveShadow = true;
+            this.smallIsland.name = "SmallIsland";
+            this.add(this.smallIsland);
+            console.log("Added SmallIsland to scene");
+            console.log("Finished setting up Level...");
+            // Finish Line Island
+            this.bigIslandGeometry = new BoxGeometry(32, 1, 20);
+            this.bigIslandMaterial = Physijs.createMaterial(this.groundMaterial, 0, 0);
+            this.bigIsland = new Physijs.ConvexMesh(this.bigIslandGeometry, this.bigIslandMaterial, 0);
+            this.bigIsland.position.set(0, 0, -199);
+            this.bigIsland.receiveShadow = true;
+            this.bigIsland.name = "BigIsland";
+            this.add(this.bigIsland);
+            console.log("Added BigIsland to scene");
+            //Door to success
+            this.bigIslandGeometry = new BoxGeometry(32, 20, 1);
+            this.bigIslandMaterial = Physijs.createMaterial(this.groundMaterial, 0, 0);
+            this.bigIsland = new Physijs.ConvexMesh(this.bigIslandGeometry, this.bigIslandMaterial, 0);
+            this.bigIsland.position.set(0, 10, -199);
+            this.bigIsland.receiveShadow = true;
+            this.bigIsland.name = "BigIsland";
+            this.add(this.bigIsland);
+            console.log("Added BigIsland to scene");
         };
         /**
          * Adds the player controller to the scene
@@ -162,47 +313,130 @@ var scenes;
          * @return void
          */
         Play.prototype.addDeathPlane = function () {
-            this.deathPlaneGeometry = new BoxGeometry(100, 1, 100);
-            this.deathPlaneMaterial = Physijs.createMaterial(new MeshBasicMaterial({ color: 0xff0000 }), 0.4, 0.6);
+            this.deathPlaneGeometry = new BoxGeometry(100, 1, -720);
+            this.deathPlaneMaterial = Physijs.createMaterial(new MeshBasicMaterial({ color: 0xADD8E6 }), 0.4, 0.6);
             this.deathPlane = new Physijs.BoxMesh(this.deathPlaneGeometry, this.deathPlaneMaterial, 0);
             this.deathPlane.position.set(0, -10, 0);
             this.deathPlane.name = "DeathPlane";
             this.add(this.deathPlane);
         };
         /**
-         * This method adds a coin to the scene
+         * This method adds a donut to the scene
          *
-         * @method addCoinMesh
+         * @method addDonutMesh
          * @return void
          */
-        Play.prototype.addCoinMesh = function () {
+        Play.prototype.addDonutMesh = function () {
             var self = this;
-            this.coins = new Array(); // Instantiate a convex mesh array
-            var coinLoader = new THREE.JSONLoader().load("../../Assets/imported/coin.json", function (geometry) {
-                var phongMaterial = new PhongMaterial({ color: 0xE7AB32 });
-                phongMaterial.emissive = new THREE.Color(0xE7AB32);
-                var coinMaterial = Physijs.createMaterial((phongMaterial), 0.4, 0.6);
-                for (var count = 0; count < self.coinCount; count++) {
-                    self.coins[count] = new Physijs.ConvexMesh(geometry, coinMaterial);
-                    self.coins[count].receiveShadow = true;
-                    self.coins[count].castShadow = true;
-                    self.coins[count].name = "Coin";
-                    self.setCoinPosition(self.coins[count]);
-                    console.log("Added Coin Mesh to Scene, at position: " + self.coins[count].position);
-                }
+            this.donuts = new Array(); // Instantiate a convex mesh array
+            var donutLoader = new THREE.JSONLoader().load("../../Assets/imported/donut.json", function (geometry, materials) {
+                //jem color    
+                var phongMaterial = new PhongMaterial({ color: 0xF21F88 });
+                phongMaterial.emissive = new THREE.Color(0xF21F88);
+                materials[0] = Physijs.createMaterial((phongMaterial), 0.4, 0.6);
+                //bun color    
+                var phongMaterial = new PhongMaterial({ color: 0x946931 });
+                phongMaterial.emissive = new THREE.Color(0x946931);
+                materials[1] = Physijs.createMaterial((phongMaterial), 0.4, 0.6);
+                //first donut
+                this.donut2 = new Physijs.ConvexMesh(geometry, new THREE.MeshFaceMaterial(materials));
+                this.donut2.receiveShadow = true;
+                this.donut2.castShadow = true;
+                this.donut2.name = "Donut";
+                this.donut2.position.set(0, 10, -10);
+                scene.add(this.donut2);
+                donuts.push(this.donut2);
+                //second donut
+                this.donut3 = new Physijs.ConvexMesh(geometry, new THREE.MeshFaceMaterial(materials));
+                this.donut3.receiveShadow = true;
+                this.donut3.castShadow = true;
+                this.donut3.name = "Donut";
+                this.donut3.position.set(-11, 10, -38);
+                scene.add(this.donut3);
+                this.donuts.push(this.donut3);
+                //third donut
+                this.donut4 = new Physijs.ConvexMesh(geometry, new THREE.MeshFaceMaterial(materials));
+                this.donut4.receiveShadow = true;
+                this.donut4.castShadow = true;
+                this.donut4.name = "Donut";
+                this.donut4.position.set(9, 10, -58);
+                scene.add(this.donut4);
+                this.donuts.push(this.donut4);
+                //fourth donut
+                this.donut5 = new Physijs.ConvexMesh(geometry, new THREE.MeshFaceMaterial(materials));
+                this.donut5.receiveShadow = true;
+                this.donut5.castShadow = true;
+                this.donut5.name = "Donut";
+                this.donut5.position.set(-1, 10, -170);
+                scene.add(this.donut5);
+                this.donuts.push(this.donut5);
+                //fifth donut
+                this.donut6 = new Physijs.ConvexMesh(geometry, new THREE.MeshFaceMaterial(materials));
+                this.donut6.receiveShadow = true;
+                this.donut6.castShadow = true;
+                this.donut6.name = "Donut";
+                this.donut6.position.set(1, 10, -195);
+                scene.add(this.donut6);
+                this.donuts.push(this.donut6);
             });
+            console.log("Added Donut Mesh to Scene");
         };
         /**
-         * This method randomly sets the coin object's position
+         * This method adds a donut to the scene
          *
-         * @method setCoinPosition
+         * @method addDonutMesh
          * @return void
          */
-        Play.prototype.setCoinPosition = function (coin) {
+        Play.prototype.addUglyDonutMesh = function () {
+            var self = this;
+            this.uglyDonuts = new Array(); // Instantiate a convex mesh array
+            var donutLoader2 = new THREE.JSONLoader().load("../../Assets/imported/donut.json", function (geometry, materials) {
+                //ugly donat gem
+                var phongMaterial = new PhongMaterial({ color: 0x0add08 });
+                phongMaterial.emissive = new THREE.Color(0x0add08);
+                materials[0] = Physijs.createMaterial((phongMaterial), 0.4, 0.6);
+                //ugly donat bun
+                var phongMaterial = new PhongMaterial({ color: 0x000000 });
+                phongMaterial.emissive = new THREE.Color(0x000000);
+                materials[1] = Physijs.createMaterial((phongMaterial), 0.4, 0.6);
+                //first ugly donut  
+                this.uglyDonut = new Physijs.ConvexMesh(geometry, new THREE.MeshFaceMaterial(materials));
+                this.uglyDonut.receiveShadow = true;
+                this.uglyDonut.castShadow = true;
+                this.uglyDonut.name = "UglyDonut";
+                this.uglyDonut.position.set(0, 10, -30);
+                scene.add(this.uglyDonut);
+                this.uglyDonuts.push(this.uglyDonut);
+                //second ugly donut  
+                this.uglyDonut2 = new Physijs.ConvexMesh(geometry, new THREE.MeshFaceMaterial(materials));
+                this.uglyDonut2.receiveShadow = true;
+                this.uglyDonut2.castShadow = true;
+                this.uglyDonut2.name = "UglyDonut";
+                this.uglyDonut2.position.set(-1, 10, -118);
+                scene.add(this.uglyDonut2);
+                this.uglyDonuts.push(this.uglyDonut2);
+                //third ugly donut  
+                this.uglyDonut3 = new Physijs.ConvexMesh(geometry, new THREE.MeshFaceMaterial(materials));
+                this.uglyDonut3.receiveShadow = true;
+                this.uglyDonut3.castShadow = true;
+                this.uglyDonut3.name = "UglyDonut";
+                this.uglyDonut3.position.set(-1, 10, -168);
+                scene.add(this.uglyDonut3);
+                this.uglyDonuts.push(this.uglyDonut3);
+            });
+            console.log("Added Donut Mesh to Scene");
+        };
+        /**
+         * This method randomly sets the donut object's position
+         *
+         * @method setdonutPosition
+         * @return void
+         */
+        Play.prototype.setdonutPosition = function (donut) {
             var randomPointX = Math.floor(Math.random() * 20) - 10;
             var randomPointZ = Math.floor(Math.random() * 20) - 10;
-            coin.position.set(randomPointX, 10, randomPointZ);
-            this.add(coin);
+            donut.position.set(randomPointX, 10, randomPointZ);
+            this.add(donut);
         };
         /**
          * Event Handler method for any pointerLockChange events
@@ -347,27 +581,44 @@ var scenes;
             this.addEventListener('update', this._simulateScene);
             console.log("Start Simulation"); */
             // Add Spot Light to the scene
-            this.addSpotLight();
-            // Ground Object
-            this.addGround();
+            this.addDirectionalLight();
+            // Level Load
+            this.addLevel();
             // Add player controller
             this.addPlayer();
-            // Add custom coin imported from Blender
-            this.addCoinMesh();
+            // Add custom donut imported from Blender
+            this.addDonutMesh();
+            this.addUglyDonutMesh();
             // Add death plane to the scene
             this.addDeathPlane();
             // Collision Check
             this.player.addEventListener('collision', function (eventObject) {
-                if (eventObject.name === "Ground") {
+                if (eventObject.name === "BigIsland") {
+                    console.log("player hit the big island");
                     this.isGrounded = true;
                     createjs.Sound.play("land");
                 }
-                if (eventObject.name === "Coin") {
-                    createjs.Sound.play("coin");
-                    this.remove(eventObject);
-                    this.setCoinPosition(eventObject);
+                if (eventObject.name === "Board") {
+                    console.log("player hit the board");
+                    this.isGrounded = true;
+                    createjs.Sound.play("land");
+                }
+                if (eventObject.name === "SmallIsland") {
+                    console.log("player hit the board");
+                    this.isGrounded = true;
+                    createjs.Sound.play("land");
+                }
+                if (eventObject.name === "Donut") {
+                    createjs.Sound.play("donut");
+                    scene.remove(eventObject);
                     this.scoreValue += 100;
                     this.scoreLabel.text = "SCORE: " + this.scoreValue;
+                }
+                if (eventObject.name === "UglyDonut") {
+                    createjs.Sound.play("donut");
+                    this.livesValue--;
+                    this.livesLabel.text = "LIVES: " + this.livesValue;
+                    this.remove(this.uglyDonut);
                 }
                 if (eventObject.name === "DeathPlane") {
                     createjs.Sound.play("hit");
@@ -413,9 +664,17 @@ var scenes;
          * @returns void
          */
         Play.prototype.update = function () {
-            this.coins.forEach(function (coin) {
-                coin.setAngularFactor(new Vector3(0, 0, 0));
-                coin.setAngularVelocity(new Vector3(0, 1, 0));
+            this.donuts.forEach(function (donut) {
+                donut.setAngularFactor(new Vector3(0, 0, 0));
+                donut.setAngularVelocity(new Vector3(0, 1, 0));
+            });
+            this.donuts.forEach(function (donut) {
+                donut.setAngularFactor(new Vector3(0, 0, 0));
+                donut.setAngularVelocity(new Vector3(0, 1, 0));
+            });
+            this.uglyDonuts.forEach(function (uglyDonut) {
+                uglyDonut.setAngularFactor(new Vector3(0, 0, 0));
+                uglyDonut.setAngularVelocity(new Vector3(0, 1, 0));
             });
             this.checkControls();
             this.stage.update();

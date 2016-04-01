@@ -35,7 +35,7 @@ var scenes;
         Menu.prototype._setupCanvas = function () {
             canvas.style.width = "100%";
             canvas.setAttribute("height", config.Screen.HEIGHT.toString());
-            canvas.style.backgroundColor = "#ffffff";
+            canvas.style.backgroundColor = "#ccccff";
         };
         /**
          * This method sets up default values for class member variables
@@ -62,7 +62,7 @@ var scenes;
          * @return void
          */
         Menu.prototype.start = function () {
-            this._gameLabel = new createjs.Text("COIN GAME", "80px Consolas", "#000000");
+            this._gameLabel = new createjs.Text("CANDY LAND", "80px Consolas", "#000000");
             this._gameLabel.regX = this._gameLabel.getMeasuredWidth() * 0.5;
             this._gameLabel.regY = this._gameLabel.getMeasuredLineHeight() * 0.5;
             this._gameLabel.x = config.Screen.WIDTH * 0.5;

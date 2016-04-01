@@ -36,7 +36,7 @@ module scenes {
         private _setupCanvas(): void {
             canvas.style.width = "100%";
             canvas.setAttribute("height", config.Screen.HEIGHT.toString());
-            canvas.style.backgroundColor = "#ffffff";
+            canvas.style.backgroundColor = "#ccccff";
         }
 
 
@@ -69,7 +69,7 @@ module scenes {
          */
         public start(): void {
             this._gameLabel = new createjs.Text(
-                "COIN GAME",
+                "CANDY LAND",
                 "80px Consolas",
                 "#000000");
             this._gameLabel.regX = this._gameLabel.getMeasuredWidth() * 0.5;

@@ -49,6 +49,7 @@ var manifest = [
     { id: "coin", src: "../../Assets/audio/coin.mp3" },
     { id: "jump", src: "../../Assets/audio/Jump.wav" },
     { id: "StartButton", src: "../../Assets/images/StartButton.png" },
+    { id: "bg", src: "../../Assets/images/bg.jpg" },
     { id: "RestartButton", src: "../../Assets/images/RestartButton.png" }
 ];
 function preload() {
@@ -61,7 +62,7 @@ function setupCanvas() {
     canvas = document.getElementById("canvas");
     canvas.setAttribute("width", config.Screen.WIDTH.toString());
     canvas.setAttribute("height", (config.Screen.HEIGHT * 0.1).toString());
-    canvas.style.backgroundColor = "#000000";
+    canvas.style.backgroundColor = "#ccccff";
 }
 function init() {
     // setup the canvas for the game
@@ -108,7 +109,7 @@ function gameLoop() {
 // Setup default renderer
 function setupRenderer() {
     renderer = new Renderer({ antialias: true });
-    renderer.setClearColor(0x404040, 1.0);
+    renderer.setClearColor(0xADD8E6, 1.0);
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setSize(CScreen.WIDTH, CScreen.HEIGHT);
     renderer.shadowMap.enabled = true;
@@ -117,7 +118,7 @@ function setupRenderer() {
 }
 // Setup main camera for the scene
 function setupCamera() {
-    camera = new PerspectiveCamera(35, config.Screen.RATIO, 0.1, 100);
+    camera = new PerspectiveCamera(35, config.Screen.RATIO, 0.1, 1000);
     //camera.position.set(0, 10, 30);
     //camera.lookAt(new Vector3(0, 0, 0));
     console.log("Finished setting up Camera...");
