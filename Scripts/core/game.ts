@@ -1,20 +1,7 @@
 /// <reference path="_reference.ts"/>
 
 // MAIN GAME FILE
-/* Name: Ga-alo Omar and Nikita Chernykh
-    Source File Name: Advanced Graphics- Assignment 3
-    Last Modified by: Ga-alo Omar
-    Date last Modified: March 25, 2016
-    Program description: Creating a game with obstacles to avoid or collect
-    Revision History:
-    Commit 1: Created the visual code file, Initial Commit
-    Commit 2: Add Ga-alo as contributor
-    Commit 3-22: Add islands, donuts, obstacles and texture 
-    
-    **
-    Majority commits were setting up two accounts and adding small objects
-   
-*/
+
 
 // THREEJS Aliases
 import Scene = Physijs.Scene;
