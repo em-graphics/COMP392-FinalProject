@@ -64,6 +64,7 @@ module scenes {
         private uglyDonut3: Physijs.ConcaveMesh;
         
         private donuts: Physijs.ConcaveMesh[];
+        private donutCount: number = 5;
         
         //level objects
         
@@ -448,80 +449,72 @@ module scenes {
          * @return void
          */
         private addDonutMesh(): void {
+            // Add the Donut mesh to the scene
             var self = this;
 
             this.donuts = new Array<Physijs.ConvexMesh>(); // Instantiate a convex mesh array
 
-            var donutLoader = new THREE.JSONLoader().load("../../Assets/imported/donut.json", function(geometry: THREE.Geometry,materials) {
+
+            var donutLoader = new THREE.JSONLoader().load("../../Assets/imported/donut.json", function(geometry: THREE.Geometry, materials) {
                 //jem color    
                 var phongMaterial = new PhongMaterial({ color: 0xF21F88 });
                 phongMaterial.emissive = new THREE.Color(0xF21F88);
                 materials[0] = Physijs.createMaterial((phongMaterial), 0.4, 0.6);
-            
+
                 //bun color    
                 var phongMaterial = new PhongMaterial({ color: 0x946931 });
                 phongMaterial.emissive = new THREE.Color(0x946931);
                 materials[1] = Physijs.createMaterial((phongMaterial), 0.4, 0.6);
-                
-                //first donut
-                this.donut2 = new Physijs.ConvexMesh(geometry, new THREE.MeshFaceMaterial( materials ));
-                this.donut2.receiveShadow = true;
-                this.donut2.castShadow = true;
-                this.donut2.name = "Donut";
-                this.donut2.position.set(0,10,-10);
-                scene.add(this.donut2);
-                donuts.push(this.donut2); 
-                //second donut
-                this.donut3 = new Physijs.ConvexMesh(geometry, new THREE.MeshFaceMaterial( materials ));
-                this.donut3.receiveShadow = true;
-                this.donut3.castShadow = true;
-                this.donut3.name = "Donut";
-                this.donut3.position.set(-11, 10, -38);
-                scene.add(this.donut3);
-                this.donuts.push(this.donut3); 
-                
-                //third donut
-                this.donut4 = new Physijs.ConvexMesh(geometry, new THREE.MeshFaceMaterial( materials ));
-                this.donut4.receiveShadow = true;
-                this.donut4.castShadow = true;
-                this.donut4.name = "Donut";
-                this.donut4.position.set(9, 10, - 58);
-                scene.add(this.donut4);
-                this.donuts.push(this.donut4); 
-            
-                //fourth donut
-                this.donut5 = new Physijs.ConvexMesh(geometry, new THREE.MeshFaceMaterial( materials ));
-                this.donut5.receiveShadow = true;
-                this.donut5.castShadow = true;
-                this.donut5.name = "Donut";
-                this.donut5.position.set(-1, 10, -170);
-                scene.add(this.donut5);
-                this.donuts.push(this.donut5); 
-                
-                //fifth donut
-                this.donut6 = new Physijs.ConvexMesh(geometry, new THREE.MeshFaceMaterial( materials ));
-                this.donut6.receiveShadow = true;
-                this.donut6.castShadow = true;
-                this.donut6.name = "Donut";
-                this.donut6.position.set(1, 10, -195);
-                scene.add(this.donut6);
-                this.donuts.push(this.donut6); 
+
+
+                for (var count: number = 0; count < self.donutCount; count++) {
+                    self.donuts[count] = new Physijs.ConvexMesh(geometry, new THREE.MeshFaceMaterial(materials));
+                    self.donuts[count].receiveShadow = true;
+                    self.donuts[count].castShadow = true;
+                    self.donuts[count].name = "Donut";
+                    self.addDonutPosition(self.donuts[count], count);
+
+                }
             });
 
             console.log("Added Donut Mesh to Scene");
         }
+        
         /**
-         * This method adds a donut to the scene
+        * This method sets the donuts object's position
+        * 
+        * @method addDonutPosition
+        * @return void
+        */
+        private addDonutPosition(donut: Physijs.ConvexMesh, count: number): void {
+            if (count == 0) {
+                donut.position.set(0, 10, -10);
+            } else if (count == 1) {
+                donut.position.set(-11, 10, -38);
+            } else if (count == 2) {
+                donut.position.set(9, 10, - 58);
+            } else if (count == 3) {
+                donut.position.set(-1, 10, -170);
+            } else {
+                donut.position.set(1, 10, -195);
+            }
+            this.add(donut);
+        }
+        /**
+         * This method adds the ugly donut controller to the scene
          * 
          * @method addDonutMesh
          * @return void
          */
         private addUglyDonutMesh(): void {
+            // Add the Ugly Donut to the scene
             var self = this;
 
             this.uglyDonuts = new Array<Physijs.ConvexMesh>(); // Instantiate a convex mesh array
 
-            var donutLoader2 = new THREE.JSONLoader().load("../../Assets/imported/donut.json", function(geometry: THREE.Geometry,materials) {
+            var donutLoader2 = new THREE.JSONLoader().load("../../Assets/imported/donut.json", function(geometry: THREE.Geometry, materials) {
+
+
                 //ugly donat gem
                 var phongMaterial = new PhongMaterial({ color: 0x0add08 });
                 phongMaterial.emissive = new THREE.Color(0x0add08);
@@ -530,40 +523,35 @@ module scenes {
                 var phongMaterial = new PhongMaterial({ color: 0x000000 });
                 phongMaterial.emissive = new THREE.Color(0x000000);
                 materials[1] = Physijs.createMaterial((phongMaterial), 0.4, 0.6);
-                
-                //first ugly donut  
-                this.uglyDonut = new Physijs.ConvexMesh(geometry, new THREE.MeshFaceMaterial( materials )); 
-                this.uglyDonut.receiveShadow = true;
-                this.uglyDonut.castShadow = true;
-                this.uglyDonut.name = "UglyDonut";
-                this.uglyDonut.position.set(0,10,-30);
-                scene.add(this.uglyDonut);
-                this.uglyDonuts.push(this.uglyDonut); 
-            
-                //second ugly donut  
-                this.uglyDonut2 = new Physijs.ConvexMesh(geometry, new THREE.MeshFaceMaterial( materials )); 
-                this.uglyDonut2.receiveShadow = true;
-                this.uglyDonut2.castShadow = true;
-                this.uglyDonut2.name = "UglyDonut";
-                this.uglyDonut2.position.set(-1, 10, -118);
-                scene.add(this.uglyDonut2);
-                this.uglyDonuts.push(this.uglyDonut2); 
-            
-                //third ugly donut  
-                this.uglyDonut3 = new Physijs.ConvexMesh(geometry, new THREE.MeshFaceMaterial( materials )); 
-                this.uglyDonut3.receiveShadow = true;
-                this.uglyDonut3.castShadow = true;
-                this.uglyDonut3.name = "UglyDonut";
-                this.uglyDonut3.position.set(-1, 10, -168);
-                scene.add(this.uglyDonut3);
-                this.uglyDonuts.push(this.uglyDonut3);
-               
-            
-                
-            });
 
+                for (var count: number = 0; count < self.donutCount-2; count++) {
+                    self.uglyDonuts[count] = new Physijs.ConvexMesh(geometry, new THREE.MeshFaceMaterial(materials));
+                    self.uglyDonuts[count].receiveShadow = true;
+                    self.uglyDonuts[count].castShadow = true;
+                    self.uglyDonuts[count].name = "UglyDonut";
+                    self.addUglyDonutPosition(self.uglyDonuts[count], count);
+                }
+            });
             console.log("Added Donut Mesh to Scene");
         }
+
+        /**
+         * This method sets the ugly donuts object's position
+         * 
+         * @method addUglyDonutPosition
+         * @return void
+         */
+        private addUglyDonutPosition(uglyDonut: Physijs.ConvexMesh, count: number): void {
+            if (count == 0) {
+                uglyDonut.position.set(0, 10, -30);
+            } else if (count == 1) {
+                uglyDonut.position.set(-1, 10, -118);
+            } else {
+                uglyDonut.position.set(-1, 10, -168);
+            }
+            this.add(uglyDonut);
+        }
+
 
         /**
          * This method randomly sets the donut object's position
