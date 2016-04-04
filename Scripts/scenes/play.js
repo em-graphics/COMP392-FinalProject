@@ -692,7 +692,7 @@ var scenes;
             this.stage.update();
         };
         return Play;
-    })(scenes.Scene);
+    }(scenes.Scene));
     scenes.Play = Play;
 })(scenes || (scenes = {}));
 
