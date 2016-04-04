@@ -1,7 +1,7 @@
 /// <reference path="_reference.ts"/>
 
 // MAIN GAME FILE
-/* Name: Ga-alo Omar,Nikita Chernykh and Eunmi Han
+/* Name: Ga-alo Omar and Nikita Chernykh
     Source File Name: Advanced Graphics- Assignment 3
     Last Modified by: Ga-alo Omar
     Date last Modified: March 25, 2016
