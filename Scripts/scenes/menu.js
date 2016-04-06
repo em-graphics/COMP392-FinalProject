@@ -74,10 +74,34 @@ var scenes;
             this._startButton.x = config.Screen.WIDTH * 0.5;
             this._startButton.y = (config.Screen.HEIGHT * 0.5) + 100;
             this._stage.addChild(this._startButton);
+            this._infoButton = new createjs.Bitmap(assets.getResult("InfoButton"));
+            this._infoButton.regX = this._infoButton.getBounds().width * 0.5;
+            this._infoButton.regY = this._infoButton.getBounds().height * 0.5;
+            this._infoButton.x = config.Screen.WIDTH * 0.5;
+            this._infoButton.y = (config.Screen.HEIGHT * 0.5) + 160;
+            this._stage.addChild(this._infoButton);
+            this._exitButton = new createjs.Bitmap(assets.getResult("ExitButton"));
+            this._exitButton.regX = this._exitButton.getBounds().width * 0.5;
+            this._exitButton.regY = this._exitButton.getBounds().height * 0.5;
+            this._exitButton.x = config.Screen.WIDTH * 0.5;
+            this._exitButton.y = (config.Screen.HEIGHT * 0.5) + 220;
+            this._stage.addChild(this._exitButton);
             this._startButton.on("mouseover", function (event) {
                 event.target.alpha = 0.7;
             });
             this._startButton.on("mouseout", function (event) {
+                event.target.alpha = 1.0;
+            });
+            this._infoButton.on("mouseover", function (event) {
+                event.target.alpha = 0.7;
+            });
+            this._infoButton.on("mouseout", function (event) {
+                event.target.alpha = 1.0;
+            });
+            this._exitButton.on("mouseover", function (event) {
+                event.target.alpha = 0.7;
+            });
+            this._exitButton.on("mouseout", function (event) {
                 event.target.alpha = 1.0;
             });
             this._startButton.on("click", function (event) {
@@ -107,5 +131,4 @@ var scenes;
     })(scenes.Scene);
     scenes.Menu = Menu;
 })(scenes || (scenes = {}));
-
 //# sourceMappingURL=menu.js.map
