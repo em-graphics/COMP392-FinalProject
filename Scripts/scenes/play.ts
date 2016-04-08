@@ -400,7 +400,7 @@ module scenes {
             this.bigIsland = new Physijs.ConvexMesh(this.bigIslandGeometry, this.bigIslandMaterial, 0);
             this.bigIsland.position.set(0, 10, -199);
             this.bigIsland.receiveShadow = true;
-            this.bigIsland.name = "BigIsland";
+            this.bigIsland.name = "Door";
             this.add(this.bigIsland);
             console.log("Added BigIsland to scene");
         
@@ -418,7 +418,7 @@ module scenes {
             this.playerMaterial = Physijs.createMaterial(new LambertMaterial({ color: 0x00ff00 }), 0.4, 0);
 
             this. player = new Physijs.BoxMesh(this.playerGeometry, this.playerMaterial, 1);
-            this.player.position.set(0, 30, 10);
+            this.player.position.set(0, 30,-150);
             this.player.receiveShadow = true;
             this.player.castShadow = true;
             this.player.name = "Player";
@@ -776,6 +776,11 @@ module scenes {
                 this.livesLabel.text = "LIVES: " + this.livesValue;
                 this.remove(this.uglyDonut);
                 
+            }
+            if (eventObject.name === "Door") {
+
+                        currentScene = config.Scene.OVER;
+                        changeScene();
             }
             
             if (eventObject.name === "DeathPlane") {

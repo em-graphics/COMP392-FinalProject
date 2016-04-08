@@ -48,10 +48,11 @@ var currentScene: number;
 var renderer: Renderer;
 var camera: PerspectiveCamera;
 
+
 var play: scenes.Play;
 var menu: scenes.Menu;
 var over: scenes.Over;
-var over: scenes.level2;
+
 
 var stats: Stats;
 var canvas: HTMLElement;
@@ -179,12 +180,7 @@ function changeScene(): void {
             scene = over;
             console.log("Starting OVER Scene");
             break;
-        case config.Scene.level2:
-            // show the game OVER scene
-            level2 = new scenes.level2();
-            scene = level2;
-            console.log("Starting level2 Scene");
-            break;
+        
     }
 }
 
