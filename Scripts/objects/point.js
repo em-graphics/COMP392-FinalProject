@@ -10,7 +10,8 @@ var objects;
             this.z = z;
         }
         return Point;
-    })();
+    }());
     objects.Point = Point;
 })(objects || (objects = {}));
+
 //# sourceMappingURL=point.js.map

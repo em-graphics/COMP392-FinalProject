@@ -43,7 +43,8 @@ var scenes;
         Scene.prototype.resize = function () {
         };
         return Scene;
-    })(Physijs.Scene);
+    }(Physijs.Scene));
     scenes.Scene = Scene;
 })(scenes || (scenes = {}));
+
 //# sourceMappingURL=scene.js.map
