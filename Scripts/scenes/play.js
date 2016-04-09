@@ -300,7 +300,7 @@ var scenes;
             this.playerGeometry = new BoxGeometry(2, 4, 2);
             this.playerMaterial = Physijs.createMaterial(new LambertMaterial({ color: 0x00ff00 }), 0.4, 0);
             this.player = new Physijs.BoxMesh(this.playerGeometry, this.playerMaterial, 1);
-            this.player.position.set(0, 30, -150);
+            this.player.position.set(0, 30, 10);
             this.player.receiveShadow = true;
             this.player.castShadow = true;
             this.player.name = "Player";
@@ -604,16 +604,16 @@ var scenes;
                     createjs.Sound.play("land");
                 }
                 if (eventObject.name === "Donut") {
-                    createjs.Sound.play("donut");
+                    createjs.Sound.play("bite");
                     scene.remove(eventObject);
                     this.scoreValue += 100;
                     this.scoreLabel.text = "SCORE: " + this.scoreValue;
                 }
                 if (eventObject.name === "UglyDonut") {
-                    createjs.Sound.play("donut");
+                    createjs.Sound.play("bite");
                     this.livesValue--;
                     this.livesLabel.text = "LIVES: " + this.livesValue;
-                    this.remove(this.uglyDonut);
+                    scene.remove(eventObject);
                 }
                 if (eventObject.name === "Door") {
                     currentScene = config.Scene.OVER;
