@@ -7,7 +7,8 @@ var objects;
         function Control() {
         }
         return Control;
-    })();
+    }());
     objects.Control = Control;
 })(objects || (objects = {}));
+
 //# sourceMappingURL=control.js.map

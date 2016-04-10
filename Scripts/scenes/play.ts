@@ -150,7 +150,7 @@ module scenes {
         private setupScoreboard(): void {
             // initialize  score and lives values
             this.scoreValue = 0;
-            this.livesValue = 1;
+            this.livesValue = 5;
 
             // Add Lives Label
             this.livesLabel = new createjs.Text(
@@ -203,12 +203,12 @@ module scenes {
             this.groundTexture = new THREE.TextureLoader().load('../../Images/Grass.jpg');
             this.groundTexture.wrapS = THREE.RepeatWrapping;
             this.groundTexture.wrapT = THREE.RepeatWrapping;
-            this.groundTexture.repeat.set(10, 10);
+            this.groundTexture.repeat.set(2, 2);
 
             this.groundTextureNormal = new THREE.TextureLoader().load('../../Images/Grass.jpg');
             this.groundTextureNormal.wrapS = THREE.RepeatWrapping;
             this.groundTextureNormal.wrapT = THREE.RepeatWrapping;
-            this.groundTextureNormal.repeat.set(10, 10);
+            this.groundTextureNormal.repeat.set(2, 2);
 
             this.groundMaterial = new PhongMaterial();
             this.groundMaterial.map = this.groundTexture;
@@ -219,17 +219,17 @@ module scenes {
             this.doorTexture = new THREE.TextureLoader().load('../../Images/door.jpg');
             this.doorTexture.wrapS = THREE.RepeatWrapping;
             this.doorTexture.wrapT = THREE.RepeatWrapping;
-            this.doorTexture.repeat.set(10, 10);
+            this.doorTexture.repeat.set(1, 1);
 
             this.doorTextureNormal = new THREE.TextureLoader().load('../../Images/door.jpg');
             this.doorTextureNormal.wrapS = THREE.RepeatWrapping;
             this.doorTextureNormal.wrapT = THREE.RepeatWrapping;
-            this.doorTextureNormal.repeat.set(10, 10);
+            this.doorTextureNormal.repeat.set(1, 1);
 
             this.doorMaterial = new PhongMaterial();
             this.doorMaterial.map = this.doorTexture;
             this.doorMaterial.bumpMap = this.doorTextureNormal;
-            this.doorMaterial.bumpScale = 0.2;
+            this.doorMaterial.bumpScale = 0.4;
             
             //Big Island
             this.bigIslandGeometry = new BoxGeometry(32, 1, 20);
@@ -341,7 +341,7 @@ module scenes {
             console.log("Added Board to scene");
 
             // Safe Board
-            this.boardGeometry = new BoxGeometry(32, 1, 10);
+            this.boardGeometry = new BoxGeometry(32, 1, 16);
             this.boardMaterial = Physijs.createMaterial(this.groundMaterial, 0, 0);
             this.board = new Physijs.ConvexMesh(this.boardGeometry, this.boardMaterial, 0);
             this.board.position.set(-1, 0, -145);
@@ -396,11 +396,11 @@ module scenes {
 
             //Door to success
             this.bigIslandGeometry = new BoxGeometry(32, 20, 1);
-            this.bigIslandMaterial = Physijs.createMaterial(this.groundMaterial, 0, 0);
+            this.bigIslandMaterial = Physijs.createMaterial(this.doorMaterial, 0, 0);
             this.bigIsland = new Physijs.ConvexMesh(this.bigIslandGeometry, this.bigIslandMaterial, 0);
             this.bigIsland.position.set(0, 10, -199);
             this.bigIsland.receiveShadow = true;
-            this.bigIsland.name = "BigIsland";
+            this.bigIsland.name = "Door";
             this.add(this.bigIsland);
             console.log("Added BigIsland to scene");
         
@@ -418,7 +418,7 @@ module scenes {
             this.playerMaterial = Physijs.createMaterial(new LambertMaterial({ color: 0x00ff00 }), 0.4, 0);
 
             this. player = new Physijs.BoxMesh(this.playerGeometry, this.playerMaterial, 1);
-            this.player.position.set(0, 30, 10);
+            this.player.position.set(0, 30,10);
             this.player.receiveShadow = true;
             this.player.castShadow = true;
             this.player.name = "Player";
@@ -765,17 +765,22 @@ module scenes {
                 createjs.Sound.play("land");
             }
             if (eventObject.name === "Donut") {
-                createjs.Sound.play("donut");
+                createjs.Sound.play("bite");
                 scene.remove(eventObject);
                 this.scoreValue += 100;
                 this.scoreLabel.text = "SCORE: " + this.scoreValue;
             }
             if (eventObject.name === "UglyDonut") {
-                createjs.Sound.play("donut");
+                createjs.Sound.play("bite");
                 this.livesValue--;
                 this.livesLabel.text = "LIVES: " + this.livesValue;
-                this.remove(this.uglyDonut);
+                scene.remove(eventObject);
                 
+            }
+            if (eventObject.name === "Door") {
+
+                        currentScene = config.Scene.OVER;
+                        changeScene();
             }
             
             if (eventObject.name === "DeathPlane") {

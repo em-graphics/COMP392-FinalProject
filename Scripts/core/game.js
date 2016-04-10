@@ -46,6 +46,7 @@ var assets;
 var manifest = [
     { id: "land", src: "../../Assets/audio/Land.wav" },
     { id: "hit", src: "../../Assets/audio/hit.wav" },
+    { id: "bite", src: "../../Assets/audio/bite.mp3" },
     { id: "coin", src: "../../Assets/audio/coin.mp3" },
     { id: "jump", src: "../../Assets/audio/Jump.wav" },
     { id: "StartButton", src: "../../Assets/images/StartButton.png" },
@@ -148,4 +149,5 @@ function changeScene() {
     }
 }
 window.onload = preload;
+
 //# sourceMappingURL=game.js.map

@@ -59,7 +59,8 @@ var objects;
             }
         };
         return KeyboardControls;
-    })();
+    }());
     objects.KeyboardControls = KeyboardControls;
 })(objects || (objects = {}));
+
 //# sourceMappingURL=keyboardcontrols.js.map
