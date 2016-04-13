@@ -46,10 +46,11 @@ var canvas;
 var assets;
 var manifest = [
     { id: "land", src: "../../Assets/audio/Land.wav" },
-    { id: "hit", src: "../../Assets/audio/hit.wav" },
+    { id: "hit", src: "../../Assets/audio/hit.mp3" },
     { id: "bite", src: "../../Assets/audio/bite.mp3" },
     { id: "coin", src: "../../Assets/audio/coin.mp3" },
     { id: "jump", src: "../../Assets/audio/Jump.wav" },
+    { id: "bg", src: "../../Assets/images/bd.jpg" },
     { id: "StartButton", src: "../../Assets/images/StartButton.png" },
     { id: "ExitButton", src: "../../Assets/images/ExitButton.png" },
     { id: "InfoButton", src: "../../Assets/images/InfoButton.png" },
@@ -75,7 +76,7 @@ function init() {
     // setup the camera
     setupCamera();
     // set initial scene
-    currentScene = config.Scene.LEVEL2;
+    currentScene = config.Scene.MENU;
     changeScene();
     // Add framerate stats
     addStatsObject();
