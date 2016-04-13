@@ -200,15 +200,10 @@ module scenes {
             // Beginning Big Island
        
             //Ground texture
-            this.groundTexture = new THREE.TextureLoader().load('../../Images/Grass.jpg');
+            this.groundTexture = new THREE.TextureLoader().load('../../Images/grass.png');
             this.groundTexture.wrapS = THREE.RepeatWrapping;
             this.groundTexture.wrapT = THREE.RepeatWrapping;
             this.groundTexture.repeat.set(2, 2);
-
-            this.groundTextureNormal = new THREE.TextureLoader().load('../../Images/Grass.jpg');
-            this.groundTextureNormal.wrapS = THREE.RepeatWrapping;
-            this.groundTextureNormal.wrapT = THREE.RepeatWrapping;
-            this.groundTextureNormal.repeat.set(2, 2);
 
             this.groundMaterial = new PhongMaterial();
             this.groundMaterial.map = this.groundTexture;
@@ -553,18 +548,6 @@ module scenes {
         }
 
 
-        /**
-         * This method randomly sets the donut object's position
-         * 
-         * @method setdonutPosition
-         * @return void
-         */
-        private setdonutPosition(donut: Physijs.ConvexMesh): void {
-            var randomPointX: number = Math.floor(Math.random() * 20) - 10;
-            var randomPointZ: number = Math.floor(Math.random() * 20) - 10;
-            donut.position.set(randomPointX, 10, randomPointZ);
-            this.add(donut);
-        }
 
         /**
          * Event Handler method for any pointerLockChange events
@@ -752,17 +735,14 @@ module scenes {
             if (eventObject.name === "BigIsland") {
                     console.log("player hit the big island");
                     this.isGrounded = true;
-                    createjs.Sound.play("land");
                 }
                 if (eventObject.name === "Board") {
                     console.log("player hit the board");
                     this.isGrounded = true;
-                    createjs.Sound.play("land");
                 }
             if (eventObject.name === "SmallIsland") {
                 console.log("player hit the board");
                 this.isGrounded = true;
-                createjs.Sound.play("land");
             }
             if (eventObject.name === "Donut") {
                 createjs.Sound.play("bite");
