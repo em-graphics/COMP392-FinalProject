@@ -597,7 +597,7 @@ var scenes;
                     scene.remove(eventObject);
                 }
                 if (eventObject.name === "Door") {
-                    currentScene = config.Scene.OVER;
+                    currentScene = config.Scene.LEVEL2;
                     changeScene();
                 }
                 if (eventObject.name === "DeathPlane") {

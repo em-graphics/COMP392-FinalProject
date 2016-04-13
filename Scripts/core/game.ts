@@ -52,6 +52,7 @@ var camera: PerspectiveCamera;
 var play: scenes.Play;
 var menu: scenes.Menu;
 var over: scenes.Over;
+var level2: scenes.Level02;
 
 
 var stats: Stats;
@@ -182,7 +183,12 @@ function changeScene(): void {
             scene = over;
             console.log("Starting OVER Scene");
             break;
-        
+        case config.Scene.LEVEL2:
+            // show the game LEVEL2 scene
+            level2 = new scenes.Level02();
+            scene = level2;
+            console.log("Starting level02 Scene");
+            break;
     }
 }
 
