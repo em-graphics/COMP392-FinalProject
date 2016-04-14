@@ -41,6 +41,7 @@ var play;
 var menu;
 var over;
 var level2;
+var level3;
 var stats;
 var canvas;
 var assets;
@@ -154,6 +155,12 @@ function changeScene() {
             scene = level2;
             renderer.setClearColor(0x302013, 1.0);
             console.log("Starting level02 Scene");
+            break;
+        case config.Scene.LEVEL3:
+            // show the PLAY scene
+            level3 = new scenes.Level03();
+            scene = level3;
+            console.log("Starting Level3 Scene");
             break;
     }
 }

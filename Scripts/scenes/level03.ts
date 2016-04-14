@@ -1,134 +1,263 @@
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
 /**
  * The Scenes module is a namespace to reference all scene objects
- *
+ * 
  * @module scenes
  */
-var scenes;
-(function (scenes) {
+module scenes {
     /**
      * The Play class is where the main action occurs for the game
-     *
+     * 
      * @class Play
      * @param havePointerLock {boolean}
      */
-    var Play = (function (_super) {
-        __extends(Play, _super);
+    export class Level03 extends scenes.Scene {
+        private havePointerLock: boolean;
+        private element: any;
+
+        private blocker: HTMLElement;
+        private instructions: HTMLElement;
+        private spotLight: SpotLight;
+        private groundGeometry: CubeGeometry;
+        private groundPhysicsMaterial: Physijs.Material;
+        private groundMaterial: PhongMaterial;
+        private ground: Physijs.Mesh;
+        private groundTexture: Texture;
+        private groundTextureNormal: Texture;
+        private playerGeometry: CubeGeometry;
+        private playerMaterial: Physijs.Material;
+        private player: Physijs.Mesh;
+        private keyboardControls: objects.KeyboardControls;
+        private mouseControls: objects.MouseControls;
+        private isGrounded: boolean;
+        private deathPlaneGeometry: CubeGeometry;
+        private deathPlaneMaterial: Physijs.Material;
+        private deathPlane: Physijs.Mesh;
+
+        private velocity: Vector3;
+        private prevTime: number;
+        private clock: Clock;
+
+        private stage: createjs.Stage;
+        private scoreLabel: createjs.Text;
+        private livesLabel: createjs.Text;
+        private scoreValue: number;
+        private livesValue: number;
+
+        //team declorations 
+
+        //donutGeometry
+        private donutGeometry: Geometry;
+        private donutMaterial: Physijs.Material;
+
+        //donuts
+
+
+
+        //ugjyDonuts
+        private uglyDonuts: Physijs.ConcaveMesh[];
+        private donuts: Physijs.ConcaveMesh[];
+        private donutCount: number = 5;
+
+        //level objects
+
+        //big island
+        private bigIsland: Physijs.Mesh;
+        private bigIslandGeometry: CubeGeometry;
+        private bigIslandMaterial: Physijs.Material;
+        //small island
+        private smallIsland;
+        private smallIslandGeometry;
+        private smallIslandMaterial;
+        //board
+        private board: Physijs.Mesh;
+        private boardGeometry: CubeGeometry;
+        private boardMaterial: Physijs.Material;
+        //doorvar doorTexture; Texture;
+        private doorTextureNormal: Texture;
+        private doorPhysicsMaterial: Physijs.Material;
+        private doorMaterial: PhongMaterial;
+        private doorTexture; Texture;
+        //light
+        private light = new THREE.DirectionalLight(0xffffff);
+
+        //moving board
+        private movingboard1: Physijs.Mesh;
+        private movingboardGeometry1: CubeGeometry;
+        private movingboardMaterial1: Physijs.Material;
+        private movingboard2: Physijs.Mesh;
+        private movingboard3: Physijs.Mesh;
+
+
+        //spinning board
+        private spinningboard: Physijs.Mesh;
+        private spinningboardGeometry: CubeGeometry;
+        private spinningboardMaterial: Physijs.Material;
+
+        //variables
+        private xFlag: boolean;
+        private zFlag: boolean;
+        private zFlag2: boolean;
+        private onGround:boolean;
+        private yRotation: number;
+        private xCoordinate: number = -11;
+        private zCoordinate: number = -158;
+        private zCoordinate2: number = -56;
+        private yRotate: number = 0.03;
+
+        
+        private ghost: Physijs.ConcaveMesh[];
+
+        private test: Physijs.Mesh;
+        private testGeometry: CubeGeometry;
+        private testMaterial: Physijs.Material;
+
+ 
+
         /**
          * @constructor
          */
-        function Play() {
-            _super.call(this);
-            this.donutCount = 5;
-            //light
-            this.light = new THREE.DirectionalLight(0xffffff);
+        constructor() {
+            super();
+
             this._initialize();
             this.start();
         }
+
         // PRIVATE METHODS ++++++++++++++++++++++++++++++++++++++++++
+
         /**
          * Sets up the initial canvas for the play scene
-         *
+         * 
          * @method setupCanvas
          * @return void
          */
-        Play.prototype._setupCanvas = function () {
+        private _setupCanvas(): void {
             canvas.setAttribute("width", config.Screen.WIDTH.toString());
             canvas.setAttribute("height", (config.Screen.HEIGHT * 0.1).toString());
             canvas.style.backgroundColor = "#000000";
-        };
+        }
+
         /**
          * The initialize method sets up key objects to be used in the scene
-         *
+         * 
          * @method _initialize
          * @returns void
          */
-        Play.prototype._initialize = function () {
+        private _initialize(): void {
             // Create to HTMLElements
             this.blocker = document.getElementById("blocker");
             this.instructions = document.getElementById("instructions");
             this.blocker.style.display = "block";
+
             // setup canvas for menu scene
             this._setupCanvas();
+
+
+
             this.prevTime = 0;
             this.stage = new createjs.Stage(canvas);
             this.velocity = new Vector3(0, 0, 0);
+
             // setup a THREE.JS Clock object
             this.clock = new Clock();
+
             // Instantiate Game Controls
             this.keyboardControls = new objects.KeyboardControls();
             this.mouseControls = new objects.MouseControls();
-        };
+        }
         /**
          * This method sets up the scoreboard for the scene
-         *
+         * 
          * @method setupScoreboard
          * @returns void
          */
-        Play.prototype.setupScoreboard = function () {
+        private setupScoreboard(): void {
             // initialize  score and lives values
             this.scoreValue = 0;
             this.livesValue = 5;
+
             // Add Lives Label
-            this.livesLabel = new createjs.Text("LIVES: " + this.livesValue, "40px Consolas", "#ffffff");
+            this.livesLabel = new createjs.Text(
+                "LIVES: " + this.livesValue,
+                "40px Consolas",
+                "#ffffff"
+            );
             this.livesLabel.x = config.Screen.WIDTH * 0.1;
             this.livesLabel.y = (config.Screen.HEIGHT * 0.15) * 0.20;
             this.stage.addChild(this.livesLabel);
             console.log("Added Lives Label to stage");
+
             // Add Score Label
-            this.scoreLabel = new createjs.Text("SCORE: " + this.scoreValue, "40px Consolas", "#ffffff");
+            this.scoreLabel = new createjs.Text(
+                "SCORE: " + this.scoreValue,
+                "40px Consolas",
+                "#ffffff"
+            );
             this.scoreLabel.x = config.Screen.WIDTH * 0.8;
             this.scoreLabel.y = (config.Screen.HEIGHT * 0.15) * 0.20;
             this.stage.addChild(this.scoreLabel);
             console.log("Added Score Label to stage");
-        };
+        }
+
         /**
          * Add a DirectionalLight to the scene
-         *
+         * 
          * @method addDirectionalLight
          * @return void
          */
-        Play.prototype.addDirectionalLight = function () {
+        private addDirectionalLight(): void {
             // DirectionalLight 
             this.light.castShadow = true; // soft white light
             this.light.shadowCameraNear = 2;
             this.add(this.light);
             console.log("Added DirectionalLight to scene");
-        };
+        }
+
         /**
          * Add a level to the scene
-         *
+         * 
          * @method addLevel
          * @return void
          */
-        Play.prototype.addLevel = function () {
+        private addLevel(): void {
+
             // Beginning Big Island
+
             //Ground texture
-            this.groundTexture = new THREE.TextureLoader().load('../../Images/grass.png');
+            this.groundTexture = new THREE.TextureLoader().load('../../Images/seamless.jpg');
             this.groundTexture.wrapS = THREE.RepeatWrapping;
             this.groundTexture.wrapT = THREE.RepeatWrapping;
             this.groundTexture.repeat.set(2, 2);
+
+            this.groundTextureNormal = new THREE.TextureLoader().load('../../Images/seamless.jpg');
+            this.groundTextureNormal.wrapS = THREE.RepeatWrapping;
+            this.groundTextureNormal.wrapT = THREE.RepeatWrapping;
+            this.groundTextureNormal.repeat.set(2, 2);
+
             this.groundMaterial = new PhongMaterial();
             this.groundMaterial.map = this.groundTexture;
             this.groundMaterial.bumpMap = this.groundTextureNormal;
             this.groundMaterial.bumpScale = 0.2;
+
             //Door Texture
             this.doorTexture = new THREE.TextureLoader().load('../../Images/door.jpg');
             this.doorTexture.wrapS = THREE.RepeatWrapping;
             this.doorTexture.wrapT = THREE.RepeatWrapping;
             this.doorTexture.repeat.set(1, 1);
+
             this.doorTextureNormal = new THREE.TextureLoader().load('../../Images/door.jpg');
             this.doorTextureNormal.wrapS = THREE.RepeatWrapping;
             this.doorTextureNormal.wrapT = THREE.RepeatWrapping;
             this.doorTextureNormal.repeat.set(1, 1);
+
             this.doorMaterial = new PhongMaterial();
             this.doorMaterial.map = this.doorTexture;
             this.doorMaterial.bumpMap = this.doorTextureNormal;
             this.doorMaterial.bumpScale = 0.4;
+
+
+
+
             //Big Island
             this.bigIslandGeometry = new BoxGeometry(32, 1, 20);
             this.bigIslandMaterial = Physijs.createMaterial(this.groundMaterial, 0, 0);
@@ -138,163 +267,110 @@ var scenes;
             this.bigIsland.name = "BigIsland";
             this.add(this.bigIsland);
             console.log("Added BigIsland to scene");
-            // Board
-            this.boardGeometry = new BoxGeometry(32, 1, 5);
-            this.boardMaterial = Physijs.createMaterial(this.groundMaterial, 0, 0);
-            this.board = new Physijs.ConvexMesh(this.boardGeometry, this.boardMaterial, 0);
-            this.board.position.set(0, 0, -9);
-            this.board.receiveShadow = true;
-            this.board.name = "Board";
-            this.add(this.board);
-            console.log("Added Board to scene");
-            // Board
-            this.boardGeometry = new BoxGeometry(32, 1, 5);
-            this.boardMaterial = Physijs.createMaterial(this.groundMaterial, 0, 0);
-            this.board = new Physijs.ConvexMesh(this.boardGeometry, this.boardMaterial, 0);
-            this.board.position.set(0, 0, -16);
-            this.board.receiveShadow = true;
-            this.board.name = "Board";
-            this.add(this.board);
-            console.log("Added Board to scene");
-            // Big Island
-            this.bigIslandGeometry = new BoxGeometry(32, 1, 10);
-            this.bigIslandMaterial = Physijs.createMaterial(this.groundMaterial, 0, 0);
+
             this.bigIsland = new Physijs.ConvexMesh(this.bigIslandGeometry, this.bigIslandMaterial, 0);
-            this.bigIsland.position.set(0, 0, -26);
+            this.bigIsland.position.set(0, 0, -83);
             this.bigIsland.receiveShadow = true;
             this.bigIsland.name = "BigIsland";
             this.add(this.bigIsland);
             console.log("Added BigIsland to scene");
-            // Small Island 1
-            this.smallIslandGeometry = new BoxGeometry(10, 1, 10);
-            this.smallIslandMaterial = Physijs.createMaterial(this.groundMaterial, 0, 0);
-            this.smallIsland = new Physijs.ConvexMesh(this.smallIslandGeometry, this.smallIslandMaterial, 0);
-            this.smallIsland.position.set(-11, 0, -38);
-            this.smallIsland.receiveShadow = true;
-            this.smallIsland.name = "SmallIsland";
-            this.add(this.smallIsland);
-            console.log("Added SmallIsland to scene");
-            //Small Island 2
-            this.smallIslandGeometry = new BoxGeometry(10, 1, 10);
-            this.smallIslandMaterial = Physijs.createMaterial(this.groundMaterial, 0, 0);
-            this.smallIsland = new Physijs.ConvexMesh(this.smallIslandGeometry, this.smallIslandMaterial, 0);
-            this.smallIsland.position.set(-1, 0, -48);
-            this.smallIsland.receiveShadow = true;
-            this.smallIsland.name = "SmallIsland";
-            this.add(this.smallIsland);
-            console.log("Added SmallIsland to scene");
-            console.log("Finished setting up Level...");
-            //Small Island 3
-            this.smallIslandGeometry = new BoxGeometry(10, 1, 10);
-            this.smallIslandMaterial = Physijs.createMaterial(this.groundMaterial, 0, 0);
-            this.smallIsland = new Physijs.ConvexMesh(this.smallIslandGeometry, this.smallIslandMaterial, 0);
-            this.smallIsland.position.set(9, 0, -58);
-            this.smallIsland.receiveShadow = true;
-            this.smallIsland.name = "SmallIsland";
-            this.add(this.smallIsland);
-            console.log("Added SmallIsland to scene");
-            // Safe Board
-            this.boardGeometry = new BoxGeometry(32, 1, 10);
+
+            this.bigIsland = new Physijs.ConvexMesh(new BoxGeometry(32, 1, 40), this.bigIslandMaterial, 0);
+            this.bigIsland.position.set(0, 0, -30);
+            this.bigIsland.receiveShadow = true;
+            this.bigIsland.name = "EnemyBoard";
+            this.add(this.bigIsland);
+            console.log("Added EnemyBoard to scene");
+
+
+            // movingBoard            
+            this.movingboardGeometry1 = new BoxGeometry(10, 1, 5);
+            this.movingboardMaterial1 = Physijs.createMaterial(this.groundMaterial, 0, 0);
+            this.movingboard1 = new Physijs.ConvexMesh(this.movingboardGeometry1, this.movingboardMaterial1, 0);
+            this.movingboard1.position.set(-11, 0, -99);
+            this.movingboard1.receiveShadow = true;
+            this.movingboard1.name = "MovingBoard";
+            this.add(this.movingboard1);
+            console.log("Added Board to scene");
+
+            // Board
+            this.boardGeometry = new BoxGeometry(32, 1, 6);
             this.boardMaterial = Physijs.createMaterial(this.groundMaterial, 0, 0);
             this.board = new Physijs.ConvexMesh(this.boardGeometry, this.boardMaterial, 0);
-            this.board.position.set(0, 0, -70);
+            this.board.position.set(0, 0, -107);
             this.board.receiveShadow = true;
             this.board.name = "Board";
             this.add(this.board);
             console.log("Added Board to scene");
-            // Small Island 
-            this.smallIslandGeometry = new BoxGeometry(10, 1, 10);
-            this.smallIslandMaterial = Physijs.createMaterial(this.groundMaterial, 0, 0);
-            this.smallIsland = new Physijs.ConvexMesh(this.smallIslandGeometry, this.smallIslandMaterial, 0);
-            this.smallIsland.position.set(-1, 0, -82);
-            this.smallIsland.receiveShadow = true;
-            this.smallIsland.name = "SmallIsland";
-            this.add(this.smallIsland);
-            console.log("Added SmallIsland to scene");
-            // Safe Board
-            this.boardGeometry = new BoxGeometry(32, 1, 10);
-            this.boardMaterial = Physijs.createMaterial(this.groundMaterial, 0, 0);
+
+            //spinningboard
+            this.spinningboardGeometry = new BoxGeometry(10, 1, 21);
+            this.spinningboardMaterial = Physijs.createMaterial(this.groundMaterial, 0, 0);
+            this.spinningboard = new Physijs.ConvexMesh(this.spinningboardGeometry, this.spinningboardMaterial, 0);
+            this.spinningboard.position.set(0, 0, -125);
+            this.spinningboard.receiveShadow = true;
+            this.spinningboard.name = "SpinningBoard";
+            this.add(this.spinningboard);
+            console.log("Added BigIsland to scene");
+
+            // Board
             this.board = new Physijs.ConvexMesh(this.boardGeometry, this.boardMaterial, 0);
-            this.board.position.set(-1, 0, -94);
+            this.board.position.set(0, 0, -141);
             this.board.receiveShadow = true;
             this.board.name = "Board";
             this.add(this.board);
             console.log("Added Board to scene");
-            // Long Board
-            this.boardGeometry = new BoxGeometry(6, 1, 32);
-            this.boardMaterial = Physijs.createMaterial(this.groundMaterial, 0, 0);
-            this.board = new Physijs.ConvexMesh(this.boardGeometry, this.boardMaterial, 0);
-            this.board.position.set(-1, 0, -118);
-            this.board.receiveShadow = true;
-            this.board.name = "Board";
-            this.add(this.board);
+
+            // moving board
+            this.movingboard2 = new Physijs.ConvexMesh(this.movingboardGeometry1, this.movingboardMaterial1, 0);
+            this.movingboard2.position.set(0, 0, -148);
+            this.movingboard2.receiveShadow = true;
+            this.movingboard2.name = "Board";
+            this.add(this.movingboard2);
             console.log("Added Board to scene");
-            // Safe Board
-            this.boardGeometry = new BoxGeometry(32, 1, 16);
-            this.boardMaterial = Physijs.createMaterial(this.groundMaterial, 0, 0);
-            this.board = new Physijs.ConvexMesh(this.boardGeometry, this.boardMaterial, 0);
-            this.board.position.set(-1, 0, -145);
-            this.board.receiveShadow = true;
-            this.board.name = "Board";
-            this.add(this.board);
+
+
+            this.movingboard3 = new Physijs.ConvexMesh(this.movingboardGeometry1, this.movingboardMaterial1, 0);
+            this.movingboard3.position.set(0, 0, -56);
+            this.movingboard3.receiveShadow = true;
+            this.movingboard3.name = "Board";
+            this.add(this.movingboard3);
             console.log("Added Board to scene");
-            //Island 1
-            this.smallIslandGeometry = new BoxGeometry(10, 1, 10);
-            this.smallIslandMaterial = Physijs.createMaterial(this.groundMaterial, 0, 0);
-            this.smallIsland = new Physijs.ConvexMesh(this.smallIslandGeometry, this.smallIslandMaterial, 0);
-            this.smallIsland.position.set(-11, 0, -158);
-            this.smallIsland.receiveShadow = true;
-            this.smallIsland.name = "SmallIsland";
-            this.add(this.smallIsland);
-            console.log("Added SmallIsland to scene");
-            //Island 2
-            this.smallIslandGeometry = new BoxGeometry(10, 1, 10);
-            this.smallIslandMaterial = Physijs.createMaterial(this.groundMaterial, 0, 0);
-            this.smallIsland = new Physijs.ConvexMesh(this.smallIslandGeometry, this.smallIslandMaterial, 0);
-            this.smallIsland.position.set(-1, 0, -170);
-            this.smallIsland.receiveShadow = true;
-            this.smallIsland.name = "SmallIsland";
-            this.add(this.smallIsland);
-            console.log("Added SmallIsland to scene");
-            //Island 3
-            this.smallIslandGeometry = new BoxGeometry(10, 1, 10);
-            this.smallIslandMaterial = Physijs.createMaterial(this.groundMaterial, 0, 0);
-            this.smallIsland = new Physijs.ConvexMesh(this.smallIslandGeometry, this.smallIslandMaterial, 0);
-            this.smallIsland.position.set(-11, 0, -182);
-            this.smallIsland.receiveShadow = true;
-            this.smallIsland.name = "SmallIsland";
-            this.add(this.smallIsland);
-            console.log("Added SmallIsland to scene");
-            console.log("Finished setting up Level...");
+
+
             // Finish Line Island
             this.bigIslandGeometry = new BoxGeometry(32, 1, 20);
             this.bigIslandMaterial = Physijs.createMaterial(this.groundMaterial, 0, 0);
             this.bigIsland = new Physijs.ConvexMesh(this.bigIslandGeometry, this.bigIslandMaterial, 0);
-            this.bigIsland.position.set(0, 0, -199);
+            this.bigIsland.position.set(0, 0, -173);
             this.bigIsland.receiveShadow = true;
             this.bigIsland.name = "BigIsland";
             this.add(this.bigIsland);
             console.log("Added BigIsland to scene");
+
             //Door to success
             this.bigIslandGeometry = new BoxGeometry(32, 20, 1);
             this.bigIslandMaterial = Physijs.createMaterial(this.doorMaterial, 0, 0);
             this.bigIsland = new Physijs.ConvexMesh(this.bigIslandGeometry, this.bigIslandMaterial, 0);
-            this.bigIsland.position.set(0, 10, -199);
+            this.bigIsland.position.set(0, 10, -183);
             this.bigIsland.receiveShadow = true;
             this.bigIsland.name = "Door";
             this.add(this.bigIsland);
             console.log("Added BigIsland to scene");
-        };
+
+        }
+
         /**
          * Adds the player controller to the scene
-         *
+         * 
          * @method addPlayer
          * @return void
          */
-        Play.prototype.addPlayer = function () {
+        private addPlayer(): void {
             // Player Object
             this.playerGeometry = new BoxGeometry(2, 4, 2);
             this.playerMaterial = Physijs.createMaterial(new LambertMaterial({ color: 0x00ff00 }), 0.4, 0);
+
             this.player = new Physijs.BoxMesh(this.playerGeometry, this.playerMaterial, 1);
             this.player.position.set(0, 30, 10);
             this.player.receiveShadow = true;
@@ -302,85 +378,116 @@ var scenes;
             this.player.name = "Player";
             this.add(this.player);
             console.log("Added Player to Scene");
-        };
+        }
+
         /**
          * Add the death plane to the scene
-         *
+         * 
          * @method addDeathPlane
          * @return void
          */
-        Play.prototype.addDeathPlane = function () {
+        private addDeathPlane(): void {
             this.deathPlaneGeometry = new BoxGeometry(100, 1, -720);
             this.deathPlaneMaterial = Physijs.createMaterial(new MeshBasicMaterial({ color: 0xADD8E6 }), 0.4, 0.6);
+
             this.deathPlane = new Physijs.BoxMesh(this.deathPlaneGeometry, this.deathPlaneMaterial, 0);
             this.deathPlane.position.set(0, -10, 0);
             this.deathPlane.name = "DeathPlane";
             this.add(this.deathPlane);
-        };
+        }
+        
+
+        /**
+          * This method adds a ghost to the scene
+          * 
+          * @method addGhostMesh
+          * @return void
+          */
+        private addGhostMesh(): void {
+
+            this.testGeometry = new BoxGeometry(2, 2, 2);
+            this.testMaterial = Physijs.createMaterial(this.groundMaterial, 0, 0);
+            this.test = new Physijs.ConvexMesh(this.testGeometry, this.bigIslandMaterial, 0);
+            this.test.position.set(0, 2, -30);
+            this.add(this.test);
+
+
+            console.log("Added Ghost Mesh to Scene");
+        }
+
+
         /**
          * This method adds a donut to the scene
-         *
+         * 
          * @method addDonutMesh
          * @return void
          */
-        Play.prototype.addDonutMesh = function () {
+        private addDonutMesh(): void {
             // Add the Donut mesh to the scene
             var self = this;
-            this.donuts = new Array(); // Instantiate a convex mesh array
-            var donutLoader = new THREE.JSONLoader().load("../../Assets/imported/donut.json", function (geometry, materials) {
+
+            this.donuts = new Array<Physijs.ConvexMesh>(); // Instantiate a convex mesh array
+
+
+            var donutLoader = new THREE.JSONLoader().load("../../Assets/imported/donut.json", function(geometry: THREE.Geometry, materials) {
                 //jem color    
                 var phongMaterial = new PhongMaterial({ color: 0xF21F88 });
                 phongMaterial.emissive = new THREE.Color(0xF21F88);
                 materials[0] = Physijs.createMaterial((phongMaterial), 0.4, 0.6);
+
                 //bun color    
                 var phongMaterial = new PhongMaterial({ color: 0x946931 });
                 phongMaterial.emissive = new THREE.Color(0x946931);
                 materials[1] = Physijs.createMaterial((phongMaterial), 0.4, 0.6);
-                for (var count = 0; count < self.donutCount; count++) {
+
+
+                for (var count: number = 0; count < self.donutCount; count++) {
                     self.donuts[count] = new Physijs.ConvexMesh(geometry, new THREE.MeshFaceMaterial(materials));
                     self.donuts[count].receiveShadow = true;
                     self.donuts[count].castShadow = true;
                     self.donuts[count].name = "Donut";
                     self.addDonutPosition(self.donuts[count], count);
+
                 }
             });
+
             console.log("Added Donut Mesh to Scene");
-        };
+        }
+
         /**
         * This method sets the donuts object's position
-        *
+        * 
         * @method addDonutPosition
         * @return void
         */
-        Play.prototype.addDonutPosition = function (donut, count) {
+        private addDonutPosition(donut: Physijs.ConvexMesh, count: number): void {
             if (count == 0) {
-                donut.position.set(0, 10, -10);
-            }
-            else if (count == 1) {
-                donut.position.set(-11, 10, -38);
-            }
-            else if (count == 2) {
-                donut.position.set(9, 10, -58);
-            }
-            else if (count == 3) {
-                donut.position.set(-1, 10, -170);
-            }
-            else {
-                donut.position.set(1, 10, -195);
+                donut.position.set(0, 10, -83);
+            } else if (count == 1) {
+                donut.position.set(-10, 10, -83);
+            } else if (count == 2) {
+                donut.position.set(10, 10, - 83);
+            } else if (count == 3) {
+                donut.position.set(5, 10, -170);
+            } else {
+                donut.position.set(-5, 10, -170);
             }
             this.add(donut);
-        };
+        }
         /**
          * This method adds the ugly donut controller to the scene
-         *
+         * 
          * @method addDonutMesh
          * @return void
          */
-        Play.prototype.addUglyDonutMesh = function () {
+        private addUglyDonutMesh(): void {
             // Add the Ugly Donut to the scene
             var self = this;
-            this.uglyDonuts = new Array(); // Instantiate a convex mesh array
-            var donutLoader2 = new THREE.JSONLoader().load("../../Assets/imported/donut.json", function (geometry, materials) {
+
+            this.uglyDonuts = new Array<Physijs.ConvexMesh>(); // Instantiate a convex mesh array
+
+            var donutLoader2 = new THREE.JSONLoader().load("../../Assets/imported/donut.json", function(geometry: THREE.Geometry, materials) {
+
                 //ugly donat gem
                 var phongMaterial = new PhongMaterial({ color: 0x0add08 });
                 phongMaterial.emissive = new THREE.Color(0x0add08);
@@ -389,7 +496,8 @@ var scenes;
                 var phongMaterial = new PhongMaterial({ color: 0x000000 });
                 phongMaterial.emissive = new THREE.Color(0x000000);
                 materials[1] = Physijs.createMaterial((phongMaterial), 0.4, 0.6);
-                for (var count = 0; count < self.donutCount - 2; count++) {
+
+                for (var count: number = 0; count < self.donutCount - 2; count++) {
                     self.uglyDonuts[count] = new Physijs.ConvexMesh(geometry, new THREE.MeshFaceMaterial(materials));
                     self.uglyDonuts[count].receiveShadow = true;
                     self.uglyDonuts[count].castShadow = true;
@@ -398,39 +506,83 @@ var scenes;
                 }
             });
             console.log("Added Donut Mesh to Scene");
-        };
+            
+        }
+
+
         /**
          * This method sets the ugly donuts object's position
-         *
+         * 
          * @method addUglyDonutPosition
          * @return void
          */
-        Play.prototype.addUglyDonutPosition = function (uglyDonut, count) {
+        private addUglyDonutPosition(uglyDonut: Physijs.ConvexMesh, count: number): void {
             if (count == 0) {
-                uglyDonut.position.set(0, 10, -30);
-            }
-            else if (count == 1) {
-                uglyDonut.position.set(-1, 10, -118);
-            }
-            else {
-                uglyDonut.position.set(-1, 10, -168);
+                uglyDonut.position.set(-5, 10, -83);
+            } else if (count == 1) {
+                uglyDonut.position.set(5, 10, -83);
+            } else {
+                uglyDonut.position.set(0, 10, -170);
             }
             this.add(uglyDonut);
-        };
+        }
+
+
+        /**
+         * This method randomly sets the donut object's position
+         * 
+         * @method setdonutPosition
+         * @return void
+         */
+        private setdonutPosition(donut: Physijs.ConvexMesh): void {
+            var randomPointX: number = Math.floor(Math.random() * 20) - 10;
+            var randomPointZ: number = Math.floor(Math.random() * 20) - 10;
+            donut.position.set(randomPointX, 10, randomPointZ);
+            this.add(donut);
+        }
+        
+        /////////////////////////////////////////////////////
+        private addCoinMesh(): void {
+            var self = this;
+
+            this.ghost = new Array<Physijs.ConvexMesh>(); // Instantiate a convex mesh array
+
+            var ghostLoader = new THREE.JSONLoader().load("../../Assets/imported/test.json", function(geometry: THREE.Geometry) {
+                var phongMaterial = new PhongMaterial({ color: 0xE7AB32 });
+                phongMaterial.emissive = new THREE.Color(0xE7AB32);
+
+                var coinMaterial = Physijs.createMaterial((phongMaterial), 0.4, 0.6);
+
+                for (var count: number = 0; count < 1; count++) {
+                    self.ghost[count] = new Physijs.ConvexMesh(geometry, coinMaterial);
+                    self.ghost[count].receiveShadow = true;
+                    self.ghost[count].castShadow = true;
+                    self.ghost[count].name = "Coin";
+                    self.setCoinPosition(self.ghost[count]);
+                    console.log("Added Coin Mesh to Scene, at position: " + self.ghost[count].position);
+                }
+            });
+        }
+        
+        private setCoinPosition(coin: Physijs.ConvexMesh): void {
+            coin.position.set(0, 2, -30);
+            this.add(coin);
+        }
+
+
         /**
          * Event Handler method for any pointerLockChange events
-         *
+         * 
          * @method pointerLockChange
          * @return void
          */
-        Play.prototype.pointerLockChange = function (event) {
+        pointerLockChange(event): void {
             if (document.pointerLockElement === this.element) {
                 // enable our mouse and keyboard controls
                 this.keyboardControls.enabled = true;
                 this.mouseControls.enabled = true;
                 this.blocker.style.display = 'none';
-            }
-            else {
+            } else {
                 if (this.livesValue <= 0) {
                     this.blocker.style.display = 'none';
                     document.removeEventListener('pointerlockchange', this.pointerLockChange.bind(this), false);
@@ -439,8 +591,7 @@ var scenes;
                     document.removeEventListener('pointerlockerror', this.pointerLockError.bind(this), false);
                     document.removeEventListener('mozpointerlockerror', this.pointerLockError.bind(this), false);
                     document.removeEventListener('webkitpointerlockerror', this.pointerLockError.bind(this), false);
-                }
-                else {
+                } else {
                     this.blocker.style.display = '-webkit-box';
                     this.blocker.style.display = '-moz-box';
                     this.blocker.style.display = 'box';
@@ -451,29 +602,34 @@ var scenes;
                 this.mouseControls.enabled = false;
                 console.log("PointerLock disabled");
             }
-        };
+        }
+
         /**
          * Event handler for PointerLockError
-         *
+         * 
          * @method pointerLockError
          * @return void
          */
-        Play.prototype.pointerLockError = function (event) {
+        private pointerLockError(event): void {
             this.instructions.style.display = '';
             console.log("PointerLock Error Detected!!");
-        };
+        }
+
         // Check Controls Function
+
         /**
          * This method updates the player's position based on user input
-         *
+         * 
          * @method checkControls
          * @return void
          */
-        Play.prototype.checkControls = function () {
+        private checkControls(): void {
             if (this.keyboardControls.enabled) {
                 this.velocity = new Vector3();
-                var time = performance.now();
-                var delta = (time - this.prevTime) / 1000;
+
+                var time: number = performance.now();
+                var delta: number = (time - this.prevTime) / 1000;
+
                 if (this.isGrounded) {
                     var direction = new Vector3(0, 0, 0);
                     if (this.keyboardControls.moveForward) {
@@ -494,7 +650,9 @@ var scenes;
                             this.isGrounded = false;
                             createjs.Sound.play("jump");
                         }
+
                     }
+
                     this.player.setDamping(0.7, 0.1);
                     // Changing player's rotation
                     this.player.setAngularVelocity(new Vector3(0, this.mouseControls.yaw, 0));
@@ -503,47 +661,195 @@ var scenes;
                     if (Math.abs(this.player.getLinearVelocity().x) < 20 && Math.abs(this.player.getLinearVelocity().y) < 10) {
                         this.player.applyCentralForce(direction);
                     }
+
                     this.cameraLook();
+
                 } // isGrounded ends
+
                 //reset Pitch and Yaw
                 this.mouseControls.pitch = 0;
                 this.mouseControls.yaw = 0;
+
                 this.prevTime = time;
             } // Controls Enabled ends
             else {
                 this.player.setAngularVelocity(new Vector3(0, 0, 0));
             }
-        };
-        Play.prototype._unpauseSimulation = function () {
+        }
+
+        private _unpauseSimulation(): void {
             scene.onSimulationResume();
             console.log("resume simulation");
-        };
+        }
+
+        /**
+         * This method updates the moving ground's position 
+         * 
+         * @method movingGroundLTR
+         * @return void
+         */
+        private movingGroundLTR(): void {
+
+            this.movingboard1.__dirtyPosition = true;
+
+            if (this.xCoordinate >= 11) {
+                this.xFlag = true;
+            } else if (this.xCoordinate <= -11) {
+                this.xFlag = false;
+            }
+
+            if (this.xFlag) {
+                this.xCoordinate -= 0.05;
+            } else {
+                this.xCoordinate += 0.05;
+            }
+
+            this.movingboard1.position.set(this.xCoordinate, 0, -99);
+
+        }
+
+        /**
+         * This method updates the moving ground's position 
+         * 
+         * @method movingGroundBNF
+         * @return void
+         */
+        private movingGroundBNF(): void {
+
+            this.movingboard2.__dirtyPosition = true;
+
+            if (this.zCoordinate <= -148 && !this.zFlag) {
+                this.zCoordinate -= 0.05;
+
+                if (this.zCoordinate < -158) {
+                    this.zFlag = true;
+                }
+            } else {
+                this.zCoordinate += 0.05;
+                if (this.zCoordinate > -148) {
+                    this.zCoordinate = -148;
+                    this.zFlag = false;
+                }
+            }
+
+            this.movingboard2.position.set(0, 0, this.zCoordinate);
+
+        }
+
+        /**
+         * This method updates the moving ground's position 
+         * 
+         * @method movingGroundBNF2
+         * @return void
+         */
+        private movingGroundBNF2(): void {
+
+            this.movingboard3.__dirtyPosition = true;
+
+            if (this.zCoordinate2 <= -56 && !this.zFlag2) {
+                this.zCoordinate2 -= 0.05;
+
+                if (this.zCoordinate2 < -69) {
+                    this.zFlag2 = true;
+                }
+            } else {
+                this.zCoordinate2 += 0.05;
+                if (this.zCoordinate2 > -56) {
+                    this.zCoordinate2 = -56;
+                    this.zFlag2 = false;
+                }
+            }
+
+            this.movingboard3.position.set(0, 0, this.zCoordinate2);
+
+        }
+
+        /**
+         * This method updates the Ghost position 
+         * 
+         * @method followingPlayer
+         * @return void
+         */
+        private followingPlayer(): void {
+
+            var direction = new Vector3(0, 0, 0);
+            this.test.lookAt(this.player.position);
+            var rotation_matrix = new THREE.Matrix4();
+            rotation_matrix.makeRotationFromEuler(this.test.rotation);
+            this.test.rotation.setFromRotationMatrix(rotation_matrix);
+            this.test.__dirtyRotation = true;
+            this.test.__dirtyPosition = true;
+
+            rotation_matrix.makeRotationFromEuler(this.rotation);;
+            var velocity = this.test.getLinearVelocity();
+            velocity.z = this.test === this.player ? 8 : 2;
+            velocity.x = 0;
+            velocity.applyMatrix4(rotation_matrix);
+            this.test.setLinearVelocity(velocity);
+if(this.onGround){
+
+            if (this.test.position.z > -50 && this.test.position.z < -10) {
+                if (this.test.position.x > -16 && this.test.position.x < 16) {
+                    var distanceZ = this.player.position.z - this.test.position.z;
+                    var distanceX = this.player.position.x - this.test.position.x;
+                    var x, z;
+                    if (distanceZ > 0) {
+                        z = this.test.position.z + 0.05;
+
+                    } else {
+                        z = this.test.position.z - 0.05;
+                    }
+
+                    if (distanceX < 0) {
+                        x = this.test.position.x - 0.05;
+                    } else {
+                        x = this.test.position.x + 0.05;
+                    }
+                    this.test.position.set(x, 2, z);
+                }
+            }
+                    
+        }else {
+            this.test.position.set(0,2,-30);
+        }
+        }
+
+
         // PUBLIC METHODS +++++++++++++++++++++++++++++++++++++++++++
+
         /**
          * The start method is the main method for the scene class
-         *
+         * 
          * @method start
          * @return void
          */
-        Play.prototype.start = function () {
-            var _this = this;
+        public start(): void {
             // Set Up Scoreboard
             this.setupScoreboard();
+
             //check to see if pointerlock is supported
             this.havePointerLock = 'pointerLockElement' in document ||
                 'mozPointerLockElement' in document ||
                 'webkitPointerLockElement' in document;
+
+
+
             // Check to see if we have pointerLock
             if (this.havePointerLock) {
                 this.element = document.body;
-                this.instructions.addEventListener('click', function () {
+
+                this.instructions.addEventListener('click', () => {
+
                     // Ask the user for pointer lock
                     console.log("Requesting PointerLock");
-                    _this.element.requestPointerLock = _this.element.requestPointerLock ||
-                        _this.element.mozRequestPointerLock ||
-                        _this.element.webkitRequestPointerLock;
-                    _this.element.requestPointerLock();
+
+                    this.element.requestPointerLock = this.element.requestPointerLock ||
+                        this.element.mozRequestPointerLock ||
+                        this.element.webkitRequestPointerLock;
+
+                    this.element.requestPointerLock();
                 });
+
                 document.addEventListener('pointerlockchange', this.pointerLockChange.bind(this), false);
                 document.addEventListener('mozpointerlockchange', this.pointerLockChange.bind(this), false);
                 document.addEventListener('webkitpointerlockchange', this.pointerLockChange.bind(this), false);
@@ -551,38 +857,58 @@ var scenes;
                 document.addEventListener('mozpointerlockerror', this.pointerLockError.bind(this), false);
                 document.addEventListener('webkitpointerlockerror', this.pointerLockError.bind(this), false);
             }
+
             // Scene changes for Physijs
             this.name = "Main";
             this.fog = new THREE.Fog(0xffffff, 0, 750);
             this.setGravity(new THREE.Vector3(0, -10, 0));
+
             // start simulation
             /*
             this.addEventListener('update', this._simulateScene);
             console.log("Start Simulation"); */
+
             // Add Spot Light to the scene
             this.addDirectionalLight();
+
             // Level Load
             this.addLevel();
+
             // Add player controller
             this.addPlayer();
+
             // Add custom donut imported from Blender
+            this.addGhostMesh();
             this.addDonutMesh();
             this.addUglyDonutMesh();
+
+
+            this.addCoinMesh();
+
+            this.spinningboard.rotation.y = 0.5;
+
             // Add death plane to the scene
             this.addDeathPlane();
+
             // Collision Check
-            this.player.addEventListener('collision', function (eventObject) {
+            this.player.addEventListener('collision', function(eventObject) {
                 if (eventObject.name === "BigIsland") {
                     console.log("player hit the big island");
                     this.isGrounded = true;
+                    this.onGround = false;
+                    createjs.Sound.play("land");
                 }
                 if (eventObject.name === "Board") {
                     console.log("player hit the board");
                     this.isGrounded = true;
+                    this.onGround = false;
+                    createjs.Sound.play("land");
                 }
                 if (eventObject.name === "SmallIsland") {
                     console.log("player hit the board");
                     this.isGrounded = true;
+                    this.onGround = false;
+                    createjs.Sound.play("land");
                 }
                 if (eventObject.name === "Donut") {
                     createjs.Sound.play("bite");
@@ -595,11 +921,21 @@ var scenes;
                     this.livesValue--;
                     this.livesLabel.text = "LIVES: " + this.livesValue;
                     scene.remove(eventObject);
+
                 }
                 if (eventObject.name === "Door") {
-                    currentScene = config.Scene.LEVEL2;
+
+                    currentScene = config.Scene.OVER;
                     changeScene();
                 }
+                
+                if (eventObject.name === "EnemyBoard") {
+                    this.onGround = true;
+                    createjs.Sound.play("land");
+
+                }
+                
+
                 if (eventObject.name === "DeathPlane") {
                     createjs.Sound.play("hit");
                     this.livesValue--;
@@ -608,11 +944,11 @@ var scenes;
                         document.exitPointerLock();
                         this.children = []; // an attempt to clean up
                         this._isGamePaused = true;
+
                         // Play the Game Over Scene
                         currentScene = config.Scene.OVER;
                         changeScene();
-                    }
-                    else {
+                    } else {
                         // otherwise reset my player and update Lives
                         this.livesLabel.text = "LIVES: " + this.livesValue;
                         this.remove(this.player);
@@ -621,64 +957,85 @@ var scenes;
                     }
                 }
             }.bind(this));
+
             // create parent-child relationship with camera and player
             this.player.add(camera);
-            camera.position.set(0, 1, 0);
+            camera.position.set(0, 1.5, 0);
+            //camera.position.set(0, 20, -70);
+            //this.add(camera)
+
             this.simulate();
-        };
+        }
+
         /**
          * Camera Look function
-         *
+         * 
          * @method cameraLook
          * @return void
          */
-        Play.prototype.cameraLook = function () {
-            var zenith = THREE.Math.degToRad(90);
-            var nadir = THREE.Math.degToRad(-90);
-            var cameraPitch = camera.rotation.x + this.mouseControls.pitch;
+        private cameraLook(): void {
+            var zenith: number = THREE.Math.degToRad(90);
+            var nadir: number = THREE.Math.degToRad(-90);
+
+            var cameraPitch: number = camera.rotation.x + this.mouseControls.pitch;
+
             // Constrain the Camera Pitch
             camera.rotation.x = THREE.Math.clamp(cameraPitch, nadir, zenith);
-        };
+        }
+
+
         /**
          * @method update
          * @returns void
          */
-        Play.prototype.update = function () {
-            this.donuts.forEach(function (donut) {
+        public update(): void {
+
+            this.movingGroundLTR();
+            this.movingGroundBNF();
+            this.movingGroundBNF2();
+
+            this.followingPlayer();
+
+            this.spinningboard.rotation.y += this.yRotate;
+
+            if (this.spinningboard.rotation.y > this.yRotate) {
+                this.yRotation = this.spinningboard.rotation.y;
+            } else {
+                this.spinningboard.rotation.y = this.yRotation;
+            }
+
+            this.donuts.forEach(donut => {
                 donut.setAngularFactor(new Vector3(0, 0, 0));
                 donut.setAngularVelocity(new Vector3(0, 1, 0));
             });
-            this.donuts.forEach(function (donut) {
-                donut.setAngularFactor(new Vector3(0, 0, 0));
-                donut.setAngularVelocity(new Vector3(0, 1, 0));
-            });
-            this.uglyDonuts.forEach(function (uglyDonut) {
+
+            this.uglyDonuts.forEach(uglyDonut => {
                 uglyDonut.setAngularFactor(new Vector3(0, 0, 0));
                 uglyDonut.setAngularVelocity(new Vector3(0, 1, 0));
             });
+
             this.checkControls();
             this.stage.update();
+
             if (!this.keyboardControls.paused) {
                 this.simulate();
             }
-        };
+
+        }
+
         /**
          * Responds to screen resizes
-         *
+         * 
          * @method resize
          * @return void
          */
-        Play.prototype.resize = function () {
+        public resize(): void {
             canvas.style.width = "100%";
             this.livesLabel.x = config.Screen.WIDTH * 0.1;
             this.livesLabel.y = (config.Screen.HEIGHT * 0.15) * 0.20;
             this.scoreLabel.x = config.Screen.WIDTH * 0.8;
             this.scoreLabel.y = (config.Screen.HEIGHT * 0.15) * 0.20;
             this.stage.update();
-        };
-        return Play;
-    })(scenes.Scene);
-    scenes.Play = Play;
-})(scenes || (scenes = {}));
-
-//# sourceMappingURL=play.js.map
+        }
+    }
+}
