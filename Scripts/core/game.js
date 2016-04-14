@@ -76,7 +76,7 @@ function init() {
     // setup the camera
     setupCamera();
     // set initial scene
-    currentScene = config.Scene.MENU;
+    currentScene = config.Scene.LEVEL2;
     changeScene();
     // Add framerate stats
     addStatsObject();
@@ -152,6 +152,7 @@ function changeScene() {
             // show the game LEVEL2 scene
             level2 = new scenes.Level02();
             scene = level2;
+            renderer.setClearColor(0x302013, 1.0);
             console.log("Starting level02 Scene");
             break;
     }
