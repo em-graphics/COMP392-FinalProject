@@ -121,6 +121,12 @@ module scenes {
             this._infoButton.on("mouseover", (event: createjs.MouseEvent) => {
                 event.target.alpha = 0.7;
             });
+            
+            this._infoButton.on("click", (event: createjs.MouseEvent) => {
+                currentScene = config.Scene.LEVEL3;
+                changeScene();
+            });
+            
 
             this._infoButton.on("mouseout", (event: createjs.MouseEvent) => {
                 event.target.alpha = 1.0;

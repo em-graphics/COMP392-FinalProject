@@ -178,6 +178,8 @@ declare module Physijs {
         setDamping(linear:number, angular:number):void;
         setCcdMotionThreshold(threshold:number):void;
         setCcdSweptSphereRadius(radius:number):void;
+        __dirtyPosition : boolean;
+        __dirtyRotation : boolean;
 
 
         // Eventable mixins

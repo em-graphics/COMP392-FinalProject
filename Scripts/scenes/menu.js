@@ -99,6 +99,10 @@ var scenes;
             this._infoButton.on("mouseover", function (event) {
                 event.target.alpha = 0.7;
             });
+            this._infoButton.on("click", function (event) {
+                currentScene = config.Scene.LEVEL3;
+                changeScene();
+            });
             this._infoButton.on("mouseout", function (event) {
                 event.target.alpha = 1.0;
             });
@@ -132,7 +136,7 @@ var scenes;
             this._setupCanvas();
         };
         return Menu;
-    }(scenes.Scene));
+    })(scenes.Scene);
     scenes.Menu = Menu;
 })(scenes || (scenes = {}));
 

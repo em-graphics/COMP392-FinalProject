@@ -53,6 +53,7 @@ var play: scenes.Play;
 var menu: scenes.Menu;
 var over: scenes.Over;
 var level2: scenes.Level02;
+var level3: scenes.Level03;
 
 
 var stats: Stats;
@@ -188,6 +189,12 @@ function changeScene(): void {
             level2 = new scenes.Level02();
             scene = level2;
             console.log("Starting level02 Scene");
+            break;
+        case config.Scene.LEVEL3:
+            // show the PLAY scene
+            level3 = new scenes.Level03();
+            scene = level3;
+            console.log("Starting Level3 Scene");
             break;
     }
 }
