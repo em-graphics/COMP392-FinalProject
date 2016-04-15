@@ -385,23 +385,33 @@ var scenes;
         /////////////////////////////////////////////////////
         Level03.prototype.addCoinMesh = function () {
             var self = this;
-            this.ghost = new Array(); // Instantiate a convex mesh array
-            var ghostLoader = new THREE.JSONLoader().load("../../Assets/imported/test.json", function (geometry) {
-                var phongMaterial = new PhongMaterial({ color: 0xE7AB32 });
-                phongMaterial.emissive = new THREE.Color(0xE7AB32);
-                var coinMaterial = Physijs.createMaterial((phongMaterial), 0.4, 0.6);
-                for (var count = 0; count < 1; count++) {
-                    self.ghost[count] = new Physijs.ConvexMesh(geometry, coinMaterial);
-                    self.ghost[count].receiveShadow = true;
-                    self.ghost[count].castShadow = true;
-                    self.ghost[count].name = "Coin";
-                    self.setCoinPosition(self.ghost[count]);
-                    console.log("Added Coin Mesh to Scene, at position: " + self.ghost[count].position);
-                }
+            // this.ghost = new Array<Physijs.ConvexMesh>(); // Instantiate a convex mesh array
+            var ghostLoader = new THREE.JSONLoader().load("../../Assets/imported/ghost.json", function (geometry, materials) {
+                var phongMaterial = new PhongMaterial({ color: 0xff0000 });
+                phongMaterial.emissive = new THREE.Color(0xff0000);
+                materials[0] = Physijs.createMaterial((phongMaterial), 0.4, 0.6);
+                var phongMaterial = new PhongMaterial({ color: 0x000000 });
+                phongMaterial.emissive = new THREE.Color(0x000000);
+                materials[1] = Physijs.createMaterial((phongMaterial), 0.4, 0.6);
+                var phongMaterial = new PhongMaterial({ color: 0x420034 });
+                phongMaterial.emissive = new THREE.Color(0x420034);
+                materials[2] = Physijs.createMaterial((phongMaterial), 0.4, 0.6);
+                var phongMaterial = new PhongMaterial({ color: 0x000000 });
+                phongMaterial.emissive = new THREE.Color(0x000000);
+                materials[3] = Physijs.createMaterial((phongMaterial), 0.4, 0.6);
+                var phongMaterial = new PhongMaterial({ color: 0x420034 });
+                phongMaterial.emissive = new THREE.Color(0x420034);
+                materials[4] = Physijs.createMaterial((phongMaterial), 0.4, 0.6);
+                self.ghost = new Physijs.ConvexMesh(geometry, new THREE.MeshFaceMaterial(materials));
+                self.ghost.receiveShadow = true;
+                self.ghost.castShadow = true;
+                self.ghost.name = "Coin";
+                self.setCoinPosition(self.ghost);
             });
         };
         Level03.prototype.setCoinPosition = function (coin) {
-            coin.position.set(0, 2, -30);
+            coin.position.set(0, 2, -20);
+            console.log("coin.position.z :" + coin.position.z);
             this.add(coin);
         };
         /**
@@ -668,10 +678,10 @@ var scenes;
             // Add player controller
             this.addPlayer();
             // Add custom donut imported from Blender
+            this.addCoinMesh();
             this.addGhostMesh();
             this.addDonutMesh();
             this.addUglyDonutMesh();
-            this.addCoinMesh();
             this.spinningboard.rotation.y = 0.5;
             // Add death plane to the scene
             this.addDeathPlane();

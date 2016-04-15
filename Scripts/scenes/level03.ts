@@ -105,7 +105,7 @@ module scenes {
         private yRotate: number = 0.03;
 
         
-        private ghost: Physijs.ConcaveMesh[];
+        private ghost: Physijs.ConvexMesh;
 
         private test: Physijs.Mesh;
         private testGeometry: CubeGeometry;
@@ -503,6 +503,7 @@ module scenes {
                     self.uglyDonuts[count].castShadow = true;
                     self.uglyDonuts[count].name = "UglyDonut";
                     self.addUglyDonutPosition(self.uglyDonuts[count], count);
+                    
                 }
             });
             console.log("Added Donut Mesh to Scene");
@@ -545,27 +546,38 @@ module scenes {
         private addCoinMesh(): void {
             var self = this;
 
-            this.ghost = new Array<Physijs.ConvexMesh>(); // Instantiate a convex mesh array
+           // this.ghost = new Array<Physijs.ConvexMesh>(); // Instantiate a convex mesh array
 
-            var ghostLoader = new THREE.JSONLoader().load("../../Assets/imported/test.json", function(geometry: THREE.Geometry) {
-                var phongMaterial = new PhongMaterial({ color: 0xE7AB32 });
-                phongMaterial.emissive = new THREE.Color(0xE7AB32);
+            var ghostLoader = new THREE.JSONLoader().load("../../Assets/imported/ghoust.json", function(geometry: THREE.Geometry, materials) {
 
-                var coinMaterial = Physijs.createMaterial((phongMaterial), 0.4, 0.6);
 
-                for (var count: number = 0; count < 1; count++) {
-                    self.ghost[count] = new Physijs.ConvexMesh(geometry, coinMaterial);
-                    self.ghost[count].receiveShadow = true;
-                    self.ghost[count].castShadow = true;
-                    self.ghost[count].name = "Coin";
-                    self.setCoinPosition(self.ghost[count]);
-                    console.log("Added Coin Mesh to Scene, at position: " + self.ghost[count].position);
-                }
+                var phongMaterial = new PhongMaterial({ color: 0xff0000 });
+                phongMaterial.emissive = new THREE.Color(0xff0000);
+                materials[0] = Physijs.createMaterial((phongMaterial), 0.4, 0.6);
+
+                var phongMaterial = new PhongMaterial({ color: 0x000000 });
+                phongMaterial.emissive = new THREE.Color(0x000000);
+                materials[1] = Physijs.createMaterial((phongMaterial), 0.4, 0.6);
+
+                var phongMaterial = new PhongMaterial({ color: 0x420034 });
+                phongMaterial.emissive = new THREE.Color(0x420034);
+                materials[2] = Physijs.createMaterial((phongMaterial), 0.4, 0.6);
+                
+               
+
+                    self.ghost = new Physijs.ConvexMesh(geometry, new THREE.MeshFaceMaterial(materials));
+                    self.ghost.receiveShadow = true;
+                    self.ghost.castShadow = true;
+                    self.ghost.name = "Coin";
+                    self.setCoinPosition(self.ghost);
+                    
+                
             });
         }
         
         private setCoinPosition(coin: Physijs.ConvexMesh): void {
-            coin.position.set(0, 2, -30);
+            coin.position.set(0, 2, -20);
+            console.log("coin.position.z :"+coin.position.z);
             this.add(coin);
         }
 
@@ -794,16 +806,16 @@ if(this.onGround){
                     var distanceX = this.player.position.x - this.test.position.x;
                     var x, z;
                     if (distanceZ > 0) {
-                        z = this.test.position.z + 0.05;
+                        z = this.test.position.z + 0.01;
 
                     } else {
-                        z = this.test.position.z - 0.05;
+                        z = this.test.position.z - 0.01;
                     }
 
                     if (distanceX < 0) {
-                        x = this.test.position.x - 0.05;
+                        x = this.test.position.x - 0.01;
                     } else {
-                        x = this.test.position.x + 0.05;
+                        x = this.test.position.x + 0.01;
                     }
                     this.test.position.set(x, 2, z);
                 }
@@ -878,12 +890,10 @@ if(this.onGround){
             this.addPlayer();
 
             // Add custom donut imported from Blender
+            this.addCoinMesh();
             this.addGhostMesh();
             this.addDonutMesh();
             this.addUglyDonutMesh();
-
-
-            this.addCoinMesh();
 
             this.spinningboard.rotation.y = 0.5;
 
