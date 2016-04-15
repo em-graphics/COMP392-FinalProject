@@ -97,21 +97,21 @@ module scenes {
         private xFlag: boolean;
         private zFlag: boolean;
         private zFlag2: boolean;
-        private onGround:boolean;
+        private onGround: boolean;
         private yRotation: number;
         private xCoordinate: number = -11;
         private zCoordinate: number = -158;
         private zCoordinate2: number = -56;
         private yRotate: number = 0.03;
 
-        
-        private ghost: Physijs.ConvexMesh;
+
+        private ghost: Physijs.ConcaveMesh[];
 
         private test: Physijs.Mesh;
         private testGeometry: CubeGeometry;
         private testMaterial: Physijs.Material;
 
- 
+
 
         /**
          * @constructor
@@ -395,7 +395,7 @@ module scenes {
             this.deathPlane.name = "DeathPlane";
             this.add(this.deathPlane);
         }
-        
+
 
         /**
           * This method adds a ghost to the scene
@@ -405,11 +405,38 @@ module scenes {
           */
         private addGhostMesh(): void {
 
-            this.testGeometry = new BoxGeometry(2, 2, 2);
-            this.testMaterial = Physijs.createMaterial(this.groundMaterial, 0, 0);
-            this.test = new Physijs.ConvexMesh(this.testGeometry, this.bigIslandMaterial, 0);
-            this.test.position.set(0, 2, -30);
-            this.add(this.test);
+            var self = this;
+
+            this.ghost = new Array<Physijs.ConvexMesh>(); // Instantiate a convex mesh array
+
+            var ghostLoader = new THREE.JSONLoader().load("../../Assets/imported/ghoust.json", function (geometry: THREE.Geometry, materials) {
+
+
+                var phongMaterial = new PhongMaterial({ color: 0xffffff });
+                phongMaterial.emissive = new THREE.Color(0xffffff);
+                materials[0] = Physijs.createMaterial((phongMaterial), 0.4, 0.6);
+
+                var phongMaterial = new PhongMaterial({ color: 0x990000 });
+                phongMaterial.emissive = new THREE.Color(0x990000);
+                materials[1] = Physijs.createMaterial((phongMaterial), 0.4, 0.6);
+
+                var phongMaterial = new PhongMaterial({ color: 0x000000 });
+                phongMaterial.emissive = new THREE.Color(0x000000);
+                materials[2] = Physijs.createMaterial((phongMaterial), 0.4, 0.6);
+
+                var phongMaterial = new PhongMaterial({ color: 0xffffff });
+                phongMaterial.emissive = new THREE.Color(0xffffff);
+                materials[3] = Physijs.createMaterial((phongMaterial), 0.4, 0.6);
+
+
+                for (var count: number = 0; count < 1; count++) {
+                    self.ghost[count] = new Physijs.ConvexMesh(geometry, new THREE.MeshFaceMaterial(materials), 0);
+                    self.ghost[count].receiveShadow = true;
+                    self.ghost[count].castShadow = true;
+                    self.ghost[count].name = "Ghost";
+                    self.setGhostPosition(self.ghost[count]);
+                }
+            });
 
 
             console.log("Added Ghost Mesh to Scene");
@@ -429,7 +456,7 @@ module scenes {
             this.donuts = new Array<Physijs.ConvexMesh>(); // Instantiate a convex mesh array
 
 
-            var donutLoader = new THREE.JSONLoader().load("../../Assets/imported/donut.json", function(geometry: THREE.Geometry, materials) {
+            var donutLoader = new THREE.JSONLoader().load("../../Assets/imported/donut.json", function (geometry: THREE.Geometry, materials) {
                 //jem color    
                 var phongMaterial = new PhongMaterial({ color: 0xF21F88 });
                 phongMaterial.emissive = new THREE.Color(0xF21F88);
@@ -486,7 +513,7 @@ module scenes {
 
             this.uglyDonuts = new Array<Physijs.ConvexMesh>(); // Instantiate a convex mesh array
 
-            var donutLoader2 = new THREE.JSONLoader().load("../../Assets/imported/donut.json", function(geometry: THREE.Geometry, materials) {
+            var donutLoader2 = new THREE.JSONLoader().load("../../Assets/imported/donut.json", function (geometry: THREE.Geometry, materials) {
 
                 //ugly donat gem
                 var phongMaterial = new PhongMaterial({ color: 0x0add08 });
@@ -503,11 +530,11 @@ module scenes {
                     self.uglyDonuts[count].castShadow = true;
                     self.uglyDonuts[count].name = "UglyDonut";
                     self.addUglyDonutPosition(self.uglyDonuts[count], count);
-                    
+
                 }
             });
             console.log("Added Donut Mesh to Scene");
-            
+
         }
 
 
@@ -541,48 +568,18 @@ module scenes {
             donut.position.set(randomPointX, 10, randomPointZ);
             this.add(donut);
         }
-        
-        /////////////////////////////////////////////////////
-        private addCoinMesh(): void {
-            var self = this;
-
-           // this.ghost = new Array<Physijs.ConvexMesh>(); // Instantiate a convex mesh array
-
-            var ghostLoader = new THREE.JSONLoader().load("../../Assets/imported/ghoust.json", function(geometry: THREE.Geometry, materials) {
 
 
-                var phongMaterial = new PhongMaterial({ color: 0xffffff });
-                phongMaterial.emissive = new THREE.Color(0xffffff);
-                materials[0] = Physijs.createMaterial((phongMaterial), 0.4, 0.6);
+        /**
+         * This method the ghost object position
+         * 
+         * @method setGhostPosition
+         * @return void
+         */
+        private setGhostPosition(ghostMesh: Physijs.ConvexMesh): void {
+            ghostMesh.position.set(0, 2, -30);
 
-                var phongMaterial = new PhongMaterial({ color: 0x990000 });
-                phongMaterial.emissive = new THREE.Color(0x990000);
-                materials[1] = Physijs.createMaterial((phongMaterial), 0.4, 0.6);
-                    
-                var phongMaterial = new PhongMaterial({ color: 0x000000 });
-                phongMaterial.emissive = new THREE.Color(0x000000);
-                materials[2] = Physijs.createMaterial((phongMaterial), 0.4, 0.6);
-                
-                var phongMaterial = new PhongMaterial({ color: 0xffffff });
-                phongMaterial.emissive = new THREE.Color(0xffffff);
-                materials[3] = Physijs.createMaterial((phongMaterial), 0.4, 0.6);
-                
-               
-
-                    self.ghost = new Physijs.ConvexMesh(geometry, new THREE.MeshFaceMaterial(materials));
-                    self.ghost.receiveShadow = true;
-                    self.ghost.castShadow = true;
-                    self.ghost.name = "Coin";
-                    self.setCoinPosition(self.ghost);
-                    
-                
-            });
-        }
-        
-        private setCoinPosition(coin: Physijs.ConvexMesh): void {
-            coin.position.set(0, 2, -20);
-            console.log("coin.position.z :"+coin.position.z);
-            this.add(coin);
+            this.add(ghostMesh);
         }
 
 
@@ -780,55 +777,6 @@ module scenes {
 
         }
 
-        /**
-         * This method updates the Ghost position 
-         * 
-         * @method followingPlayer
-         * @return void
-         */
-        private followingPlayer(): void {
-
-            var direction = new Vector3(0, 0, 0);
-            this.test.lookAt(this.player.position);
-            var rotation_matrix = new THREE.Matrix4();
-            rotation_matrix.makeRotationFromEuler(this.test.rotation);
-            this.test.rotation.setFromRotationMatrix(rotation_matrix);
-            this.test.__dirtyRotation = true;
-            this.test.__dirtyPosition = true;
-
-            rotation_matrix.makeRotationFromEuler(this.rotation);;
-            var velocity = this.test.getLinearVelocity();
-            velocity.z = this.test === this.player ? 8 : 2;
-            velocity.x = 0;
-            velocity.applyMatrix4(rotation_matrix);
-            this.test.setLinearVelocity(velocity);
-if(this.onGround){
-
-            if (this.test.position.z > -50 && this.test.position.z < -10) {
-                if (this.test.position.x > -16 && this.test.position.x < 16) {
-                    var distanceZ = this.player.position.z - this.test.position.z;
-                    var distanceX = this.player.position.x - this.test.position.x;
-                    var x, z;
-                    if (distanceZ > 0) {
-                        z = this.test.position.z + 0.01;
-
-                    } else {
-                        z = this.test.position.z - 0.01;
-                    }
-
-                    if (distanceX < 0) {
-                        x = this.test.position.x - 0.01;
-                    } else {
-                        x = this.test.position.x + 0.01;
-                    }
-                    this.test.position.set(x, 2, z);
-                }
-            }
-                    
-        }else {
-            this.test.position.set(0,2,-30);
-        }
-        }
 
 
         // PUBLIC METHODS +++++++++++++++++++++++++++++++++++++++++++
@@ -893,8 +841,7 @@ if(this.onGround){
             // Add player controller
             this.addPlayer();
 
-            // Add custom donut imported from Blender
-            this.addCoinMesh();
+            // Add custom donut imported from Blender            
             this.addGhostMesh();
             this.addDonutMesh();
             this.addUglyDonutMesh();
@@ -905,7 +852,7 @@ if(this.onGround){
             this.addDeathPlane();
 
             // Collision Check
-            this.player.addEventListener('collision', function(eventObject) {
+            this.player.addEventListener('collision', function (eventObject) {
                 if (eventObject.name === "BigIsland") {
                     console.log("player hit the big island");
                     this.isGrounded = true;
@@ -930,6 +877,12 @@ if(this.onGround){
                     this.scoreValue += 100;
                     this.scoreLabel.text = "SCORE: " + this.scoreValue;
                 }
+                if (eventObject.name === "Ghost") {
+                    // createjs.Sound.play("bite");
+                    // scene.remove(eventObject);
+                    this.livesValue--;
+
+                }
                 if (eventObject.name === "UglyDonut") {
                     createjs.Sound.play("bite");
                     this.livesValue--;
@@ -942,13 +895,12 @@ if(this.onGround){
                     currentScene = config.Scene.OVER;
                     changeScene();
                 }
-                
+
                 if (eventObject.name === "EnemyBoard") {
                     this.onGround = true;
                     createjs.Sound.play("land");
-
                 }
-                
+
 
                 if (eventObject.name === "DeathPlane") {
                     createjs.Sound.play("hit");
@@ -975,7 +927,7 @@ if(this.onGround){
             // create parent-child relationship with camera and player
             this.player.add(camera);
             camera.position.set(0, 1.5, 0);
-            //camera.position.set(0, 20, -70);
+            //camera.position.set(0, 3, 0);
             //this.add(camera)
 
             this.simulate();
@@ -1008,8 +960,6 @@ if(this.onGround){
             this.movingGroundBNF();
             this.movingGroundBNF2();
 
-            this.followingPlayer();
-
             this.spinningboard.rotation.y += this.yRotate;
 
             if (this.spinningboard.rotation.y > this.yRotate) {
@@ -1017,6 +967,7 @@ if(this.onGround){
             } else {
                 this.spinningboard.rotation.y = this.yRotation;
             }
+
 
             this.donuts.forEach(donut => {
                 donut.setAngularFactor(new Vector3(0, 0, 0));
@@ -1028,7 +979,59 @@ if(this.onGround){
                 uglyDonut.setAngularVelocity(new Vector3(0, 1, 0));
             });
 
+            this.ghost.forEach(ghostMesh => {
+
+                var direction = new Vector3(0, 0, 0);
+                ghostMesh.lookAt(this.player.position);
+                var rotation_matrix = new THREE.Matrix4();
+                rotation_matrix.makeRotationFromEuler(ghostMesh.rotation);
+                ghostMesh.rotation.setFromRotationMatrix(rotation_matrix);
+                ghostMesh.__dirtyRotation = true;
+                ghostMesh.__dirtyPosition = true;
+
+
+                rotation_matrix.makeRotationFromEuler(this.rotation);;
+                var velocity = ghostMesh.getLinearVelocity();
+                velocity.z = ghostMesh === this.player ? 8 : 2;
+                velocity.x = 0;
+                velocity.applyMatrix4(rotation_matrix);
+                ghostMesh.setLinearVelocity(velocity);
+
+
+
+                if (this.onGround) {
+
+                    if (ghostMesh.position.z > -50 && ghostMesh.position.z < -10) {
+                        if (ghostMesh.position.x > -16 && ghostMesh.position.x < 16) {
+                            var distanceZ = this.player.position.z - ghostMesh.position.z;
+                            var distanceX = this.player.position.x - ghostMesh.position.x;
+                            var x, z;
+                            if (distanceZ > 0) {
+                                z = ghostMesh.position.z + 0.01;
+
+                            } else {
+                                z = ghostMesh.position.z - 0.01;
+                            }
+
+                            if (distanceX < 0) {
+                                x = ghostMesh.position.x - 0.01;
+                            } else {
+                                x = ghostMesh.position.x + 0.01;
+                            }
+
+                            ghostMesh.position.set(x, 2, z);
+                        }
+                    }
+
+                } else {
+                    ghostMesh.position.set(0, 2, -30);
+                }
+
+
+            });
+
             this.checkControls();
+
             this.stage.update();
 
             if (!this.keyboardControls.paused) {

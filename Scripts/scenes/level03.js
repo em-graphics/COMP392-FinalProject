@@ -263,11 +263,29 @@ var scenes;
           * @return void
           */
         Level03.prototype.addGhostMesh = function () {
-            this.testGeometry = new BoxGeometry(2, 2, 2);
-            this.testMaterial = Physijs.createMaterial(this.groundMaterial, 0, 0);
-            this.test = new Physijs.ConvexMesh(this.testGeometry, this.bigIslandMaterial, 0);
-            this.test.position.set(0, 2, -30);
-            this.add(this.test);
+            var self = this;
+            this.ghost = new Array(); // Instantiate a convex mesh array
+            var ghostLoader = new THREE.JSONLoader().load("../../Assets/imported/ghoust.json", function (geometry, materials) {
+                var phongMaterial = new PhongMaterial({ color: 0xffffff });
+                phongMaterial.emissive = new THREE.Color(0xffffff);
+                materials[0] = Physijs.createMaterial((phongMaterial), 0.4, 0.6);
+                var phongMaterial = new PhongMaterial({ color: 0x990000 });
+                phongMaterial.emissive = new THREE.Color(0x990000);
+                materials[1] = Physijs.createMaterial((phongMaterial), 0.4, 0.6);
+                var phongMaterial = new PhongMaterial({ color: 0x000000 });
+                phongMaterial.emissive = new THREE.Color(0x000000);
+                materials[2] = Physijs.createMaterial((phongMaterial), 0.4, 0.6);
+                var phongMaterial = new PhongMaterial({ color: 0xffffff });
+                phongMaterial.emissive = new THREE.Color(0xffffff);
+                materials[3] = Physijs.createMaterial((phongMaterial), 0.4, 0.6);
+                for (var count = 0; count < 1; count++) {
+                    self.ghost[count] = new Physijs.ConvexMesh(geometry, new THREE.MeshFaceMaterial(materials), 0);
+                    self.ghost[count].receiveShadow = true;
+                    self.ghost[count].castShadow = true;
+                    self.ghost[count].name = "Ghost";
+                    self.setGhostPosition(self.ghost[count]);
+                }
+            });
             console.log("Added Ghost Mesh to Scene");
         };
         /**
@@ -382,34 +400,15 @@ var scenes;
             donut.position.set(randomPointX, 10, randomPointZ);
             this.add(donut);
         };
-        /////////////////////////////////////////////////////
-        Level03.prototype.addCoinMesh = function () {
-            var self = this;
-            // this.ghost = new Array<Physijs.ConvexMesh>(); // Instantiate a convex mesh array
-            var ghostLoader = new THREE.JSONLoader().load("../../Assets/imported/ghoust.json", function (geometry, materials) {
-                var phongMaterial = new PhongMaterial({ color: 0xffffff });
-                phongMaterial.emissive = new THREE.Color(0xffffff);
-                materials[0] = Physijs.createMaterial((phongMaterial), 0.4, 0.6);
-                var phongMaterial = new PhongMaterial({ color: 0x990000 });
-                phongMaterial.emissive = new THREE.Color(0x990000);
-                materials[1] = Physijs.createMaterial((phongMaterial), 0.4, 0.6);
-                var phongMaterial = new PhongMaterial({ color: 0x000000 });
-                phongMaterial.emissive = new THREE.Color(0x000000);
-                materials[2] = Physijs.createMaterial((phongMaterial), 0.4, 0.6);
-                var phongMaterial = new PhongMaterial({ color: 0xffffff });
-                phongMaterial.emissive = new THREE.Color(0xffffff);
-                materials[3] = Physijs.createMaterial((phongMaterial), 0.4, 0.6);
-                self.ghost = new Physijs.ConvexMesh(geometry, new THREE.MeshFaceMaterial(materials));
-                self.ghost.receiveShadow = true;
-                self.ghost.castShadow = true;
-                self.ghost.name = "Coin";
-                self.setCoinPosition(self.ghost);
-            });
-        };
-        Level03.prototype.setCoinPosition = function (coin) {
-            coin.position.set(0, 2, -20);
-            console.log("coin.position.z :" + coin.position.z);
-            this.add(coin);
+        /**
+         * This method the ghost object position
+         *
+         * @method setGhostPosition
+         * @return void
+         */
+        Level03.prototype.setGhostPosition = function (ghostMesh) {
+            ghostMesh.position.set(0, 2, -30);
+            this.add(ghostMesh);
         };
         /**
          * Event Handler method for any pointerLockChange events
@@ -580,53 +579,6 @@ var scenes;
             }
             this.movingboard3.position.set(0, 0, this.zCoordinate2);
         };
-        /**
-         * This method updates the Ghost position
-         *
-         * @method followingPlayer
-         * @return void
-         */
-        Level03.prototype.followingPlayer = function () {
-            var direction = new Vector3(0, 0, 0);
-            this.test.lookAt(this.player.position);
-            var rotation_matrix = new THREE.Matrix4();
-            rotation_matrix.makeRotationFromEuler(this.test.rotation);
-            this.test.rotation.setFromRotationMatrix(rotation_matrix);
-            this.test.__dirtyRotation = true;
-            this.test.__dirtyPosition = true;
-            rotation_matrix.makeRotationFromEuler(this.rotation);
-            ;
-            var velocity = this.test.getLinearVelocity();
-            velocity.z = this.test === this.player ? 8 : 2;
-            velocity.x = 0;
-            velocity.applyMatrix4(rotation_matrix);
-            this.test.setLinearVelocity(velocity);
-            if (this.onGround) {
-                if (this.test.position.z > -50 && this.test.position.z < -10) {
-                    if (this.test.position.x > -16 && this.test.position.x < 16) {
-                        var distanceZ = this.player.position.z - this.test.position.z;
-                        var distanceX = this.player.position.x - this.test.position.x;
-                        var x, z;
-                        if (distanceZ > 0) {
-                            z = this.test.position.z + 0.01;
-                        }
-                        else {
-                            z = this.test.position.z - 0.01;
-                        }
-                        if (distanceX < 0) {
-                            x = this.test.position.x - 0.01;
-                        }
-                        else {
-                            x = this.test.position.x + 0.01;
-                        }
-                        this.test.position.set(x, 2, z);
-                    }
-                }
-            }
-            else {
-                this.test.position.set(0, 2, -30);
-            }
-        };
         // PUBLIC METHODS +++++++++++++++++++++++++++++++++++++++++++
         /**
          * The start method is the main method for the scene class
@@ -674,8 +626,7 @@ var scenes;
             this.addLevel();
             // Add player controller
             this.addPlayer();
-            // Add custom donut imported from Blender
-            this.addCoinMesh();
+            // Add custom donut imported from Blender            
             this.addGhostMesh();
             this.addDonutMesh();
             this.addUglyDonutMesh();
@@ -707,6 +658,11 @@ var scenes;
                     scene.remove(eventObject);
                     this.scoreValue += 100;
                     this.scoreLabel.text = "SCORE: " + this.scoreValue;
+                }
+                if (eventObject.name === "Ghost") {
+                    // createjs.Sound.play("bite");
+                    // scene.remove(eventObject);
+                    this.livesValue--;
                 }
                 if (eventObject.name === "UglyDonut") {
                     createjs.Sound.play("bite");
@@ -746,7 +702,7 @@ var scenes;
             // create parent-child relationship with camera and player
             this.player.add(camera);
             camera.position.set(0, 1.5, 0);
-            //camera.position.set(0, 20, -70);
+            //camera.position.set(0, 3, 0);
             //this.add(camera)
             this.simulate();
         };
@@ -768,10 +724,10 @@ var scenes;
          * @returns void
          */
         Level03.prototype.update = function () {
+            var _this = this;
             this.movingGroundLTR();
             this.movingGroundBNF();
             this.movingGroundBNF2();
-            this.followingPlayer();
             this.spinningboard.rotation.y += this.yRotate;
             if (this.spinningboard.rotation.y > this.yRotate) {
                 this.yRotation = this.spinningboard.rotation.y;
@@ -786,6 +742,47 @@ var scenes;
             this.uglyDonuts.forEach(function (uglyDonut) {
                 uglyDonut.setAngularFactor(new Vector3(0, 0, 0));
                 uglyDonut.setAngularVelocity(new Vector3(0, 1, 0));
+            });
+            this.ghost.forEach(function (ghostMesh) {
+                var direction = new Vector3(0, 0, 0);
+                ghostMesh.lookAt(_this.player.position);
+                var rotation_matrix = new THREE.Matrix4();
+                rotation_matrix.makeRotationFromEuler(ghostMesh.rotation);
+                ghostMesh.rotation.setFromRotationMatrix(rotation_matrix);
+                ghostMesh.__dirtyRotation = true;
+                ghostMesh.__dirtyPosition = true;
+                rotation_matrix.makeRotationFromEuler(_this.rotation);
+                ;
+                var velocity = ghostMesh.getLinearVelocity();
+                velocity.z = ghostMesh === _this.player ? 8 : 2;
+                velocity.x = 0;
+                velocity.applyMatrix4(rotation_matrix);
+                ghostMesh.setLinearVelocity(velocity);
+                if (_this.onGround) {
+                    if (ghostMesh.position.z > -50 && ghostMesh.position.z < -10) {
+                        if (ghostMesh.position.x > -16 && ghostMesh.position.x < 16) {
+                            var distanceZ = _this.player.position.z - ghostMesh.position.z;
+                            var distanceX = _this.player.position.x - ghostMesh.position.x;
+                            var x, z;
+                            if (distanceZ > 0) {
+                                z = ghostMesh.position.z + 0.01;
+                            }
+                            else {
+                                z = ghostMesh.position.z - 0.01;
+                            }
+                            if (distanceX < 0) {
+                                x = ghostMesh.position.x - 0.01;
+                            }
+                            else {
+                                x = ghostMesh.position.x + 0.01;
+                            }
+                            ghostMesh.position.set(x, 2, z);
+                        }
+                    }
+                }
+                else {
+                    ghostMesh.position.set(0, 2, -30);
+                }
             });
             this.checkControls();
             this.stage.update();
@@ -808,7 +805,7 @@ var scenes;
             this.stage.update();
         };
         return Level03;
-    }(scenes.Scene));
+    })(scenes.Scene);
     scenes.Level03 = Level03;
 })(scenes || (scenes = {}));
 
