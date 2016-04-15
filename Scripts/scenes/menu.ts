@@ -127,6 +127,11 @@ module scenes {
                 changeScene();
             });
             
+            this._exitButton.on("click", (event: createjs.MouseEvent) => {
+                currentScene = config.Scene.LEVEL2;
+                changeScene();
+            });
+            
 
             this._infoButton.on("mouseout", (event: createjs.MouseEvent) => {
                 event.target.alpha = 1.0;

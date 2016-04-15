@@ -10,7 +10,7 @@ var objects;
             this.z = z;
         }
         return Point;
-    })();
+    }());
     objects.Point = Point;
 })(objects || (objects = {}));
 

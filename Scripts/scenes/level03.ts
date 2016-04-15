@@ -220,7 +220,9 @@ module scenes {
          * @return void
          */
         private addLevel(): void {
-
+            //add soundtrack
+            createjs.Sound.play("soundtracklvl1");
+            createjs.Sound.volume = 0.1;
             // Beginning Big Island
 
             //Ground texture
@@ -388,7 +390,7 @@ module scenes {
          */
         private addDeathPlane(): void {
             this.deathPlaneGeometry = new BoxGeometry(100, 1, -720);
-            this.deathPlaneMaterial = Physijs.createMaterial(new MeshBasicMaterial({ color: 0xADD8E6 }), 0.4, 0.6);
+            this.deathPlaneMaterial = Physijs.createMaterial(new MeshBasicMaterial({ color: 0xcc0000 }), 0.4, 0.6);
 
             this.deathPlane = new Physijs.BoxMesh(this.deathPlaneGeometry, this.deathPlaneMaterial, 0);
             this.deathPlane.position.set(0, -10, 0);
@@ -554,7 +556,6 @@ module scenes {
             }
             this.add(uglyDonut);
         }
-
 
         /**
          * This method randomly sets the donut object's position

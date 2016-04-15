@@ -196,7 +196,9 @@ module scenes {
          * @return void
          */
         private addLevel(): void {
-            
+            //add soundtrack
+            createjs.Sound.play("soundtracklvl1");
+            createjs.Sound.volume = 0.1;
             // Beginning Big Island
        
             //Ground texture
@@ -735,14 +737,17 @@ module scenes {
             if (eventObject.name === "BigIsland") {
                     console.log("player hit the big island");
                     this.isGrounded = true;
+                    createjs.Sound.play("land");
                 }
                 if (eventObject.name === "Board") {
                     console.log("player hit the board");
                     this.isGrounded = true;
+                    createjs.Sound.play("land");
                 }
             if (eventObject.name === "SmallIsland") {
                 console.log("player hit the board");
                 this.isGrounded = true;
+                createjs.Sound.play("land");
             }
             if (eventObject.name === "Donut") {
                 createjs.Sound.play("bite");
