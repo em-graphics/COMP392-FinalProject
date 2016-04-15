@@ -386,22 +386,19 @@ var scenes;
         Level03.prototype.addCoinMesh = function () {
             var self = this;
             // this.ghost = new Array<Physijs.ConvexMesh>(); // Instantiate a convex mesh array
-            var ghostLoader = new THREE.JSONLoader().load("../../Assets/imported/ghost.json", function (geometry, materials) {
-                var phongMaterial = new PhongMaterial({ color: 0xff0000 });
-                phongMaterial.emissive = new THREE.Color(0xff0000);
+            var ghostLoader = new THREE.JSONLoader().load("../../Assets/imported/ghoust.json", function (geometry, materials) {
+                var phongMaterial = new PhongMaterial({ color: 0xffffff });
+                phongMaterial.emissive = new THREE.Color(0xffffff);
                 materials[0] = Physijs.createMaterial((phongMaterial), 0.4, 0.6);
-                var phongMaterial = new PhongMaterial({ color: 0x000000 });
-                phongMaterial.emissive = new THREE.Color(0x000000);
+                var phongMaterial = new PhongMaterial({ color: 0x990000 });
+                phongMaterial.emissive = new THREE.Color(0x990000);
                 materials[1] = Physijs.createMaterial((phongMaterial), 0.4, 0.6);
-                var phongMaterial = new PhongMaterial({ color: 0x420034 });
-                phongMaterial.emissive = new THREE.Color(0x420034);
-                materials[2] = Physijs.createMaterial((phongMaterial), 0.4, 0.6);
                 var phongMaterial = new PhongMaterial({ color: 0x000000 });
                 phongMaterial.emissive = new THREE.Color(0x000000);
+                materials[2] = Physijs.createMaterial((phongMaterial), 0.4, 0.6);
+                var phongMaterial = new PhongMaterial({ color: 0xffffff });
+                phongMaterial.emissive = new THREE.Color(0xffffff);
                 materials[3] = Physijs.createMaterial((phongMaterial), 0.4, 0.6);
-                var phongMaterial = new PhongMaterial({ color: 0x420034 });
-                phongMaterial.emissive = new THREE.Color(0x420034);
-                materials[4] = Physijs.createMaterial((phongMaterial), 0.4, 0.6);
                 self.ghost = new Physijs.ConvexMesh(geometry, new THREE.MeshFaceMaterial(materials));
                 self.ghost.receiveShadow = true;
                 self.ghost.castShadow = true;
@@ -611,16 +608,16 @@ var scenes;
                         var distanceX = this.player.position.x - this.test.position.x;
                         var x, z;
                         if (distanceZ > 0) {
-                            z = this.test.position.z + 0.05;
+                            z = this.test.position.z + 0.01;
                         }
                         else {
-                            z = this.test.position.z - 0.05;
+                            z = this.test.position.z - 0.01;
                         }
                         if (distanceX < 0) {
-                            x = this.test.position.x - 0.05;
+                            x = this.test.position.x - 0.01;
                         }
                         else {
-                            x = this.test.position.x + 0.05;
+                            x = this.test.position.x + 0.01;
                         }
                         this.test.position.set(x, 2, z);
                     }
@@ -811,7 +808,7 @@ var scenes;
             this.stage.update();
         };
         return Level03;
-    })(scenes.Scene);
+    }(scenes.Scene));
     scenes.Level03 = Level03;
 })(scenes || (scenes = {}));
 

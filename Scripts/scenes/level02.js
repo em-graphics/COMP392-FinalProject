@@ -599,7 +599,7 @@ var scenes;
                     scene.remove(eventObject);
                 }
                 if (eventObject.name === "Door") {
-                    currentScene = config.Scene.OVER;
+                    currentScene = config.Scene.LEVEL3;
                     changeScene();
                 }
                 if (eventObject.name === "Path") {
@@ -683,7 +683,7 @@ var scenes;
             this.stage.update();
         };
         return Level02;
-    })(scenes.Scene);
+    }(scenes.Scene));
     scenes.Level02 = Level02;
 })(scenes || (scenes = {}));
 
