@@ -156,7 +156,7 @@ var scenes;
             this.add(this.bigIsland);
             console.log("Added BigIsland to scene");
             // Path 
-            this.pathGeometry = new BoxGeometry(4, 1, 26);
+            this.pathGeometry = new BoxGeometry(1, 1, 26);
             this.pathMaterial = Physijs.createMaterial(this.groundMaterial, 0, 0);
             this.path = new Physijs.ConvexMesh(this.pathGeometry, this.pathMaterial, 0);
             this.path.position.set(0, 0, -18);
@@ -172,7 +172,7 @@ var scenes;
             this.path.name = "Path";
             this.add(this.path);
             console.log("Added Board to scene");
-            this.pathGeometry = new BoxGeometry(4, 1, 20);
+            this.pathGeometry = new BoxGeometry(1, 1, 20);
             this.pathMaterial = Physijs.createMaterial(this.groundMaterial, 0, 0);
             this.path = new Physijs.ConvexMesh(this.pathGeometry, this.pathMaterial, 0);
             this.path.position.set(6, 0, -47);
@@ -188,7 +188,7 @@ var scenes;
             this.path.name = "Path";
             this.add(this.path);
             console.log("Added Path4 to scene");
-            this.pathGeometry = new BoxGeometry(4, 1, 20);
+            this.pathGeometry = new BoxGeometry(1, 1, 22);
             this.pathMaterial = Physijs.createMaterial(this.groundMaterial, 0, 0);
             this.path = new Physijs.ConvexMesh(this.pathGeometry, this.pathMaterial, 0);
             this.path.position.set(0, 0, -73);
@@ -197,7 +197,7 @@ var scenes;
             this.add(this.path);
             console.log("Added Path5 to scene");
             //Lava Board 1
-            this.lavaboardGeometry = new BoxGeometry(32, 1, 3);
+            this.lavaboardGeometry = new BoxGeometry(10, 2, 1);
             this.lavaMaterial = Physijs.createMaterial(this.lavaboardMaterial, 0, 0);
             this.lavaboard = new Physijs.ConvexMesh(this.lavaboardGeometry, this.lavaboardMaterial, 0);
             this.lavaboard.position.set(0, 0, -85);
@@ -205,7 +205,7 @@ var scenes;
             this.lavaboard.name = "LavaBoard";
             this.add(this.lavaboard);
             console.log("Added Lavaboard to scene");
-            this.pathGeometry = new BoxGeometry(4, 1, 20);
+            this.pathGeometry = new BoxGeometry(1, 1, 22);
             this.pathMaterial = Physijs.createMaterial(this.groundMaterial, 0, 0);
             this.path = new Physijs.ConvexMesh(this.pathGeometry, this.pathMaterial, 0);
             this.path.position.set(0, 0, -97);
@@ -221,7 +221,7 @@ var scenes;
             this.path.name = "Path";
             this.add(this.path);
             console.log("Added Path7 to scene");
-            this.pathGeometry = new BoxGeometry(4, 1, 20);
+            this.pathGeometry = new BoxGeometry(1, 1, 22);
             this.pathMaterial = Physijs.createMaterial(this.groundMaterial, 0, 0);
             this.path = new Physijs.ConvexMesh(this.pathGeometry, this.pathMaterial, 0);
             this.path.position.set(6, 0, -122);
@@ -230,15 +230,15 @@ var scenes;
             this.add(this.path);
             console.log("Added Path8 to scene");
             //Lava Board 2
-            this.lavaboardGeometry = new BoxGeometry(32, 1, 3);
+            this.lavaboardGeometry = new BoxGeometry(10, 2, 1);
             this.lavaMaterial = Physijs.createMaterial(this.lavaboardMaterial, 0, 0);
             this.lavaboard = new Physijs.ConvexMesh(this.lavaboardGeometry, this.lavaboardMaterial, 0);
-            this.lavaboard.position.set(0, 0, -134);
+            this.lavaboard.position.set(6, 0, -134);
             this.lavaboard.receiveShadow = true;
             this.lavaboard.name = "LavaBoard";
             this.add(this.lavaboard);
             console.log("Added LavaBoard to scene");
-            this.pathGeometry = new BoxGeometry(4, 1, 20);
+            this.pathGeometry = new BoxGeometry(1, 1, 22);
             this.pathMaterial = Physijs.createMaterial(this.groundMaterial, 0, 0);
             this.path = new Physijs.ConvexMesh(this.pathGeometry, this.pathMaterial, 0);
             this.path.position.set(6, 0, -146);
@@ -254,7 +254,7 @@ var scenes;
             this.path.name = "Path";
             this.add(this.path);
             console.log("Added path10 to scene");
-            this.pathGeometry = new BoxGeometry(4, 1, 10);
+            this.pathGeometry = new BoxGeometry(1, 1, 10);
             this.pathMaterial = Physijs.createMaterial(this.groundMaterial, 0, 0);
             this.path = new Physijs.ConvexMesh(this.pathGeometry, this.pathMaterial, 0);
             this.path.position.set(0, 0, -165);
@@ -282,7 +282,7 @@ var scenes;
             console.log("Added BigIsland to scene");
             //Poison
             this.poisonGeometry = new BoxGeometry(190, 0, -800);
-            this.poisonMaterial = Physijs.createMaterial(new MeshBasicMaterial({ color: 0x32CD32 }), 0.4, 0.6);
+            this.poisonMaterial = Physijs.createMaterial(new MeshBasicMaterial({ color: 0xa3491a }), 0.4, 0.6);
             this.poison = new Physijs.BoxMesh(this.poisonGeometry, this.poisonMaterial, 0);
             this.poison.position.set(0, 0, 0);
             this.poison.name = "Poison";
@@ -405,18 +405,6 @@ var scenes;
                 uglyDonut.position.set(-1, 10, -168);
             }
             this.add(uglyDonut);
-        };
-        /**
-         * This method randomly sets the donut object's position
-         *
-         * @method setdonutPosition
-         * @return void
-         */
-        Level02.prototype.setdonutPosition = function (donut) {
-            var randomPointX = Math.floor(Math.random() * 20) - 10;
-            var randomPointZ = Math.floor(Math.random() * 20) - 10;
-            donut.position.set(randomPointX, 10, randomPointZ);
-            this.add(donut);
         };
         /**
          * Event Handler method for any pointerLockChange events

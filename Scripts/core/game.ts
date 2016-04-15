@@ -98,7 +98,7 @@ function init(): void {
     setupCamera();
 
     // set initial scene
-    currentScene = config.Scene.MENU;
+    currentScene = config.Scene.LEVEL2;
     changeScene();
 
     // Add framerate stats
@@ -152,7 +152,7 @@ function setupRenderer(): void {
     renderer.setSize(CScreen.WIDTH, CScreen.HEIGHT);
     renderer.shadowMap.enabled = true;
     renderer.autoClear = true;
-    console.log("Finished setting up Renderer...");
+    console.log("Finished setting up Renderer...");   
 }
 
 // Setup main camera for the scene
@@ -188,6 +188,7 @@ function changeScene(): void {
             // show the game LEVEL2 scene
             level2 = new scenes.Level02();
             scene = level2;
+            renderer.setClearColor(0x302013, 1.0);
             console.log("Starting level02 Scene");
             break;
         case config.Scene.LEVEL3:

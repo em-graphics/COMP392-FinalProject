@@ -39,6 +39,7 @@ module scenes {
         private livesLabel: createjs.Text;
         private scoreValue: number;
         private livesValue: number;
+        
 
         //team declorations 
 
@@ -95,7 +96,7 @@ module scenes {
         //light
         private light = new THREE.DirectionalLight(0xffffff);
 
-
+        
         /**
          * @constructor
          */
@@ -119,7 +120,7 @@ module scenes {
             canvas.setAttribute("height", (config.Screen.HEIGHT * 0.1).toString());
             canvas.style.backgroundColor = "#000000";
         }
-
+        
         /**
          * The initialize method sets up key objects to be used in the scene
          * 
@@ -265,7 +266,7 @@ module scenes {
             console.log("Added BigIsland to scene");
 
             // Path 
-            this.pathGeometry = new BoxGeometry(4, 1, 26);
+            this.pathGeometry = new BoxGeometry(1, 1, 26);
             this.pathMaterial = Physijs.createMaterial(this.groundMaterial, 0, 0);
             this.path = new Physijs.ConvexMesh(this.pathGeometry, this.pathMaterial, 0);
             this.path.position.set(0, 0, -18);
@@ -284,7 +285,7 @@ module scenes {
             console.log("Added Board to scene");
 
 
-            this.pathGeometry = new BoxGeometry(4, 1, 20);
+            this.pathGeometry = new BoxGeometry(1, 1, 20);
             this.pathMaterial = Physijs.createMaterial(this.groundMaterial, 0, 0);
             this.path = new Physijs.ConvexMesh(this.pathGeometry, this.pathMaterial, 0);
             this.path.position.set(6, 0, -47);
@@ -303,7 +304,7 @@ module scenes {
             console.log("Added Path4 to scene");
 
 
-            this.pathGeometry = new BoxGeometry(4, 1, 20);
+            this.pathGeometry = new BoxGeometry(1, 1, 22);
             this.pathMaterial = Physijs.createMaterial(this.groundMaterial, 0, 0);
             this.path = new Physijs.ConvexMesh(this.pathGeometry, this.pathMaterial, 0);
             this.path.position.set(0, 0, -73);
@@ -313,7 +314,7 @@ module scenes {
             console.log("Added Path5 to scene");
 
             //Lava Board 1
-            this.lavaboardGeometry = new BoxGeometry(32, 1, 3);
+            this.lavaboardGeometry = new BoxGeometry(10, 2, 1);
             this.lavaMaterial = Physijs.createMaterial(this.lavaboardMaterial, 0, 0);
             this.lavaboard = new Physijs.ConvexMesh(this.lavaboardGeometry, this.lavaboardMaterial, 0);
             this.lavaboard.position.set(0, 0, -85);
@@ -323,7 +324,7 @@ module scenes {
             console.log("Added Lavaboard to scene");
 
 
-            this.pathGeometry = new BoxGeometry(4, 1, 20);
+            this.pathGeometry = new BoxGeometry(1, 1, 22);
             this.pathMaterial = Physijs.createMaterial(this.groundMaterial, 0, 0);
             this.path = new Physijs.ConvexMesh(this.pathGeometry, this.pathMaterial, 0);
             this.path.position.set(0, 0, -97);
@@ -343,7 +344,7 @@ module scenes {
             console.log("Added Path7 to scene");
 
             
-            this.pathGeometry = new BoxGeometry(4, 1, 20);
+            this.pathGeometry = new BoxGeometry(1, 1, 22);
             this.pathMaterial = Physijs.createMaterial(this.groundMaterial, 0, 0);
             this.path = new Physijs.ConvexMesh(this.pathGeometry, this.pathMaterial, 0);
             this.path.position.set(6, 0, -122);
@@ -353,17 +354,17 @@ module scenes {
             console.log("Added Path8 to scene");
             
             //Lava Board 2
-            this.lavaboardGeometry = new BoxGeometry(32, 1, 3);
+            this.lavaboardGeometry = new BoxGeometry(10, 2, 1);
             this.lavaMaterial = Physijs.createMaterial(this.lavaboardMaterial, 0, 0);
             this.lavaboard = new Physijs.ConvexMesh(this.lavaboardGeometry, this.lavaboardMaterial, 0);
-            this.lavaboard.position.set(0, 0, -134);
+            this.lavaboard.position.set(6, 0, -134);
             this.lavaboard.receiveShadow = true;
             this.lavaboard.name = "LavaBoard";
             this.add(this.lavaboard);
             console.log("Added LavaBoard to scene");
 
             
-            this.pathGeometry = new BoxGeometry(4, 1, 20);
+            this.pathGeometry = new BoxGeometry(1, 1, 22);
             this.pathMaterial = Physijs.createMaterial(this.groundMaterial, 0, 0);
             this.path = new Physijs.ConvexMesh(this.pathGeometry, this.pathMaterial, 0);
             this.path.position.set(6, 0, -146);
@@ -382,7 +383,7 @@ module scenes {
             this.add(this.path);
             console.log("Added path10 to scene");
 
-            this.pathGeometry = new BoxGeometry(4, 1, 10);
+            this.pathGeometry = new BoxGeometry(1, 1, 10);
             this.pathMaterial = Physijs.createMaterial(this.groundMaterial, 0, 0);
             this.path = new Physijs.ConvexMesh(this.pathGeometry, this.pathMaterial, 0);
             this.path.position.set(0, 0, -165);
@@ -413,7 +414,7 @@ module scenes {
             
             //Poison
             this.poisonGeometry = new BoxGeometry(190, 0, -800);    
-            this.poisonMaterial = Physijs.createMaterial(new MeshBasicMaterial({ color: 0x32CD32 }), 0.4, 0.6);
+            this.poisonMaterial = Physijs.createMaterial(new MeshBasicMaterial({ color: 0xa3491a }), 0.4, 0.6);
             this.poison = new Physijs.BoxMesh(this.poisonGeometry, this.poisonMaterial, 0);
             this.poison.position.set(0, 0, 0);
             this.poison.name = "Poison";
@@ -552,18 +553,6 @@ module scenes {
         }
 
 
-        /**
-         * This method randomly sets the donut object's position
-         * 
-         * @method setdonutPosition
-         * @return void
-         */
-        private setdonutPosition(donut: Physijs.ConvexMesh): void {
-            var randomPointX: number = Math.floor(Math.random() * 20) - 10;
-            var randomPointZ: number = Math.floor(Math.random() * 20) - 10;
-            donut.position.set(randomPointX, 10, randomPointZ);
-            this.add(donut);
-        }
 
         /**
          * Event Handler method for any pointerLockChange events
@@ -693,7 +682,8 @@ module scenes {
             this.havePointerLock = 'pointerLockElement' in document ||
                 'mozPointerLockElement' in document ||
                 'webkitPointerLockElement' in document;
-
+               
+            
 
 
             // Check to see if we have pointerLock
