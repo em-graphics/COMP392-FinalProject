@@ -776,7 +776,7 @@ module scenes {
                 }
                 if (eventObject.name === "Door") {
 
-                    currentScene = config.Scene.OVER;
+                    currentScene = config.Scene.LEVEL3;
                     changeScene();
                 }
                 if (eventObject.name === "Path") {

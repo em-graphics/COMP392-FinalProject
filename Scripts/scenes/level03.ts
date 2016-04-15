@@ -551,17 +551,21 @@ module scenes {
             var ghostLoader = new THREE.JSONLoader().load("../../Assets/imported/ghoust.json", function(geometry: THREE.Geometry, materials) {
 
 
-                var phongMaterial = new PhongMaterial({ color: 0xff0000 });
-                phongMaterial.emissive = new THREE.Color(0xff0000);
+                var phongMaterial = new PhongMaterial({ color: 0xffffff });
+                phongMaterial.emissive = new THREE.Color(0xffffff);
                 materials[0] = Physijs.createMaterial((phongMaterial), 0.4, 0.6);
 
+                var phongMaterial = new PhongMaterial({ color: 0x990000 });
+                phongMaterial.emissive = new THREE.Color(0x990000);
+                materials[1] = Physijs.createMaterial((phongMaterial), 0.4, 0.6);
+                    
                 var phongMaterial = new PhongMaterial({ color: 0x000000 });
                 phongMaterial.emissive = new THREE.Color(0x000000);
-                materials[1] = Physijs.createMaterial((phongMaterial), 0.4, 0.6);
-
-                var phongMaterial = new PhongMaterial({ color: 0x420034 });
-                phongMaterial.emissive = new THREE.Color(0x420034);
                 materials[2] = Physijs.createMaterial((phongMaterial), 0.4, 0.6);
+                
+                var phongMaterial = new PhongMaterial({ color: 0xffffff });
+                phongMaterial.emissive = new THREE.Color(0xffffff);
+                materials[3] = Physijs.createMaterial((phongMaterial), 0.4, 0.6);
                 
                
 
