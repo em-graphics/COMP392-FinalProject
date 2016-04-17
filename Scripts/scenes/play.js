@@ -106,6 +106,9 @@ var scenes;
          * @return void
          */
         Play.prototype.addLevel = function () {
+            //add soundtrack
+            createjs.Sound.play("soundtracklvl1");
+            createjs.Sound.volume = 0.1;
             // Beginning Big Island
             //Ground texture
             this.groundTexture = new THREE.TextureLoader().load('../../Images/grass.png');
@@ -575,14 +578,17 @@ var scenes;
                 if (eventObject.name === "BigIsland") {
                     console.log("player hit the big island");
                     this.isGrounded = true;
+                    createjs.Sound.play("land");
                 }
                 if (eventObject.name === "Board") {
                     console.log("player hit the board");
                     this.isGrounded = true;
+                    createjs.Sound.play("land");
                 }
                 if (eventObject.name === "SmallIsland") {
                     console.log("player hit the board");
                     this.isGrounded = true;
+                    createjs.Sound.play("land");
                 }
                 if (eventObject.name === "Donut") {
                     createjs.Sound.play("bite");
@@ -677,7 +683,7 @@ var scenes;
             this.stage.update();
         };
         return Play;
-    })(scenes.Scene);
+    }(scenes.Scene));
     scenes.Play = Play;
 })(scenes || (scenes = {}));
 

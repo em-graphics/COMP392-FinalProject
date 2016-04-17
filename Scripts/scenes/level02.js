@@ -106,6 +106,9 @@ var scenes;
          * @return void
          */
         Level02.prototype.addLevel = function () {
+            //add soundtrack
+            createjs.Sound.play("soundtracklvl1");
+            createjs.Sound.volume = 0.1;
             // Beginning Big Island
             //Ground texture
             this.groundTexture = new THREE.TextureLoader().load('../../Images/GravelCobble.jpg');
@@ -346,10 +349,10 @@ var scenes;
                 donut.position.set(0, 10, -10);
             }
             else if (count == 1) {
-                donut.position.set(-11, 10, -38);
+                donut.position.set(5, 10, -35);
             }
             else if (count == 2) {
-                donut.position.set(9, 10, -58);
+                donut.position.set(0, 10, -60);
             }
             else if (count == 3) {
                 donut.position.set(-1, 10, -170);
@@ -399,10 +402,10 @@ var scenes;
                 uglyDonut.position.set(0, 10, -30);
             }
             else if (count == 1) {
-                uglyDonut.position.set(-1, 10, -118);
+                uglyDonut.position.set(0, 10, -105);
             }
             else {
-                uglyDonut.position.set(-1, 10, -168);
+                uglyDonut.position.set(1, 10, -170);
             }
             this.add(uglyDonut);
         };
@@ -683,7 +686,7 @@ var scenes;
             this.stage.update();
         };
         return Level02;
-    })(scenes.Scene);
+    }(scenes.Scene));
     scenes.Level02 = Level02;
 })(scenes || (scenes = {}));
 

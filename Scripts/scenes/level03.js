@@ -110,6 +110,9 @@ var scenes;
          * @return void
          */
         Level03.prototype.addLevel = function () {
+            //add soundtrack
+            createjs.Sound.play("soundtracklvl1");
+            createjs.Sound.volume = 0.1;
             // Beginning Big Island
             //Ground texture
             this.groundTexture = new THREE.TextureLoader().load('../../Images/seamless.jpg');
@@ -250,7 +253,7 @@ var scenes;
          */
         Level03.prototype.addDeathPlane = function () {
             this.deathPlaneGeometry = new BoxGeometry(100, 1, -720);
-            this.deathPlaneMaterial = Physijs.createMaterial(new MeshBasicMaterial({ color: 0xADD8E6 }), 0.4, 0.6);
+            this.deathPlaneMaterial = Physijs.createMaterial(new MeshBasicMaterial({ color: 0xcc0000 }), 0.4, 0.6);
             this.deathPlane = new Physijs.BoxMesh(this.deathPlaneGeometry, this.deathPlaneMaterial, 0);
             this.deathPlane.position.set(0, -10, 0);
             this.deathPlane.name = "DeathPlane";
@@ -805,7 +808,7 @@ var scenes;
             this.stage.update();
         };
         return Level03;
-    })(scenes.Scene);
+    }(scenes.Scene));
     scenes.Level03 = Level03;
 })(scenes || (scenes = {}));
 

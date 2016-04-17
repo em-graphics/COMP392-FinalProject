@@ -64,6 +64,7 @@ var manifest = [
     { id: "hit", src: "../../Assets/audio/hit.mp3" },
     { id: "bite", src: "../../Assets/audio/bite.mp3" },
     { id: "coin", src: "../../Assets/audio/coin.mp3" },
+    { id: "soundtracklvl1", src: "../../Assets/audio/SoundtrackLevel1.mp3" },
     { id: "jump", src: "../../Assets/audio/Jump.wav" },
     { id: "bg", src: "../../Assets/images/bd.jpg"},
     { id: "StartButton", src: "../../Assets/images/StartButton.png"},
@@ -195,6 +196,7 @@ function changeScene(): void {
             // show the PLAY scene
             level3 = new scenes.Level03();
             scene = level3;
+            renderer.setClearColor(0xcc0000, 1.0);
             console.log("Starting Level3 Scene");
             break;
     }
