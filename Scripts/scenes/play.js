@@ -603,6 +603,9 @@ var scenes;
                     scene.remove(eventObject);
                 }
                 if (eventObject.name === "Door") {
+                    config.Scene.gScore = this.scoreValue;
+                    config.Scene.gLive = this.livesValue;
+                    console.log("score: " + config.Scene.gScore);
                     currentScene = config.Scene.LEVEL2;
                     changeScene();
                 }
@@ -683,7 +686,7 @@ var scenes;
             this.stage.update();
         };
         return Play;
-    }(scenes.Scene));
+    })(scenes.Scene);
     scenes.Play = Play;
 })(scenes || (scenes = {}));
 

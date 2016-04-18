@@ -39,7 +39,7 @@ module scenes {
         private livesLabel: createjs.Text;
         private scoreValue: number;
         private livesValue: number;
-        
+
 
         //team declorations 
 
@@ -87,7 +87,7 @@ module scenes {
         private doorPhysicsMaterial: Physijs.Material;
         private doorMaterial: PhongMaterial;
         private doorTexture: Texture;
-        
+
         //LavaTexture
         private lavaTextureNormal: Texture;
         private lavaPhysicsMaterial: Physijs.Material;
@@ -96,7 +96,7 @@ module scenes {
         //light
         private light = new THREE.DirectionalLight(0xffffff);
 
-        
+
         /**
          * @constructor
          */
@@ -120,7 +120,7 @@ module scenes {
             canvas.setAttribute("height", (config.Screen.HEIGHT * 0.1).toString());
             canvas.style.backgroundColor = "#000000";
         }
-        
+
         /**
          * The initialize method sets up key objects to be used in the scene
          * 
@@ -157,8 +157,8 @@ module scenes {
          */
         private setupScoreboard(): void {
             // initialize  score and lives values
-            this.scoreValue = 0;
-            this.livesValue = 5;
+            this.scoreValue = config.Scene.gScore;
+            this.livesValue = config.Scene.gLive;
 
             // Add Lives Label
             this.livesLabel = new createjs.Text(
@@ -240,7 +240,7 @@ module scenes {
             this.doorMaterial.map = this.doorTexture;
             this.doorMaterial.bumpMap = this.doorTextureNormal;
             this.doorMaterial.bumpScale = 0.4;
-            
+
             //Lava Texture
             this.lavaTexture = new THREE.TextureLoader().load('../../Images/lava.png');
             this.lavaTexture.wrapS = THREE.RepeatWrapping;
@@ -345,7 +345,7 @@ module scenes {
             this.add(this.path);
             console.log("Added Path7 to scene");
 
-            
+
             this.pathGeometry = new BoxGeometry(1, 1, 22);
             this.pathMaterial = Physijs.createMaterial(this.groundMaterial, 0, 0);
             this.path = new Physijs.ConvexMesh(this.pathGeometry, this.pathMaterial, 0);
@@ -354,7 +354,7 @@ module scenes {
             this.path.name = "Path";
             this.add(this.path);
             console.log("Added Path8 to scene");
-            
+
             //Lava Board 2
             this.lavaboardGeometry = new BoxGeometry(10, 2, 1);
             this.lavaMaterial = Physijs.createMaterial(this.lavaboardMaterial, 0, 0);
@@ -365,7 +365,7 @@ module scenes {
             this.add(this.lavaboard);
             console.log("Added LavaBoard to scene");
 
-            
+
             this.pathGeometry = new BoxGeometry(1, 1, 22);
             this.pathMaterial = Physijs.createMaterial(this.groundMaterial, 0, 0);
             this.path = new Physijs.ConvexMesh(this.pathGeometry, this.pathMaterial, 0);
@@ -375,7 +375,7 @@ module scenes {
             this.add(this.path);
             console.log("Added Path9 to scene");
 
-           
+
             this.pathGeometry = new BoxGeometry(10, 1, 6);
             this.pathMaterial = Physijs.createMaterial(this.groundMaterial, 0, 0);
             this.path = new Physijs.ConvexMesh(this.pathGeometry, this.pathMaterial, 0);
@@ -413,9 +413,9 @@ module scenes {
             this.bigIsland.name = "Door";
             this.add(this.bigIsland);
             console.log("Added BigIsland to scene");
-            
+
             //Poison
-            this.poisonGeometry = new BoxGeometry(190, 0, -800);    
+            this.poisonGeometry = new BoxGeometry(190, 0, -800);
             this.poisonMaterial = Physijs.createMaterial(new MeshBasicMaterial({ color: 0xa3491a }), 0.4, 0.6);
             this.poison = new Physijs.BoxMesh(this.poisonGeometry, this.poisonMaterial, 0);
             this.poison.position.set(0, 0, 0);
@@ -457,7 +457,7 @@ module scenes {
             this.donuts = new Array<Physijs.ConvexMesh>(); // Instantiate a convex mesh array
 
 
-            var donutLoader = new THREE.JSONLoader().load("../../Assets/imported/donut.json", function(geometry: THREE.Geometry, materials) {
+            var donutLoader = new THREE.JSONLoader().load("../../Assets/imported/donut.json", function (geometry: THREE.Geometry, materials) {
                 //jem color    
                 var phongMaterial = new PhongMaterial({ color: 0xF21F88 });
                 phongMaterial.emissive = new THREE.Color(0xF21F88);
@@ -514,7 +514,7 @@ module scenes {
 
             this.uglyDonuts = new Array<Physijs.ConvexMesh>(); // Instantiate a convex mesh array
 
-            var donutLoader2 = new THREE.JSONLoader().load("../../Assets/imported/donut.json", function(geometry: THREE.Geometry, materials) {
+            var donutLoader2 = new THREE.JSONLoader().load("../../Assets/imported/donut.json", function (geometry: THREE.Geometry, materials) {
 
 
                 //ugly donat gem
@@ -684,8 +684,8 @@ module scenes {
             this.havePointerLock = 'pointerLockElement' in document ||
                 'mozPointerLockElement' in document ||
                 'webkitPointerLockElement' in document;
-               
-            
+
+
 
 
             // Check to see if we have pointerLock
@@ -736,7 +736,7 @@ module scenes {
             this.addUglyDonutMesh();
 
             // Collision Check
-            this.player.addEventListener('collision', function(eventObject) {
+            this.player.addEventListener('collision', function (eventObject) {
                 if (eventObject.name === "BigIsland") {
                     console.log("player hit the big island");
                     this.isGrounded = true;
@@ -759,10 +759,10 @@ module scenes {
                         // Play the Game Over Scene
                         currentScene = config.Scene.OVER;
                         changeScene();
-                } else {
+                    } else {
                         // otherwise update Lives
                         this.livesLabel.text = "LIVES: " + this.livesValue;
-                 }
+                    }
                 }
                 if (eventObject.name === "Donut") {
                     createjs.Sound.play("bite");
@@ -773,10 +773,23 @@ module scenes {
                 if (eventObject.name === "UglyDonut") {
                     createjs.Sound.play("bite");
                     this.livesValue--;
-                    this.livesLabel.text = "LIVES: " + this.livesValue;
-                    scene.remove(eventObject);
+                    if (this.livesValue <= 0) {
+                        // Exit Pointer Lock
+                        document.exitPointerLock();
+                        this.children = []; // an attempt to clean up
+                        this._isGamePaused = true;
+
+                        // Play the Game Over Scene
+                        currentScene = config.Scene.OVER;
+                        changeScene();
+                    } else {
+                        this.livesLabel.text = "LIVES: " + this.livesValue;
+                        scene.remove(eventObject);
+                    }
                 }
                 if (eventObject.name === "Door") {
+                    config.Scene.gScore = this.scoreValue;
+                    config.Scene.gLive = this.livesValue;
 
                     currentScene = config.Scene.LEVEL3;
                     changeScene();

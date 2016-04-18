@@ -42,13 +42,13 @@ module scenes {
         private livesLabel: createjs.Text;
         private scoreValue: number;
         private livesValue: number;
-        
+
         //team declorations 
-        
+
         //donutGeometry
         private donutGeometry: Geometry;
         private donutMaterial: Physijs.Material;
-        
+
         //donuts
         private donut: Physijs.ConcaveMesh;
         private donut2: Physijs.ConcaveMesh;
@@ -56,18 +56,18 @@ module scenes {
         private donut4: Physijs.ConcaveMesh;
         private donut5: Physijs.ConcaveMesh;
         private donut6: Physijs.ConcaveMesh;
-        
+
         //ugjyDonuts
         private uglyDonuts: Physijs.ConcaveMesh[];
         private uglyDonut: Physijs.ConcaveMesh;
         private uglyDonut2: Physijs.ConcaveMesh;
         private uglyDonut3: Physijs.ConcaveMesh;
-        
+
         private donuts: Physijs.ConcaveMesh[];
         private donutCount: number = 5;
-        
+
         //level objects
-        
+
         //big island
         private bigIsland: Physijs.Mesh;
         private bigIslandGeometry: CubeGeometry;
@@ -87,8 +87,8 @@ module scenes {
         private doorTexture; Texture;
         //light
         private light = new THREE.DirectionalLight(0xffffff);
-        
-        
+
+
         /**
          * @constructor
          */
@@ -119,7 +119,7 @@ module scenes {
          * @method _initialize
          * @returns void
          */
-        private _initialize(): void {          
+        private _initialize(): void {
             // Create to HTMLElements
             this.blocker = document.getElementById("blocker");
             this.instructions = document.getElementById("instructions");
@@ -129,7 +129,7 @@ module scenes {
             this._setupCanvas();
 
 
-            
+
             this.prevTime = 0;
             this.stage = new createjs.Stage(canvas);
             this.velocity = new Vector3(0, 0, 0);
@@ -200,7 +200,7 @@ module scenes {
             createjs.Sound.play("soundtracklvl1");
             createjs.Sound.volume = 0.1;
             // Beginning Big Island
-       
+
             //Ground texture
             this.groundTexture = new THREE.TextureLoader().load('../../Images/grass.png');
             this.groundTexture.wrapS = THREE.RepeatWrapping;
@@ -211,7 +211,7 @@ module scenes {
             this.groundMaterial.map = this.groundTexture;
             this.groundMaterial.bumpMap = this.groundTextureNormal;
             this.groundMaterial.bumpScale = 0.2;
-            
+
             //Door Texture
             this.doorTexture = new THREE.TextureLoader().load('../../Images/door.jpg');
             this.doorTexture.wrapS = THREE.RepeatWrapping;
@@ -227,7 +227,7 @@ module scenes {
             this.doorMaterial.map = this.doorTexture;
             this.doorMaterial.bumpMap = this.doorTextureNormal;
             this.doorMaterial.bumpScale = 0.4;
-            
+
             //Big Island
             this.bigIslandGeometry = new BoxGeometry(32, 1, 20);
             this.bigIslandMaterial = Physijs.createMaterial(this.groundMaterial, 0, 0);
@@ -237,7 +237,7 @@ module scenes {
             this.bigIsland.name = "BigIsland";
             this.add(this.bigIsland);
             console.log("Added BigIsland to scene");
-            
+
             // Board
             this.boardGeometry = new BoxGeometry(32, 1, 5);
             this.boardMaterial = Physijs.createMaterial(this.groundMaterial, 0, 0);
@@ -256,7 +256,7 @@ module scenes {
             this.board.name = "Board";
             this.add(this.board);
             console.log("Added Board to scene");
-            
+
             // Big Island
             this.bigIslandGeometry = new BoxGeometry(32, 1, 10);
             this.bigIslandMaterial = Physijs.createMaterial(this.groundMaterial, 0, 0);
@@ -275,7 +275,7 @@ module scenes {
             this.smallIsland.name = "SmallIsland";
             this.add(this.smallIsland);
             console.log("Added SmallIsland to scene");
-            
+
             //Small Island 2
             this.smallIslandGeometry = new BoxGeometry(10, 1, 10);
             this.smallIslandMaterial = Physijs.createMaterial(this.groundMaterial, 0, 0);
@@ -289,14 +289,14 @@ module scenes {
             console.log("Finished setting up Level...");
             //Small Island 3
             this.smallIslandGeometry = new BoxGeometry(10, 1, 10);
-            this.smallIslandMaterial =Physijs.createMaterial(this.groundMaterial, 0, 0);
+            this.smallIslandMaterial = Physijs.createMaterial(this.groundMaterial, 0, 0);
             this.smallIsland = new Physijs.ConvexMesh(this.smallIslandGeometry, this.smallIslandMaterial, 0);
             this.smallIsland.position.set(9, 0, - 58);
             this.smallIsland.receiveShadow = true;
             this.smallIsland.name = "SmallIsland";
             this.add(this.smallIsland);
             console.log("Added SmallIsland to scene");
-            
+
             // Safe Board
             this.boardGeometry = new BoxGeometry(32, 1, 10);
             this.boardMaterial = Physijs.createMaterial(this.groundMaterial, 0, 0);
@@ -326,7 +326,7 @@ module scenes {
             this.board.name = "Board";
             this.add(this.board);
             console.log("Added Board to scene");
-            
+
             // Long Board
             this.boardGeometry = new BoxGeometry(6, 1, 32);
             this.boardMaterial = Physijs.createMaterial(this.groundMaterial, 0, 0);
@@ -357,7 +357,7 @@ module scenes {
             this.add(this.smallIsland);
             console.log("Added SmallIsland to scene");
 
-            
+
             //Island 2
             this.smallIslandGeometry = new BoxGeometry(10, 1, 10);
             this.smallIslandMaterial = Physijs.createMaterial(this.groundMaterial, 0, 0);
@@ -368,10 +368,10 @@ module scenes {
             this.add(this.smallIsland);
             console.log("Added SmallIsland to scene");
 
-           
+
             //Island 3
             this.smallIslandGeometry = new BoxGeometry(10, 1, 10);
-            this.smallIslandMaterial =Physijs.createMaterial(this.groundMaterial, 0, 0);
+            this.smallIslandMaterial = Physijs.createMaterial(this.groundMaterial, 0, 0);
             this.smallIsland = new Physijs.ConvexMesh(this.smallIslandGeometry, this.smallIslandMaterial, 0);
             this.smallIsland.position.set(-11, 0, -182);
             this.smallIsland.receiveShadow = true;
@@ -400,7 +400,7 @@ module scenes {
             this.bigIsland.name = "Door";
             this.add(this.bigIsland);
             console.log("Added BigIsland to scene");
-        
+
         }
 
         /**
@@ -414,31 +414,31 @@ module scenes {
             this.playerGeometry = new BoxGeometry(2, 4, 2);
             this.playerMaterial = Physijs.createMaterial(new LambertMaterial({ color: 0x00ff00 }), 0.4, 0);
 
-            this. player = new Physijs.BoxMesh(this.playerGeometry, this.playerMaterial, 1);
-            this.player.position.set(0, 30,10);
+            this.player = new Physijs.BoxMesh(this.playerGeometry, this.playerMaterial, 1);
+            this.player.position.set(0, 30, 10);
             this.player.receiveShadow = true;
             this.player.castShadow = true;
             this.player.name = "Player";
             this.add(this.player);
             console.log("Added Player to Scene");
         }
-        
+
         /**
          * Add the death plane to the scene
          * 
          * @method addDeathPlane
          * @return void
          */
-        private addDeathPlane():void {
+        private addDeathPlane(): void {
             this.deathPlaneGeometry = new BoxGeometry(100, 1, -720);
-            this.deathPlaneMaterial = Physijs.createMaterial(new MeshBasicMaterial({color: 0xADD8E6}), 0.4, 0.6);
-       
-            this.deathPlane =  new Physijs.BoxMesh(this.deathPlaneGeometry, this.deathPlaneMaterial, 0);
+            this.deathPlaneMaterial = Physijs.createMaterial(new MeshBasicMaterial({ color: 0xADD8E6 }), 0.4, 0.6);
+
+            this.deathPlane = new Physijs.BoxMesh(this.deathPlaneGeometry, this.deathPlaneMaterial, 0);
             this.deathPlane.position.set(0, -10, 0);
             this.deathPlane.name = "DeathPlane";
             this.add(this.deathPlane);
-       }
-            
+        }
+
         /**
          * This method adds a donut to the scene
          * 
@@ -452,7 +452,7 @@ module scenes {
             this.donuts = new Array<Physijs.ConvexMesh>(); // Instantiate a convex mesh array
 
 
-            var donutLoader = new THREE.JSONLoader().load("../../Assets/imported/donut.json", function(geometry: THREE.Geometry, materials) {
+            var donutLoader = new THREE.JSONLoader().load("../../Assets/imported/donut.json", function (geometry: THREE.Geometry, materials) {
                 //jem color    
                 var phongMaterial = new PhongMaterial({ color: 0xF21F88 });
                 phongMaterial.emissive = new THREE.Color(0xF21F88);
@@ -476,7 +476,7 @@ module scenes {
 
             console.log("Added Donut Mesh to Scene");
         }
-        
+
         /**
         * This method sets the donuts object's position
         * 
@@ -509,7 +509,7 @@ module scenes {
 
             this.uglyDonuts = new Array<Physijs.ConvexMesh>(); // Instantiate a convex mesh array
 
-            var donutLoader2 = new THREE.JSONLoader().load("../../Assets/imported/donut.json", function(geometry: THREE.Geometry, materials) {
+            var donutLoader2 = new THREE.JSONLoader().load("../../Assets/imported/donut.json", function (geometry: THREE.Geometry, materials) {
 
 
                 //ugly donat gem
@@ -521,7 +521,7 @@ module scenes {
                 phongMaterial.emissive = new THREE.Color(0x000000);
                 materials[1] = Physijs.createMaterial((phongMaterial), 0.4, 0.6);
 
-                for (var count: number = 0; count < self.donutCount-2; count++) {
+                for (var count: number = 0; count < self.donutCount - 2; count++) {
                     self.uglyDonuts[count] = new Physijs.ConvexMesh(geometry, new THREE.MeshFaceMaterial(materials));
                     self.uglyDonuts[count].receiveShadow = true;
                     self.uglyDonuts[count].castShadow = true;
@@ -657,8 +657,8 @@ module scenes {
                 this.player.setAngularVelocity(new Vector3(0, 0, 0));
             }
         }
-        
-        private _unpauseSimulation():void {
+
+        private _unpauseSimulation(): void {
             scene.onSimulationResume();
             console.log("resume simulation");
         }
@@ -728,13 +728,13 @@ module scenes {
             // Add custom donut imported from Blender
             this.addDonutMesh();
             this.addUglyDonutMesh();
-            
+
             // Add death plane to the scene
             this.addDeathPlane();
-            
+
             // Collision Check
-            this.player.addEventListener('collision', function(eventObject) {
-            if (eventObject.name === "BigIsland") {
+            this.player.addEventListener('collision', function (eventObject) {
+                if (eventObject.name === "BigIsland") {
                     console.log("player hit the big island");
                     this.isGrounded = true;
                     createjs.Sound.play("land");
@@ -744,31 +744,34 @@ module scenes {
                     this.isGrounded = true;
                     createjs.Sound.play("land");
                 }
-            if (eventObject.name === "SmallIsland") {
-                console.log("player hit the board");
-                this.isGrounded = true;
-                createjs.Sound.play("land");
-            }
-            if (eventObject.name === "Donut") {
-                createjs.Sound.play("bite");
-                scene.remove(eventObject);
-                this.scoreValue += 100;
-                this.scoreLabel.text = "SCORE: " + this.scoreValue;
-            }
-            if (eventObject.name === "UglyDonut") {
-                createjs.Sound.play("bite");
-                this.livesValue--;
-                this.livesLabel.text = "LIVES: " + this.livesValue;
-                scene.remove(eventObject);
-                
-            }
-            if (eventObject.name === "Door") {
+                if (eventObject.name === "SmallIsland") {
+                    console.log("player hit the board");
+                    this.isGrounded = true;
+                    createjs.Sound.play("land");
+                }
+                if (eventObject.name === "Donut") {
+                    createjs.Sound.play("bite");
+                    scene.remove(eventObject);
+                    this.scoreValue += 100;
+                    this.scoreLabel.text = "SCORE: " + this.scoreValue;
+                }
+                if (eventObject.name === "UglyDonut") {
+                    createjs.Sound.play("bite");
+                    this.livesValue--;
+                    this.livesLabel.text = "LIVES: " + this.livesValue;
+                    scene.remove(eventObject);
 
-                        currentScene = config.Scene.LEVEL2;
-                        changeScene();
-            }
-            
-            if (eventObject.name === "DeathPlane") {
+                }
+                if (eventObject.name === "Door") {
+                    config.Scene.gScore = this.scoreValue;
+                    config.Scene.gLive = this.livesValue;
+                    console.log("score: "+config.Scene.gScore);
+
+                    currentScene = config.Scene.LEVEL2;
+                    changeScene();
+                }
+
+                if (eventObject.name === "DeathPlane") {
                     createjs.Sound.play("hit");
                     this.livesValue--;
                     if (this.livesValue <= 0) {
@@ -776,7 +779,7 @@ module scenes {
                         document.exitPointerLock();
                         this.children = []; // an attempt to clean up
                         this._isGamePaused = true;
-                        
+
                         // Play the Game Over Scene
                         currentScene = config.Scene.OVER;
                         changeScene();
@@ -823,12 +826,12 @@ module scenes {
                 donut.setAngularFactor(new Vector3(0, 0, 0));
                 donut.setAngularVelocity(new Vector3(0, 1, 0));
             });
-            
+
             this.donuts.forEach(donut => {
                 donut.setAngularFactor(new Vector3(0, 0, 0));
                 donut.setAngularVelocity(new Vector3(0, 1, 0));
             });
-        
+
             this.uglyDonuts.forEach(uglyDonut => {
                 uglyDonut.setAngularFactor(new Vector3(0, 0, 0));
                 uglyDonut.setAngularVelocity(new Vector3(0, 1, 0));
@@ -836,11 +839,11 @@ module scenes {
 
             this.checkControls();
             this.stage.update();
-            
-            if(!this.keyboardControls.paused) {
+
+            if (!this.keyboardControls.paused) {
                 this.simulate();
             }
-            
+
         }
 
         /**

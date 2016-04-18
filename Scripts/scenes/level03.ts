@@ -173,8 +173,8 @@ module scenes {
          */
         private setupScoreboard(): void {
             // initialize  score and lives values
-            this.scoreValue = 0;
-            this.livesValue = 5;
+            this.scoreValue = config.Scene.gScore;
+            this.livesValue = config.Scene.gLive;
 
             // Add Lives Label
             this.livesLabel = new createjs.Text(
@@ -374,7 +374,7 @@ module scenes {
             this.playerMaterial = Physijs.createMaterial(new LambertMaterial({ color: 0x00ff00 }), 0.4, 0);
 
             this.player = new Physijs.BoxMesh(this.playerGeometry, this.playerMaterial, 1);
-            this.player.position.set(0, 30, 10);
+            this.player.position.set(0, 5, 10);
             this.player.receiveShadow = true;
             this.player.castShadow = true;
             this.player.name = "Player";
@@ -883,17 +883,26 @@ module scenes {
                     this.scoreValue += 100;
                     this.scoreLabel.text = "SCORE: " + this.scoreValue;
                 }
-                if (eventObject.name === "Ghost") {
-                    // createjs.Sound.play("bite");
-                    // scene.remove(eventObject);
+                if (eventObject.name === "Ghost") {                    
                     this.livesValue--;
-
+                    this.livesLabel.text = "LIVES: " + this.livesValue;
                 }
                 if (eventObject.name === "UglyDonut") {
                     createjs.Sound.play("bite");
                     this.livesValue--;
-                    this.livesLabel.text = "LIVES: " + this.livesValue;
-                    scene.remove(eventObject);
+                    if (this.livesValue <= 0) {
+                        // Exit Pointer Lock
+                        document.exitPointerLock();
+                        this.children = []; // an attempt to clean up
+                        this._isGamePaused = true;
+
+                        // Play the Game Over Scene
+                        currentScene = config.Scene.OVER;
+                        changeScene();
+                    } else {
+                        this.livesLabel.text = "LIVES: " + this.livesValue;
+                        scene.remove(eventObject);
+                    }
 
                 }
                 if (eventObject.name === "Door") {
