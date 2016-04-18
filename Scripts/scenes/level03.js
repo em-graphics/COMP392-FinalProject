@@ -11,9 +11,9 @@ var __extends = (this && this.__extends) || function (d, b) {
 var scenes;
 (function (scenes) {
     /**
-     * The Play class is where the main action occurs for the game
+     * This is Level 3 where you have to walk across the path and avoid the lava
      *
-     * @class Play
+     * @class Level03
      * @param havePointerLock {boolean}
      */
     var Level03 = (function (_super) {

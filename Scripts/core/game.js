@@ -40,8 +40,10 @@ var camera;
 var play;
 var menu;
 var over;
+var win;
 var level2;
 var level3;
+var instructions;
 var stats;
 var canvas;
 var assets;
@@ -78,7 +80,7 @@ function init() {
     // setup the camera
     setupCamera();
     // set initial scene
-    currentScene = config.Scene.MENU;
+    currentScene = config.Scene.WIN;
     changeScene();
     // Add framerate stats
     addStatsObject();
@@ -163,6 +165,20 @@ function changeScene() {
             scene = level3;
             renderer.setClearColor(0xcc0000, 1.0);
             console.log("Starting Level3 Scene");
+            break;
+        case config.Scene.WIN:
+            // show the PLAY scene
+            win = new scenes.Win();
+            scene = win;
+            renderer.setClearColor(0xcc0000, 1.0);
+            console.log("Starting Win Scene");
+            break;
+        case config.Scene.INSTRUCTIONS:
+            // show the PLAY scene
+            instructions = new scenes.Instructions();
+            scene = instructions;
+            renderer.setClearColor(0xcc0000, 1.0);
+            console.log("Starting Win Scene");
             break;
     }
 }
