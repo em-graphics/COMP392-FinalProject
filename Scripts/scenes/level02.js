@@ -699,7 +699,7 @@ var scenes;
             this.stage.update();
         };
         return Level02;
-    })(scenes.Scene);
+    }(scenes.Scene));
     scenes.Level02 = Level02;
 })(scenes || (scenes = {}));
 
