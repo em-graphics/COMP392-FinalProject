@@ -277,7 +277,7 @@ module scenes {
             this.add(this.bigIsland);
             console.log("Added BigIsland to scene");
 
-            this.bigIsland = new Physijs.ConvexMesh(new BoxGeometry(32, 1, 40), this.bigIslandMaterial, 0);
+            this.bigIsland = new Physijs.ConvexMesh(new BoxGeometry(32, 1, 43), this.bigIslandMaterial, 0);
             this.bigIsland.position.set(0, 0, -30);
             this.bigIsland.receiveShadow = true;
             this.bigIsland.name = "EnemyBoard";
@@ -855,6 +855,11 @@ module scenes {
             // Collision Check
             this.player.addEventListener('collision', function (eventObject) {
                 if (eventObject.name === "BigIsland") {
+                    console.log("player hit the big island");
+                    this.isGrounded = true;
+                    this.onGround = false;
+                    createjs.Sound.play("land");
+                }if (eventObject.name === "EnemyBoard") {
                     console.log("player hit the big island");
                     this.isGrounded = true;
                     this.onGround = false;
