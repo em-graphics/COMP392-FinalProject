@@ -12,6 +12,8 @@ module config {
         public static OVER: number = 2;
         public static LEVEL2: number = 3;
         public static LEVEL3: number = 4;
+        public static gLive: number;
+        public static gScore: number;
     }
     
 }

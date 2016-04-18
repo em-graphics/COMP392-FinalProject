@@ -75,8 +75,8 @@ var scenes;
          */
         Level03.prototype.setupScoreboard = function () {
             // initialize  score and lives values
-            this.scoreValue = 0;
-            this.livesValue = 5;
+            this.scoreValue = config.Scene.gScore;
+            this.livesValue = config.Scene.gLive;
             // Add Lives Label
             this.livesLabel = new createjs.Text("LIVES: " + this.livesValue, "40px Consolas", "#ffffff");
             this.livesLabel.x = config.Screen.WIDTH * 0.1;
@@ -238,7 +238,7 @@ var scenes;
             this.playerGeometry = new BoxGeometry(2, 4, 2);
             this.playerMaterial = Physijs.createMaterial(new LambertMaterial({ color: 0x00ff00 }), 0.4, 0);
             this.player = new Physijs.BoxMesh(this.playerGeometry, this.playerMaterial, 1);
-            this.player.position.set(0, 30, 10);
+            this.player.position.set(0, 5, 10);
             this.player.receiveShadow = true;
             this.player.castShadow = true;
             this.player.name = "Player";
@@ -663,15 +663,25 @@ var scenes;
                     this.scoreLabel.text = "SCORE: " + this.scoreValue;
                 }
                 if (eventObject.name === "Ghost") {
-                    // createjs.Sound.play("bite");
-                    // scene.remove(eventObject);
                     this.livesValue--;
+                    this.livesLabel.text = "LIVES: " + this.livesValue;
                 }
                 if (eventObject.name === "UglyDonut") {
                     createjs.Sound.play("bite");
                     this.livesValue--;
-                    this.livesLabel.text = "LIVES: " + this.livesValue;
-                    scene.remove(eventObject);
+                    if (this.livesValue <= 0) {
+                        // Exit Pointer Lock
+                        document.exitPointerLock();
+                        this.children = []; // an attempt to clean up
+                        this._isGamePaused = true;
+                        // Play the Game Over Scene
+                        currentScene = config.Scene.OVER;
+                        changeScene();
+                    }
+                    else {
+                        this.livesLabel.text = "LIVES: " + this.livesValue;
+                        scene.remove(eventObject);
+                    }
                 }
                 if (eventObject.name === "Door") {
                     currentScene = config.Scene.OVER;
@@ -808,7 +818,7 @@ var scenes;
             this.stage.update();
         };
         return Level03;
-    }(scenes.Scene));
+    })(scenes.Scene);
     scenes.Level03 = Level03;
 })(scenes || (scenes = {}));
 

@@ -71,8 +71,8 @@ var scenes;
          */
         Level02.prototype.setupScoreboard = function () {
             // initialize  score and lives values
-            this.scoreValue = 0;
-            this.livesValue = 5;
+            this.scoreValue = config.Scene.gScore;
+            this.livesValue = config.Scene.gLive;
             // Add Lives Label
             this.livesLabel = new createjs.Text("LIVES: " + this.livesValue, "40px Consolas", "#ffffff");
             this.livesLabel.x = config.Screen.WIDTH * 0.1;
@@ -598,10 +598,23 @@ var scenes;
                 if (eventObject.name === "UglyDonut") {
                     createjs.Sound.play("bite");
                     this.livesValue--;
-                    this.livesLabel.text = "LIVES: " + this.livesValue;
-                    scene.remove(eventObject);
+                    if (this.livesValue <= 0) {
+                        // Exit Pointer Lock
+                        document.exitPointerLock();
+                        this.children = []; // an attempt to clean up
+                        this._isGamePaused = true;
+                        // Play the Game Over Scene
+                        currentScene = config.Scene.OVER;
+                        changeScene();
+                    }
+                    else {
+                        this.livesLabel.text = "LIVES: " + this.livesValue;
+                        scene.remove(eventObject);
+                    }
                 }
                 if (eventObject.name === "Door") {
+                    config.Scene.gScore = this.scoreValue;
+                    config.Scene.gLive = this.livesValue;
                     currentScene = config.Scene.LEVEL3;
                     changeScene();
                 }
@@ -686,7 +699,7 @@ var scenes;
             this.stage.update();
         };
         return Level02;
-    }(scenes.Scene));
+    })(scenes.Scene);
     scenes.Level02 = Level02;
 })(scenes || (scenes = {}));
 
