@@ -9,24 +9,24 @@ var __extends = (this && this.__extends) || function (d, b) {
 var scenes;
 (function (scenes) {
     /**
-     * This class instantiates the game over scene object
+     * This class is where we show the win scence
      *
-     * @class Over
+     * @class Win
      * @extends scenes.Scene
      */
-    var Over = (function (_super) {
-        __extends(Over, _super);
+    var Win = (function (_super) {
+        __extends(Win, _super);
         /**
          * Empty Contructor
          *
          * @constructor
          */
-        function Over() {
+        function Win() {
             _super.call(this);
             this._initialize();
             this.start();
         }
-        Over.prototype._setupCanvas = function () {
+        Win.prototype._setupCanvas = function () {
             canvas.style.width = "100%";
             canvas.setAttribute("height", config.Screen.HEIGHT.toString());
             canvas.style.backgroundColor = "#ffffff";
@@ -38,7 +38,7 @@ var scenes;
          * @method _initialize
          * @return void
          */
-        Over.prototype._initialize = function () {
+        Win.prototype._initialize = function () {
             // Create to HTMLElements
             this._blocker = document.getElementById("blocker");
             this._blocker.style.display = "none";
@@ -54,13 +54,17 @@ var scenes;
          * @method start
          * @return void
          */
-        Over.prototype.start = function () {
-            this._gameOverLabel = new createjs.Text("GAME OVER", "80px Consolas", "#000000");
-            this._gameOverLabel.regX = this._gameOverLabel.getMeasuredWidth() * 0.5;
-            this._gameOverLabel.regY = this._gameOverLabel.getMeasuredLineHeight() * 0.5;
-            this._gameOverLabel.x = config.Screen.WIDTH * 0.5;
-            this._gameOverLabel.y = config.Screen.HEIGHT * 0.5;
-            this._stage.addChild(this._gameOverLabel);
+        Win.prototype.start = function () {
+            this._wbg = new createjs.Bitmap(assets.getResult("wbd"));
+            this._wbg.scaleX = 1;
+            this._wbg.scaleY = 1;
+            this._stage.addChild(this._wbg);
+            this._winLabel = new createjs.Text("WIN SCREEN", "80px Consolas", "#000000");
+            this._winLabel.regX = this._winLabel.getMeasuredWidth() * 0.5;
+            this._winLabel.regY = this._winLabel.getMeasuredLineHeight() * 0.5;
+            this._winLabel.x = config.Screen.WIDTH * 0.5;
+            this._winLabel.y = config.Screen.HEIGHT * 0.5;
+            this._stage.addChild(this._winLabel);
             this._restartButton = new createjs.Bitmap(assets.getResult("RestartButton"));
             this._restartButton.regX = this._restartButton.getBounds().width * 0.5;
             this._restartButton.regY = this._restartButton.getBounds().height * 0.5;
@@ -84,7 +88,7 @@ var scenes;
          * @method update
          * @return void
          */
-        Over.prototype.update = function () {
+        Win.prototype.update = function () {
             this._stage.update();
         };
         /**
@@ -93,12 +97,12 @@ var scenes;
          * @method resize
          * @return void
          */
-        Over.prototype.resize = function () {
+        Win.prototype.resize = function () {
             this._setupCanvas();
         };
-        return Over;
+        return Win;
     }(scenes.Scene));
-    scenes.Over = Over;
+    scenes.Win = Win;
 })(scenes || (scenes = {}));
 
-//# sourceMappingURL=over.js.map
+//# sourceMappingURL=win.js.map
