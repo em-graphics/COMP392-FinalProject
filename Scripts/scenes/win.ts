@@ -13,6 +13,7 @@ module scenes {
         private _stage: createjs.Stage;
         private _winLabel: createjs.Text;
         private _restartButton: createjs.Bitmap;
+        private _wbg: createjs.Bitmap;
 
         /**
          * Empty Contructor
@@ -59,6 +60,12 @@ module scenes {
          * @return void
          */
         public start(): void {
+            
+            this._wbg = new createjs.Bitmap(assets.getResult("wbd"));
+            this._wbg.scaleX = 1;
+            this._wbg.scaleY = 1;
+            this._stage.addChild(this._wbg);
+            
             this._winLabel = new createjs.Text(
                 "WIN SCREEN",
                 "80px Consolas",

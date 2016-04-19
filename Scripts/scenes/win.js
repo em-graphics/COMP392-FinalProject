@@ -55,6 +55,10 @@ var scenes;
          * @return void
          */
         Win.prototype.start = function () {
+            this._wbg = new createjs.Bitmap(assets.getResult("wbd"));
+            this._wbg.scaleX = 1;
+            this._wbg.scaleY = 1;
+            this._stage.addChild(this._wbg);
             this._winLabel = new createjs.Text("WIN SCREEN", "80px Consolas", "#000000");
             this._winLabel.regX = this._winLabel.getMeasuredWidth() * 0.5;
             this._winLabel.regY = this._winLabel.getMeasuredLineHeight() * 0.5;
