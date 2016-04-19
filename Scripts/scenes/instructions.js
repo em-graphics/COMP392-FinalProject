@@ -9,24 +9,24 @@ var __extends = (this && this.__extends) || function (d, b) {
 var scenes;
 (function (scenes) {
     /**
-     * This class instantiates the game over scene object
+     * This class expalins the instructions of the game
      *
-     * @class Over
+     * @class Instructions
      * @extends scenes.Scene
      */
-    var Over = (function (_super) {
-        __extends(Over, _super);
+    var Instructions = (function (_super) {
+        __extends(Instructions, _super);
         /**
          * Empty Contructor
          *
          * @constructor
          */
-        function Over() {
+        function Instructions() {
             _super.call(this);
             this._initialize();
             this.start();
         }
-        Over.prototype._setupCanvas = function () {
+        Instructions.prototype._setupCanvas = function () {
             canvas.style.width = "100%";
             canvas.setAttribute("height", config.Screen.HEIGHT.toString());
             canvas.style.backgroundColor = "#ffffff";
@@ -38,7 +38,7 @@ var scenes;
          * @method _initialize
          * @return void
          */
-        Over.prototype._initialize = function () {
+        Instructions.prototype._initialize = function () {
             // Create to HTMLElements
             this._blocker = document.getElementById("blocker");
             this._blocker.style.display = "none";
@@ -54,7 +54,7 @@ var scenes;
          * @method start
          * @return void
          */
-        Over.prototype.start = function () {
+        Instructions.prototype.start = function () {
             this._gameOverLabel = new createjs.Text("GAME OVER", "80px Consolas", "#000000");
             this._gameOverLabel.regX = this._gameOverLabel.getMeasuredWidth() * 0.5;
             this._gameOverLabel.regY = this._gameOverLabel.getMeasuredLineHeight() * 0.5;
@@ -84,7 +84,7 @@ var scenes;
          * @method update
          * @return void
          */
-        Over.prototype.update = function () {
+        Instructions.prototype.update = function () {
             this._stage.update();
         };
         /**
@@ -93,12 +93,12 @@ var scenes;
          * @method resize
          * @return void
          */
-        Over.prototype.resize = function () {
+        Instructions.prototype.resize = function () {
             this._setupCanvas();
         };
-        return Over;
+        return Instructions;
     }(scenes.Scene));
-    scenes.Over = Over;
+    scenes.Instructions = Instructions;
 })(scenes || (scenes = {}));
 
-//# sourceMappingURL=over.js.map
+//# sourceMappingURL=instructions.js.map

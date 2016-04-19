@@ -14,6 +14,8 @@ module config {
         public static LEVEL3: number = 4;
         public static gLive: number;
         public static gScore: number;
+        public static WIN: number = 5;
+        public static INSTRUCTIONS: number = 6;
     }
     
 }

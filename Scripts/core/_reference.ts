@@ -8,3 +8,5 @@
 /// <reference path="../scenes/menu.ts" />
 /// <reference path="../scenes/level02.ts" />
 /// <reference path="../scenes/level03.ts" />
+/// <reference path="../scenes/win.ts" />
+/// <reference path="../scenes/instructions.ts" />
