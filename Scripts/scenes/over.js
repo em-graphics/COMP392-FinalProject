@@ -65,7 +65,7 @@ var scenes;
             this._gameOverLabel.x = config.Screen.WIDTH * 0.5;
             this._gameOverLabel.y = (config.Screen.HEIGHT * 0.5) - 140;
             this._stage.addChild(this._gameOverLabel);
-            this._restartButton = new createjs.Bitmap(assets.getResult("reset"));
+            this._restartButton = new createjs.Bitmap(assets.getResult("RestartButton"));
             this._restartButton.regX = this._restartButton.getBounds().width * 0.5;
             this._restartButton.regY = this._restartButton.getBounds().height * 0.5;
             this._restartButton.x = config.Screen.WIDTH * 0.5;
@@ -79,6 +79,22 @@ var scenes;
             });
             this._restartButton.on("click", function (event) {
                 currentScene = config.Scene.PLAY;
+                changeScene();
+            });
+            this._menuButton = new createjs.Bitmap(assets.getResult("MenuButton"));
+            this._menuButton.regX = this._menuButton.getBounds().width * 0.5;
+            this._menuButton.regY = this._menuButton.getBounds().height * 0.5;
+            this._menuButton.x = config.Screen.WIDTH * 0.5;
+            this._menuButton.y = (config.Screen.HEIGHT * 0.5) + 100;
+            this._stage.addChild(this._menuButton);
+            this._menuButton.on("mouseover", function (event) {
+                event.target.alpha = 0.7;
+            });
+            this._menuButton.on("mouseout", function (event) {
+                event.target.alpha = 1.0;
+            });
+            this._menuButton.on("click", function (event) {
+                currentScene = config.Scene.MENU;
                 changeScene();
             });
         };

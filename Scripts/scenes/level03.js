@@ -695,7 +695,7 @@ var scenes;
                     }
                 }
                 if (eventObject.name === "Door") {
-                    currentScene = config.Scene.OVER;
+                    currentScene = config.Scene.WIN;
                     changeScene();
                 }
                 if (eventObject.name === "EnemyBoard") {

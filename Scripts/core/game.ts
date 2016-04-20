@@ -75,11 +75,13 @@ var manifest = [
     { id: "thank", src: "../../Assets/images/thank.jpg" },
     { id: "reset", src: "../../Assets/images/reset.png" },
     { id: "StartButton", src: "../../Assets/images/StartButton.png" },
+    { id: "MenuButton", src: "../../Assets/images/MenuButton.png" },
     { id: "ExitButton", src: "../../Assets/images/ExitButton.png" },
     { id: "InfoButton", src: "../../Assets/images/InfoButton.png" },
     { id: "RestartButton", src: "../../Assets/images/RestartButton.png" },
     { id: "bg", src: "../../Assets/images/bd.jpg"},
     { id: "ThankYou", src: "../../Assets/images/ThankYou.png"},
+    { id: "Win", src: "../../Assets/images/win.png"},
     { id: "Instuctions", src: "../../Assets/images/instructions.png"},
     { id: "wbd", src: "../../Assets/images/wbg.jpg"},
     { id: "StartButton", src: "../../Assets/images/StartButton.png"},
@@ -115,7 +117,7 @@ function init(): void {
     setupCamera();
 
     // set initial scene
-    currentScene = config.Scene.MENU;
+    currentScene = config.Scene.WIN;
     changeScene();
 
     // Add framerate stats
@@ -196,13 +198,13 @@ function changeScene(): void {
             console.log("Starting PLAY Scene");
             break;
         case config.Scene.OVER:
-            // show the game OVER scene
+            // show the GAME OVER scene
             over = new scenes.Over();
             scene = over;
             console.log("Starting OVER Scene");
             break;
         case config.Scene.LEVEL2:
-            // show the game LEVEL2 scene
+            // show the LEVEL2 scene
             level2 = new scenes.Level02();
             scene = level2;
             renderer.setClearColor(0x302013, 1.0);

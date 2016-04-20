@@ -31,7 +31,7 @@ module scenes {
             canvas.style.width = "100%";
             canvas.setAttribute("height", config.Screen.HEIGHT.toString());
             canvas.setAttribute("width", config.Screen.WIDTH.toString());
-            canvas.style.backgroundColor = "#ccccff";
+            canvas.style.backgroundColor = "#FFFFFF";
         }
 
         /**
@@ -63,9 +63,11 @@ module scenes {
          */
         public start(): void {
 
-            this._thank = new createjs.Bitmap(assets.getResult("thank"));
-            this._thank.scaleX = 2.2;
-            this._thank.scaleY = 2.23;
+           this._thank = new createjs.Bitmap(assets.getResult("ThankYou"));
+            this._thank.regX = this._thank.getBounds().width * 0.5;
+            this._thank.regY = this._thank.getBounds().height * 0.5;
+            this._thank.x = config.Screen.WIDTH * 0.5;
+            this._thank.y = (config.Screen.HEIGHT * 0.5);
             this._stage.addChild(this._thank);
 
            /* this._winLabel = new createjs.Text(

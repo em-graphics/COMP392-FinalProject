@@ -104,7 +104,7 @@ var scenes;
                 changeScene();
             });
             this._exitButton.on("click", function (event) {
-                currentScene = config.Scene.LEVEL2;
+                currentScene = config.Scene.THANK;
                 changeScene();
             });
             this._infoButton.on("mouseout", function (event) {
