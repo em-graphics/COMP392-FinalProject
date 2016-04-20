@@ -13,6 +13,8 @@ module scenes {
         private _stage: createjs.Stage;
         private _gameOverLabel: createjs.Text;
         private _restartButton: createjs.Bitmap;
+        private _bg: createjs.Bitmap;
+        private _instructions: createjs.Bitmap;
 
         /**
          * Empty Contructor
@@ -59,21 +61,26 @@ module scenes {
          * @return void
          */
         public start(): void {
-            this._gameOverLabel = new createjs.Text(
-                "GAME OVER",
-                "80px Consolas",
-                "#000000");
-            this._gameOverLabel.regX = this._gameOverLabel.getMeasuredWidth() * 0.5;
-            this._gameOverLabel.regY = this._gameOverLabel.getMeasuredLineHeight() * 0.5;
-            this._gameOverLabel.x = config.Screen.WIDTH * 0.5;
-            this._gameOverLabel.y = config.Screen.HEIGHT * 0.5;
-            this._stage.addChild(this._gameOverLabel);
+            
+            
+            
+            this._bg = new createjs.Bitmap(assets.getResult("bg"));
+            this._bg.scaleX = 1;
+            this._bg.scaleY = 1;
+            this._stage.addChild(this._bg);
+            
+            this._instructions = new createjs.Bitmap(assets.getResult("Instuctions"));
+            this._instructions.regX = this._instructions.getBounds().width * 0.5;
+            this._instructions.regY = this._instructions.getBounds().height * 0.5;
+            this._instructions.x = config.Screen.WIDTH * 0.5;
+            this._instructions.y = (config.Screen.HEIGHT * 0.5);
+            this._stage.addChild(this._instructions);
 
-            this._restartButton = new createjs.Bitmap(assets.getResult("RestartButton"));
+            this._restartButton = new createjs.Bitmap(assets.getResult("BackButton"));
             this._restartButton.regX = this._restartButton.getBounds().width * 0.5;
             this._restartButton.regY = this._restartButton.getBounds().height * 0.5;
             this._restartButton.x = config.Screen.WIDTH * 0.5;
-            this._restartButton.y = (config.Screen.HEIGHT * 0.5) + 100;
+            this._restartButton.y = (config.Screen.HEIGHT * 0.5) + 200;
             this._stage.addChild(this._restartButton);
 
             this._restartButton.on("mouseover", (event: createjs.MouseEvent) => {
@@ -85,7 +92,7 @@ module scenes {
             });
 
             this._restartButton.on("click", (event: createjs.MouseEvent) => {
-                currentScene = config.Scene.PLAY;
+                currentScene = config.Scene.MENU;
                 changeScene();
             });
         }

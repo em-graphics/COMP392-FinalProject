@@ -100,7 +100,7 @@ var scenes;
                 event.target.alpha = 0.7;
             });
             this._infoButton.on("click", function (event) {
-                currentScene = config.Scene.LEVEL3;
+                currentScene = config.Scene.INSTRUCTIONS;
                 changeScene();
             });
             this._exitButton.on("click", function (event) {
