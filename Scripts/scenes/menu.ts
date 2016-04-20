@@ -123,7 +123,7 @@ module scenes {
             });
             
             this._infoButton.on("click", (event: createjs.MouseEvent) => {
-                currentScene = config.Scene.LEVEL3;
+                currentScene = config.Scene.INSTRUCTIONS;
                 changeScene();
             });
             
