@@ -606,6 +606,11 @@ module scenes {
          */
         private checkControls(): void {
             if (this.keyboardControls.enabled) {
+                if (this.keyboardControls.cheatKey) {
+                    this.remove(this.player);
+                    this.player.position.set(0, 10, -190);
+                    this.add(this.player);
+                }
                 this.velocity = new Vector3();
 
                 var time: number = performance.now();
@@ -765,7 +770,7 @@ module scenes {
                 if (eventObject.name === "Door") {
                     config.Scene.gScore = this.scoreValue;
                     config.Scene.gLive = this.livesValue;
-                    console.log("score: "+config.Scene.gScore);
+                    console.log("score: " + config.Scene.gScore);
 
                     currentScene = config.Scene.LEVEL2;
                     changeScene();

@@ -101,7 +101,7 @@ var scenes;
             this._setupCanvas();
         };
         return Instructions;
-    }(scenes.Scene));
+    })(scenes.Scene);
     scenes.Instructions = Instructions;
 })(scenes || (scenes = {}));
 
