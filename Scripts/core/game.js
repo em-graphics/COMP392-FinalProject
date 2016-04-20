@@ -55,8 +55,12 @@ var manifest = [
     { id: "soundtracklvl1", src: "../../Assets/audio/SoundtrackLevel1.mp3" },
     { id: "jump", src: "../../Assets/audio/Jump.wav" },
     { id: "bg", src: "../../Assets/images/bd.jpg" },
+<<<<<<< HEAD
     { id: "ThankYou", src: "../../Assets/images/ThankYou.png" },
     { id: "Instuctions", src: "../../Assets/images/instructions.png" },
+=======
+    { id: "wbd", src: "../../Assets/images/wbg.jpg" },
+>>>>>>> 96bdd3cc68070bf9d40837c766c601baad514db5
     { id: "StartButton", src: "../../Assets/images/StartButton.png" },
     { id: "BackButton", src: "../../Assets/images/BackButton.png" },
     { id: "ExitButton", src: "../../Assets/images/ExitButton.png" },
