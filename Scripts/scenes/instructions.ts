@@ -60,7 +60,7 @@ module scenes {
          */
         public start(): void {
             this._gameOverLabel = new createjs.Text(
-                "GAME OVER",
+                "Instructions",
                 "80px Consolas",
                 "#000000");
             this._gameOverLabel.regX = this._gameOverLabel.getMeasuredWidth() * 0.5;
@@ -85,7 +85,7 @@ module scenes {
             });
 
             this._restartButton.on("click", (event: createjs.MouseEvent) => {
-                currentScene = config.Scene.PLAY;
+                currentScene = config.Scene.MENU;
                 changeScene();
             });
         }

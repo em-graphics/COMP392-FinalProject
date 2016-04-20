@@ -55,7 +55,7 @@ var scenes;
          * @return void
          */
         Instructions.prototype.start = function () {
-            this._gameOverLabel = new createjs.Text("GAME OVER", "80px Consolas", "#000000");
+            this._gameOverLabel = new createjs.Text("Instructions", "80px Consolas", "#000000");
             this._gameOverLabel.regX = this._gameOverLabel.getMeasuredWidth() * 0.5;
             this._gameOverLabel.regY = this._gameOverLabel.getMeasuredLineHeight() * 0.5;
             this._gameOverLabel.x = config.Screen.WIDTH * 0.5;
@@ -74,7 +74,7 @@ var scenes;
                 event.target.alpha = 1.0;
             });
             this._restartButton.on("click", function (event) {
-                currentScene = config.Scene.PLAY;
+                currentScene = config.Scene.MENU;
                 changeScene();
             });
         };
