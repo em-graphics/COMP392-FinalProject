@@ -695,7 +695,7 @@ var scenes;
                     }
                 }
                 if (eventObject.name === "Door") {
-                    currentScene = config.Scene.OVER;
+                    currentScene = config.Scene.WIN;
                     changeScene();
                 }
                 if (eventObject.name === "EnemyBoard") {
@@ -829,7 +829,7 @@ var scenes;
             this.stage.update();
         };
         return Level03;
-    })(scenes.Scene);
+    }(scenes.Scene));
     scenes.Level03 = Level03;
 })(scenes || (scenes = {}));
 

@@ -29,7 +29,8 @@ var scenes;
         Win.prototype._setupCanvas = function () {
             canvas.style.width = "100%";
             canvas.setAttribute("height", config.Screen.HEIGHT.toString());
-            canvas.style.backgroundColor = "#ffffff";
+            canvas.setAttribute("width", config.Screen.WIDTH.toString());
+            canvas.style.backgroundColor = "#FFFFFF";
         };
         /**
          * This method sets up default values for class member variables
@@ -47,6 +48,7 @@ var scenes;
             // setup a stage on the canvas
             this._stage = new createjs.Stage(canvas);
             this._stage.enableMouseOver(20);
+            this._stage;
         };
         /**
          * The start method is the main method for the scene class
@@ -55,16 +57,12 @@ var scenes;
          * @return void
          */
         Win.prototype.start = function () {
-            this._wbg = new createjs.Bitmap(assets.getResult("wbd"));
-            this._wbg.scaleX = 1;
-            this._wbg.scaleY = 1;
-            this._stage.addChild(this._wbg);
-            this._winLabel = new createjs.Text("WIN SCREEN", "80px Consolas", "#000000");
-            this._winLabel.regX = this._winLabel.getMeasuredWidth() * 0.5;
-            this._winLabel.regY = this._winLabel.getMeasuredLineHeight() * 0.5;
-            this._winLabel.x = config.Screen.WIDTH * 0.5;
-            this._winLabel.y = config.Screen.HEIGHT * 0.5;
-            this._stage.addChild(this._winLabel);
+            this._menu = new createjs.Bitmap(assets.getResult("Win"));
+            this._menu.regX = this._menu.getBounds().width * 0.5;
+            this._menu.regY = this._menu.getBounds().height * 0.5;
+            this._menu.x = config.Screen.WIDTH * 0.5;
+            this._menu.y = (config.Screen.HEIGHT * 0.5);
+            this._stage.addChild(this._menu);
             this._restartButton = new createjs.Bitmap(assets.getResult("RestartButton"));
             this._restartButton.regX = this._restartButton.getBounds().width * 0.5;
             this._restartButton.regY = this._restartButton.getBounds().height * 0.5;
@@ -79,6 +77,22 @@ var scenes;
             });
             this._restartButton.on("click", function (event) {
                 currentScene = config.Scene.PLAY;
+                changeScene();
+            });
+            this._menuButton = new createjs.Bitmap(assets.getResult("MenuButton"));
+            this._menuButton.regX = this._menuButton.getBounds().width * 0.5;
+            this._menuButton.regY = this._menuButton.getBounds().height * 0.5;
+            this._menuButton.x = config.Screen.WIDTH * 0.5;
+            this._menuButton.y = (config.Screen.HEIGHT * 0.5) + 170;
+            this._stage.addChild(this._menuButton);
+            this._menuButton.on("mouseover", function (event) {
+                event.target.alpha = 0.7;
+            });
+            this._menuButton.on("mouseout", function (event) {
+                event.target.alpha = 1.0;
+            });
+            this._menuButton.on("click", function (event) {
+                currentScene = config.Scene.MENU;
                 changeScene();
             });
         };
@@ -101,7 +115,7 @@ var scenes;
             this._setupCanvas();
         };
         return Win;
-    })(scenes.Scene);
+    }(scenes.Scene));
     scenes.Win = Win;
 })(scenes || (scenes = {}));
 

@@ -65,7 +65,7 @@ var objects;
             }
         };
         return KeyboardControls;
-    })();
+    }());
     objects.KeyboardControls = KeyboardControls;
 })(objects || (objects = {}));
 

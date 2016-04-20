@@ -3,19 +3,17 @@
  */
 module scenes {
     /**
-     * This class is where we show the win scence
+     * This class is where we say thanks for playing 
      * 
-     * @class Win
+     * @class Thank
      * @extends scenes.Scene
      */
-    export class Win extends scenes.Scene {
+    export class Thank extends scenes.Scene {
         private _blocker: HTMLElement;
         private _stage: createjs.Stage;
         private _winLabel: createjs.Text;
         private _resetButton: createjs.Bitmap;
-        private _restartButton: createjs.Bitmap;
-        private _menuButton: createjs.Bitmap;
-        private _menu: createjs.Bitmap;
+        private _thank: createjs.Bitmap;
 
         /**
          * Empty Contructor
@@ -64,54 +62,46 @@ module scenes {
          * @return void
          */
         public start(): void {
-            
-            this._menu = new createjs.Bitmap(assets.getResult("Win"));
-            this._menu.regX = this._menu.getBounds().width * 0.5;
-            this._menu.regY = this._menu.getBounds().height * 0.5;
-            this._menu.x = config.Screen.WIDTH * 0.5;
-            this._menu.y = (config.Screen.HEIGHT * 0.5);
-            this._stage.addChild(this._menu);
-            
-            this._restartButton = new createjs.Bitmap(assets.getResult("RestartButton"));
-            this._restartButton.regX = this._restartButton.getBounds().width * 0.5;
-            this._restartButton.regY = this._restartButton.getBounds().height * 0.5;
-            this._restartButton.x = config.Screen.WIDTH * 0.5;
-            this._restartButton.y = (config.Screen.HEIGHT * 0.5) + 100;
-            this._stage.addChild(this._restartButton);
 
-            this._restartButton.on("mouseover", (event: createjs.MouseEvent) => {
+           this._thank = new createjs.Bitmap(assets.getResult("ThankYou"));
+            this._thank.regX = this._thank.getBounds().width * 0.5;
+            this._thank.regY = this._thank.getBounds().height * 0.5;
+            this._thank.x = config.Screen.WIDTH * 0.5;
+            this._thank.y = (config.Screen.HEIGHT * 0.5);
+            this._stage.addChild(this._thank);
+
+           /* this._winLabel = new createjs.Text(
+                "THANK YOU FOR PLAYING",
+                "60px Consolas",
+             "#0000cc");   */ 
+           
+        /*     this._winLabel.regX = (this._winLabel.getMeasuredWidth() * 0.5);
+            this._winLabel.regY = (this._winLabel.getMeasuredLineHeight() * 0.5);
+            this._winLabel.x = (config.Screen.WIDTH * 0.5)+ 10;
+            this._winLabel.y = (config.Screen.HEIGHT * 0.5) - 250;
+            this._stage.addChild(this._winLabel); */
+
+         /*   this._resetButton = new createjs.Bitmap(assets.getResult("reset"));
+            this._resetButton.regX = this._resetButton.getBounds().width * 0.5;
+            this._resetButton.regY = this._resetButton.getBounds().height * 0.5;
+            this._resetButton.x = config.Screen.WIDTH * 0.5;
+            this._resetButton.y = (config.Screen.HEIGHT * 0.5) +20 ;
+            this._stage.addChild(this._resetButton);
+            
+
+            this._resetButton.on("mouseover", (event: createjs.MouseEvent) => {
                 event.target.alpha = 0.7;
             });
 
-            this._restartButton.on("mouseout", (event: createjs.MouseEvent) => {
+            this._resetButton.on("mouseout", (event: createjs.MouseEvent) => {
                 event.target.alpha = 1.0;
             });
 
-            this._restartButton.on("click", (event: createjs.MouseEvent) => {
+            this._resetButton.on("click", (event: createjs.MouseEvent) => {
                 currentScene = config.Scene.PLAY;
                 changeScene();
             });
-            
-            
-             this._menuButton = new createjs.Bitmap(assets.getResult("MenuButton"));
-            this._menuButton.regX = this._menuButton.getBounds().width * 0.5;
-            this._menuButton.regY = this._menuButton.getBounds().height * 0.5;
-            this._menuButton.x = config.Screen.WIDTH * 0.5;
-            this._menuButton.y = (config.Screen.HEIGHT * 0.5) + 170;
-            this._stage.addChild(this._menuButton);
-
-            this._menuButton.on("mouseover", (event: createjs.MouseEvent) => {
-                event.target.alpha = 0.7;
-            });
-
-            this._menuButton.on("mouseout", (event: createjs.MouseEvent) => {
-                event.target.alpha = 1.0;
-            });
-
-            this._menuButton.on("click", (event: createjs.MouseEvent) => {
-                currentScene = config.Scene.MENU;
-                changeScene();
-            });
+            */
         }
 
         /**
