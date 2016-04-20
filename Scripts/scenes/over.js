@@ -101,7 +101,7 @@ var scenes;
             this._setupCanvas();
         };
         return Over;
-    }(scenes.Scene));
+    })(scenes.Scene);
     scenes.Over = Over;
 })(scenes || (scenes = {}));
 

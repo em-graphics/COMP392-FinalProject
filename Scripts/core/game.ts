@@ -69,6 +69,7 @@ var manifest = [
     { id: "coin", src: "../../Assets/audio/coin.mp3" },
     { id: "soundtracklvl1", src: "../../Assets/audio/SoundtrackLevel1.mp3" },
     { id: "jump", src: "../../Assets/audio/Jump.wav" },
+<<<<<<< HEAD
     { id: "bg", src: "../../Assets/images/bd.jpg" },
     { id: "wbd", src: "../../Assets/images/wbg.jpg" },
     { id: "sadcandy", src: "../../Assets/images/sadcandy.jpg" },
@@ -78,6 +79,20 @@ var manifest = [
     { id: "ExitButton", src: "../../Assets/images/ExitButton.png" },
     { id: "InfoButton", src: "../../Assets/images/InfoButton.png" },
     { id: "RestartButton", src: "../../Assets/images/RestartButton.png" }
+=======
+    { id: "bg", src: "../../Assets/images/bd.jpg"},
+<<<<<<< HEAD
+    { id: "ThankYou", src: "../../Assets/images/ThankYou.png"},
+    { id: "Instuctions", src: "../../Assets/images/instructions.png"},
+=======
+    { id: "wbd", src: "../../Assets/images/wbg.jpg"},
+>>>>>>> 96bdd3cc68070bf9d40837c766c601baad514db5
+    { id: "StartButton", src: "../../Assets/images/StartButton.png"},
+    { id: "BackButton", src: "../../Assets/images/BackButton.png"},
+    { id: "ExitButton", src: "../../Assets/images/ExitButton.png"},
+    { id: "InfoButton", src: "../../Assets/images/InfoButton.png"},
+    { id: "RestartButton", src: "../../Assets/images/RestartButton.png"}
+>>>>>>> d1fd73e73ce87f9642c60efda639a2df8aa7d23f
 ];
 
 function preload(): void {
@@ -106,7 +121,11 @@ function init(): void {
     setupCamera();
 
     // set initial scene
+<<<<<<< HEAD
     currentScene = config.Scene.THANK;
+=======
+    currentScene = config.Scene.MENU;
+>>>>>>> d1fd73e73ce87f9642c60efda639a2df8aa7d23f
     changeScene();
 
     // Add framerate stats

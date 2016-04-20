@@ -639,6 +639,13 @@ module scenes {
          */
         private checkControls(): void {
             if (this.keyboardControls.enabled) {
+                
+                if (this.keyboardControls.cheatKey) {
+                    this.remove(this.player);
+                    this.player.position.set(0, 10, -173);
+                    this.add(this.player);
+                }
+                
                 this.velocity = new Vector3();
 
                 var time: number = performance.now();
@@ -859,7 +866,7 @@ module scenes {
                     this.isGrounded = true;
                     this.onGround = false;
                     createjs.Sound.play("land");
-                }if (eventObject.name === "EnemyBoard") {
+                } if (eventObject.name === "EnemyBoard") {
                     console.log("player hit the big island");
                     this.isGrounded = true;
                     this.onGround = false;
@@ -883,7 +890,7 @@ module scenes {
                     this.scoreValue += 100;
                     this.scoreLabel.text = "SCORE: " + this.scoreValue;
                 }
-                if (eventObject.name === "Ghost") {                    
+                if (eventObject.name === "Ghost") {
                     this.livesValue--;
                     this.livesLabel.text = "LIVES: " + this.livesValue;
                 }
