@@ -20,6 +20,7 @@ var config;
         Scene.LEVEL3 = 4;
         Scene.WIN = 5;
         Scene.INSTRUCTIONS = 6;
+        Scene.THANK = 7;
         return Scene;
     }());
     config.Scene = Scene;

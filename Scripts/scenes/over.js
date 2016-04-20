@@ -55,17 +55,21 @@ var scenes;
          * @return void
          */
         Over.prototype.start = function () {
+            this._sadbg = new createjs.Bitmap(assets.getResult("sadcandy"));
+            this._sadbg.scaleX = 0.5;
+            this._sadbg.scaleY = 0.5;
+            this._stage.addChild(this._sadbg);
             this._gameOverLabel = new createjs.Text("GAME OVER", "80px Consolas", "#000000");
             this._gameOverLabel.regX = this._gameOverLabel.getMeasuredWidth() * 0.5;
             this._gameOverLabel.regY = this._gameOverLabel.getMeasuredLineHeight() * 0.5;
             this._gameOverLabel.x = config.Screen.WIDTH * 0.5;
-            this._gameOverLabel.y = config.Screen.HEIGHT * 0.5;
+            this._gameOverLabel.y = (config.Screen.HEIGHT * 0.5) - 140;
             this._stage.addChild(this._gameOverLabel);
-            this._restartButton = new createjs.Bitmap(assets.getResult("RestartButton"));
+            this._restartButton = new createjs.Bitmap(assets.getResult("reset"));
             this._restartButton.regX = this._restartButton.getBounds().width * 0.5;
             this._restartButton.regY = this._restartButton.getBounds().height * 0.5;
             this._restartButton.x = config.Screen.WIDTH * 0.5;
-            this._restartButton.y = (config.Screen.HEIGHT * 0.5) + 100;
+            this._restartButton.y = (config.Screen.HEIGHT * 0.5) + 20;
             this._stage.addChild(this._restartButton);
             this._restartButton.on("mouseover", function (event) {
                 event.target.alpha = 0.7;

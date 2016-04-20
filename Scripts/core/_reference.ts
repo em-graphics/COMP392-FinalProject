@@ -10,3 +10,4 @@
 /// <reference path="../scenes/level03.ts" />
 /// <reference path="../scenes/win.ts" />
 /// <reference path="../scenes/instructions.ts" />
+/// <reference path="../scenes/thank.ts" />

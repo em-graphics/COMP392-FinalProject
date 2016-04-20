@@ -56,6 +56,7 @@ var win: scenes.Win;
 var level2: scenes.Level02;
 var level3: scenes.Level03;
 var instructions: scenes.Instructions;
+var thank: scenes.Thank;
 
 
 var stats: Stats;
@@ -68,12 +69,15 @@ var manifest = [
     { id: "coin", src: "../../Assets/audio/coin.mp3" },
     { id: "soundtracklvl1", src: "../../Assets/audio/SoundtrackLevel1.mp3" },
     { id: "jump", src: "../../Assets/audio/Jump.wav" },
-    { id: "bg", src: "../../Assets/images/bd.jpg"},
-    { id: "wbd", src: "../../Assets/images/wbg.jpg"},
-    { id: "StartButton", src: "../../Assets/images/StartButton.png"},
-    { id: "ExitButton", src: "../../Assets/images/ExitButton.png"},
-    { id: "InfoButton", src: "../../Assets/images/InfoButton.png"},
-    { id: "RestartButton", src: "../../Assets/images/RestartButton.png"}
+    { id: "bg", src: "../../Assets/images/bd.jpg" },
+    { id: "wbd", src: "../../Assets/images/wbg.jpg" },
+    { id: "sadcandy", src: "../../Assets/images/sadcandy.jpg" },
+    { id: "thank", src: "../../Assets/images/thank.jpg" },
+    { id: "reset", src: "../../Assets/images/reset.png" },
+    { id: "StartButton", src: "../../Assets/images/StartButton.png" },
+    { id: "ExitButton", src: "../../Assets/images/ExitButton.png" },
+    { id: "InfoButton", src: "../../Assets/images/InfoButton.png" },
+    { id: "RestartButton", src: "../../Assets/images/RestartButton.png" }
 ];
 
 function preload(): void {
@@ -88,7 +92,7 @@ function setupCanvas(): void {
     canvas.setAttribute("width", config.Screen.WIDTH.toString());
     canvas.setAttribute("height", (config.Screen.HEIGHT * 0.1).toString());
     canvas.style.backgroundColor = "#ccccff";
-    
+
 }
 
 function init(): void {
@@ -102,7 +106,7 @@ function init(): void {
     setupCamera();
 
     // set initial scene
-    currentScene = config.Scene.WIN;
+    currentScene = config.Scene.THANK;
     changeScene();
 
     // Add framerate stats
@@ -156,7 +160,7 @@ function setupRenderer(): void {
     renderer.setSize(CScreen.WIDTH, CScreen.HEIGHT);
     renderer.shadowMap.enabled = true;
     renderer.autoClear = true;
-    console.log("Finished setting up Renderer...");   
+    console.log("Finished setting up Renderer...");
 }
 
 // Setup main camera for the scene
@@ -174,7 +178,7 @@ function changeScene(): void {
             // show the MENU scene
             menu = new scenes.Menu();
             scene = menu;
-            console.log("Starting MENU Scene"); 
+            console.log("Starting MENU Scene");
             break;
         case config.Scene.PLAY:
             // show the PLAY scene
@@ -196,25 +200,32 @@ function changeScene(): void {
             console.log("Starting level02 Scene");
             break;
         case config.Scene.LEVEL3:
-            // show the PLAY scene
+            // show the LEVEL3 scene
             level3 = new scenes.Level03();
             scene = level3;
             renderer.setClearColor(0xcc0000, 1.0);
             console.log("Starting Level3 Scene");
             break;
-         case config.Scene.WIN:
-            // show the PLAY scene
+        case config.Scene.WIN:
+            // show the WIN scene
             win = new scenes.Win();
             scene = win;
             renderer.setClearColor(0xcc0000, 1.0);
             console.log("Starting Win Scene");
             break;
-            case config.Scene.INSTRUCTIONS:
-            // show the PLAY scene
+        case config.Scene.INSTRUCTIONS:
+            // show the INSTRUCTIONS scene
             instructions = new scenes.Instructions();
             scene = instructions;
             renderer.setClearColor(0xcc0000, 1.0);
             console.log("Starting Win Scene");
+            break;
+        case config.Scene.THANK:
+            // show the THANK scene
+            thank = new scenes.Thank();
+            scene = thank;
+            renderer.setClearColor(0xcc0000, 1.0);
+            console.log("Starting thank Scene");
             break;
     }
 }

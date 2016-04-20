@@ -44,6 +44,7 @@ var win;
 var level2;
 var level3;
 var instructions;
+var thank;
 var stats;
 var canvas;
 var assets;
@@ -56,6 +57,9 @@ var manifest = [
     { id: "jump", src: "../../Assets/audio/Jump.wav" },
     { id: "bg", src: "../../Assets/images/bd.jpg" },
     { id: "wbd", src: "../../Assets/images/wbg.jpg" },
+    { id: "sadcandy", src: "../../Assets/images/sadcandy.jpg" },
+    { id: "thank", src: "../../Assets/images/thank.jpg" },
+    { id: "reset", src: "../../Assets/images/reset.png" },
     { id: "StartButton", src: "../../Assets/images/StartButton.png" },
     { id: "ExitButton", src: "../../Assets/images/ExitButton.png" },
     { id: "InfoButton", src: "../../Assets/images/InfoButton.png" },
@@ -81,7 +85,7 @@ function init() {
     // setup the camera
     setupCamera();
     // set initial scene
-    currentScene = config.Scene.WIN;
+    currentScene = config.Scene.THANK;
     changeScene();
     // Add framerate stats
     addStatsObject();
@@ -161,25 +165,32 @@ function changeScene() {
             console.log("Starting level02 Scene");
             break;
         case config.Scene.LEVEL3:
-            // show the PLAY scene
+            // show the LEVEL3 scene
             level3 = new scenes.Level03();
             scene = level3;
             renderer.setClearColor(0xcc0000, 1.0);
             console.log("Starting Level3 Scene");
             break;
         case config.Scene.WIN:
-            // show the PLAY scene
+            // show the WIN scene
             win = new scenes.Win();
             scene = win;
             renderer.setClearColor(0xcc0000, 1.0);
             console.log("Starting Win Scene");
             break;
         case config.Scene.INSTRUCTIONS:
-            // show the PLAY scene
+            // show the INSTRUCTIONS scene
             instructions = new scenes.Instructions();
             scene = instructions;
             renderer.setClearColor(0xcc0000, 1.0);
             console.log("Starting Win Scene");
+            break;
+        case config.Scene.THANK:
+            // show the THANK scene
+            thank = new scenes.Thank();
+            scene = thank;
+            renderer.setClearColor(0xcc0000, 1.0);
+            console.log("Starting thank Scene");
             break;
     }
 }

@@ -16,6 +16,8 @@ module config {
         public static gScore: number;
         public static WIN: number = 5;
         public static INSTRUCTIONS: number = 6;
+        public static THANK: number = 7;
+        
     }
     
 }
