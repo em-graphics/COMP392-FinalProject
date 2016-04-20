@@ -606,20 +606,12 @@ module scenes {
          */
         private checkControls(): void {
             if (this.keyboardControls.enabled) {
-                if (this.keyboardControls.cheatKey) {
-                        this.remove(this.player);
-                        this.player.position.set(0, 10, -190);
-                        this.add(this.player);                        
-                    }
                 this.velocity = new Vector3();
 
                 var time: number = performance.now();
                 var delta: number = (time - this.prevTime) / 1000;
 
                 if (this.isGrounded) {
-                    
-                    
-                    
                     var direction = new Vector3(0, 0, 0);
                     if (this.keyboardControls.moveForward) {
                         this.velocity.z -= 400.0 * delta;
@@ -664,8 +656,6 @@ module scenes {
             else {
                 this.player.setAngularVelocity(new Vector3(0, 0, 0));
             }
-            
-            
         }
 
         private _unpauseSimulation(): void {

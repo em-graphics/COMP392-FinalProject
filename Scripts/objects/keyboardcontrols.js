@@ -33,9 +33,6 @@ var objects;
                 case 81:
                     this.paused = (this.paused) ? false : true;
                     break;
-                case 80:
-                    this.cheatKey = true;
-                    break;
             }
         };
         KeyboardControls.prototype.onKeyUp = function (event) {
@@ -59,13 +56,10 @@ var objects;
                 case 32:
                     this.jump = false;
                     break;
-                case 80:
-                    this.cheatKey = false;
-                    break;
             }
         };
         return KeyboardControls;
-    })();
+    }());
     objects.KeyboardControls = KeyboardControls;
 })(objects || (objects = {}));
 

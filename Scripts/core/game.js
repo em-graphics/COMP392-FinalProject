@@ -81,7 +81,7 @@ function init() {
     // setup the camera
     setupCamera();
     // set initial scene
-    currentScene = config.Scene.MENU;
+    currentScene = config.Scene.WIN;
     changeScene();
     // Add framerate stats
     addStatsObject();

@@ -7,7 +7,7 @@ var config;
         Screen.HEIGHT = window.innerHeight;
         Screen.RATIO = window.innerWidth / window.innerHeight;
         return Screen;
-    })();
+    }());
     config.Screen = Screen;
     // Scene Constants
     var Scene = (function () {
@@ -21,7 +21,7 @@ var config;
         Scene.WIN = 5;
         Scene.INSTRUCTIONS = 6;
         return Scene;
-    })();
+    }());
     config.Scene = Scene;
 })(config || (config = {}));
 

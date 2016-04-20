@@ -467,11 +467,6 @@ var scenes;
          */
         Level03.prototype.checkControls = function () {
             if (this.keyboardControls.enabled) {
-                if (this.keyboardControls.cheatKey) {
-                    this.remove(this.player);
-                    this.player.position.set(0, 10, -173);
-                    this.add(this.player);
-                }
                 this.velocity = new Vector3();
                 var time = performance.now();
                 var delta = (time - this.prevTime) / 1000;
@@ -829,7 +824,7 @@ var scenes;
             this.stage.update();
         };
         return Level03;
-    })(scenes.Scene);
+    }(scenes.Scene));
     scenes.Level03 = Level03;
 })(scenes || (scenes = {}));
 
