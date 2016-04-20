@@ -56,15 +56,18 @@ var manifest = [
     { id: "soundtracklvl1", src: "../../Assets/audio/SoundtrackLevel1.mp3" },
     { id: "jump", src: "../../Assets/audio/Jump.wav" },
     { id: "bg", src: "../../Assets/images/bd.jpg" },
-<<<<<<< HEAD
     { id: "wbd", src: "../../Assets/images/wbg.jpg" },
     { id: "sadcandy", src: "../../Assets/images/sadcandy.jpg" },
     { id: "thank", src: "../../Assets/images/thank.jpg" },
     { id: "reset", src: "../../Assets/images/reset.png" },
-=======
+    { id: "StartButton", src: "../../Assets/images/StartButton.png" },
+    { id: "ExitButton", src: "../../Assets/images/ExitButton.png" },
+    { id: "InfoButton", src: "../../Assets/images/InfoButton.png" },
+    { id: "RestartButton", src: "../../Assets/images/RestartButton.png" },
+    { id: "bg", src: "../../Assets/images/bd.jpg" },
     { id: "ThankYou", src: "../../Assets/images/ThankYou.png" },
     { id: "Instuctions", src: "../../Assets/images/instructions.png" },
->>>>>>> d1fd73e73ce87f9642c60efda639a2df8aa7d23f
+    { id: "wbd", src: "../../Assets/images/wbg.jpg" },
     { id: "StartButton", src: "../../Assets/images/StartButton.png" },
     { id: "BackButton", src: "../../Assets/images/BackButton.png" },
     { id: "ExitButton", src: "../../Assets/images/ExitButton.png" },
@@ -91,11 +94,7 @@ function init() {
     // setup the camera
     setupCamera();
     // set initial scene
-<<<<<<< HEAD
-    currentScene = config.Scene.THANK;
-=======
     currentScene = config.Scene.MENU;
->>>>>>> d1fd73e73ce87f9642c60efda639a2df8aa7d23f
     changeScene();
     // Add framerate stats
     addStatsObject();
@@ -193,14 +192,14 @@ function changeScene() {
             instructions = new scenes.Instructions();
             scene = instructions;
             renderer.setClearColor(0xcc0000, 1.0);
-            console.log("Starting Win Scene");
+            console.log("Starting Instructions Scene");
             break;
         case config.Scene.THANK:
             // show the THANK scene
             thank = new scenes.Thank();
             scene = thank;
             renderer.setClearColor(0xcc0000, 1.0);
-            console.log("Starting thank Scene");
+            console.log("Starting Thank Scene");
             break;
     }
 }

@@ -110,7 +110,7 @@ var scenes;
             this._setupCanvas();
         };
         return Win;
-    })(scenes.Scene);
+    }(scenes.Scene));
     scenes.Win = Win;
 })(scenes || (scenes = {}));
 
